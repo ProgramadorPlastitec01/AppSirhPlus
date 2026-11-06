@@ -84,14 +84,14 @@ El dorado `#D9B06A` es el acento de la marca. **No es un color de estado.** Marc
   --sup:          #FFFFFF;
   --sup-2:        #FBFBFD;   /* cabecera de tabla, fila alterna */
   --sup-3:        #F0F0F5;   /* elemento deshabilitado */
-  --linea:        #E7E7EE;   /* separador interno */
-  --linea-2:      #D7D8E2;   /* borde de control */
+  --linea:        #E7E7EE;   /* separador interno — no es borde de control */
+  --linea-2:      #8E93A5;   /* borde de control · 3.06:1 sobre --sup */
 
   /* ——— Texto ——— */
   --txt:          #14141F;   /* principal */
   --txt-2:        #4A4F5E;   /* secundario */
   --txt-3:        #6B7080;   /* etiqueta, ayuda */
-  --txt-4:        #8A8FA3;   /* metadato, marca de agua */
+  --txt-4:        #70758A;   /* metadato, línea de fuente · 4.56:1 sobre --sup */
 
   /* ——— Estados ——— */
   --ok:           #0B5A48;  --ok-s:   #E8F3EF;  --ok-b:   #A9D4C4;
@@ -114,6 +114,10 @@ El dorado `#D9B06A` es el acento de la marca. **No es un color de estado.** Marc
 | **`--acento` solo sobre oscuro** | Sobre claro no alcanza contraste; ahí va `--acento-txt` |
 | **Los colores de datos van en orden** | Primera serie `--d1`, segunda `--d2`. No se eligen por gusto |
 | **Contraste mínimo 4.5:1 en texto** | 3:1 en texto de 18 px o mayor y en bordes de control |
+
+> **Los tokens de esta paleta están medidos, no elegidos a ojo.** Los 21 pares que el sistema usa de verdad se calcularon el 6 de noviembre de 2026 contra el umbral que les aplica. Dos no pasaban y se corrigieron: `--txt-4` era `#8A8FA3` (3,21:1, y sostiene la línea de origen del dato, que es obligatoria) y `--linea-2` era `#D7D8E2` (1,42:1, y es el borde de todo campo de formulario).
+>
+> **Un color que no cumple se cambia; el umbral no se baja.** Bajar el requisito para que el color pase es resolver el examen cambiando la nota. Si se agrega un token nuevo, se mide antes de escribirlo.
 
 ### Qué significa cada estado
 
@@ -530,29 +534,57 @@ Es el componente de la hoja de vida y el de la bitácora de auditoría.
 
 ## 3.16 Catálogo completo
 
-| Componente | Macro |
+**No son macros: son etiquetas de inclusión de Django.** El Django Template Language no tiene macros, y el estándar prohíbe cambiar de motor de plantillas (`.claude/rules/02-stack.md` §4). La forma nativa equivalente es la etiqueta de inclusión, que conserva exactamente la misma firma:
+
+```django
+{% load macros %}
+{% btn "Registrar persona" "primario" icono="personas" %}
+{% badge "Sin código de nómina" "error" %}
+{% kpi "Personas activas" "1.094" "601 directos · 493 temporales" "SIRH+" %}
+```
+
+| Dónde | Qué |
+|---|---|
+| `core/templatetags/macros.py` | La firma y la lógica de cada componente |
+| `templates/macros/<componente>.html` | El HTML de cada uno |
+| `templates/macros.html` | El catálogo documentado: qué existe y cómo se invoca |
+| `/componentes/` | El catálogo **vivo**, solo con `DEBUG=True` |
+
+**Construidos** — se usan desde la fase 0:
+
+| Componente | Firma |
 |---|---|
 | Icono | `icon(nombre, tam)` |
-| Botón | `btn(texto, variante, icono, href)` |
-| Campo | `field(tipo, nombre, etiqueta, ayuda, error)` |
-| Selector | `select(nombre, etiqueta, opciones)` |
-| Tarjeta | `card(variante)` |
+| Botón | `btn(texto, variante, icono, href, tipo, extra)` |
+| Campo | `field(tipo, nombre, etiqueta, ayuda, error, valor, opcional, extra)` |
 | Tarjeta de cifra | `kpi(etiqueta, valor, detalle, fuente)` |
 | Etiqueta de estado | `badge(texto, estado)` |
+| Aviso | `alert(texto, estado)` |
+| Estado vacío | `empty_state(titulo, texto, accion, href, icono)` |
+| Migas | `migas(ruta)` |
+| Paginación | `paginacion(pagina, total, por_pagina)` |
+| Avatar | `avatar(iniciales, tono, tam)` |
+| Origen del dato | `fuente(origen, corte)` |
+
+**Con estilos listos, sin etiqueta todavía** — la tarjeta, la tabla, la ventana modal, la línea de tiempo, las pestañas, los pasos y la franja de vigencia tienen sus clases en `styles.css` y se escriben en HTML directo. Cada uno se convierte en etiqueta **cuando el primer módulo lo necesite de verdad**, no antes: una abstracción diseñada sobre un caso imaginario se diseña mal.
+
+**Previstos, sin nada todavía:** selector, confirmación destructiva, ayuda contextual, filtros e interruptor.
+
+| Componente | Firma prevista |
+|---|---|
+| Tarjeta | `card(variante)` |
 | Tabla | `tabla(columnas, filas, caption)` |
+| Selector | `select(nombre, etiqueta, opciones)` |
 | Modal | `modal(id, titulo, descripcion)` |
 | Confirmación | `confirmar(titulo, objeto, impacto, verbo)` |
-| Aviso | `alert(texto, estado)` |
-| Estado vacío | `empty_state(titulo, texto, accion)` |
 | Ayuda | `ayuda(modulo)` |
-| Migas | `migas(ruta)` |
-| Paginación | `paginacion(pagina, total)` |
 | Filtros | `filtros(buscador, selectores, atajos)` |
 | Línea de tiempo | `timeline(hitos)` |
-| Avatar | `avatar(iniciales, tono, tam)` |
 | Pestañas | `tabs(items, activa)` |
 | Interruptor | `switch(nombre, activo, etiqueta)` |
 | Pasos | `pasos(lista, actual)` |
+
+**La regla no cambia:** ningún módulo escribe su propio botón. Si un componente todavía no existe como etiqueta, se usa la clase del sistema de diseño — nunca un valor visual escrito a mano.
 
 ---
 

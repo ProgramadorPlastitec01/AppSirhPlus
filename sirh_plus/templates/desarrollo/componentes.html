@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+{% load macros %}
+{% comment %}
+Catalogo vivo del sistema de diseno. Solo existe con DEBUG=True.
+
+Para que sirve: revisar los componentes contra el mockup sin tener que
+construir una pantalla de negocio, y tener un sitio donde se vea que ya
+existe un boton — para que nadie escriba otro.
+
+No es una pantalla del sistema: no tiene ayuda contextual ni entra en la
+compuerta 5. Las pantallas de negocio empiezan en la fase 1.
+{% endcomment %}
+
+{% block titulo %}Componentes{% endblock %}
+{% block titulo_pantalla %}Sistema de diseño{% endblock %}
+
+{% block migas %}
+  {% migas ruta %}
+{% endblock %}
+
+{% block acciones %}
+  {% btn "Acción primaria" "primario" icono="check" %}
+  {% btn "Secundaria" "secundario" %}
+{% endblock %}
+
+{% block navegacion %}
+<div class="lateral__grupo">
+  <p class="lateral__grupo-titulo">Operación</p>
+  <a class="lateral__enlace" href="#cifras">{% icon "panel" 17 %}<span>Tablero</span></a>
+  <a class="lateral__enlace" href="#tabla">{% icon "personas" 17 %}<span>Personal</span></a>
+  <a class="lateral__enlace" href="#estados">{% icon "documento" 17 %}<span>Trámites</span></a>
+</div>
+<div class="lateral__grupo">
+  <p class="lateral__grupo-titulo">Administración</p>
+  <a class="lateral__enlace" href="#componentes" aria-current="page">{% icon "engranaje" 17 %}<span>Componentes</span></a>
+  <a class="lateral__enlace" href="#iconos">{% icon "estructura" 17 %}<span>Iconos</span></a>
+</div>
+{% endblock %}
+
+{% block lateral_pie %}
+  {% avatar "SJ" "oscuro" %}
+  <span class="lateral__usuario">
+    <span class="lateral__usuario-nombre">Sin sesión</span>
+    <span class="lateral__usuario-rol">La identidad llega en la fase 1</span>
+  </span>
+{% endblock %}
+
+{% block contenido %}
+
+<section id="cifras" class="u-mb-6">
+  <h2 class="u-mb-4">Tarjetas de cifra</h2>
+  <div class="rejilla rejilla--4">
+    <div class="tarjeta">{% kpi "Personas activas" "1.094" "601 directos · 493 temporales" "SIRH+" %}</div>
+    <div class="tarjeta">{% kpi "Registros incompletos" "31" "Bajo el 40 %" "SIRH+" %}</div>
+    <div class="tarjeta">{% kpi "Salario promedio" "$ 2.340.000" "Solo con permiso" "SINERGY · corte 31/10/2026" %}</div>
+    <div class="tarjeta tarjeta--destacada">{% kpi "Marcaciones de ayer" "4.218" "10 dispositivos" "BioTime · corte 05/11/2026" %}</div>
+  </div>
+</section>
+
+<section id="botones" class="u-mb-6">
+  <h2 class="u-mb-4">Botones</h2>
+  <div class="tarjeta fila">
+    {% btn "Primario" "primario" %}
+    {% btn "Secundario" "secundario" %}
+    {% btn "Oscuro" "oscuro" icono="buscar" %}
+    {% btn "Sutil" "sutil" %}
+    {% btn "Anular el registro" "peligro" icono="cerrar" %}
+  </div>
+</section>
+
+<section id="estados" class="u-mb-6">
+  <h2 class="u-mb-4">Etiquetas de estado</h2>
+  <div class="tarjeta fila">
+    {% badge "Activo" "ok" %}
+    {% badge "Próximo a vencer" "aviso" %}
+    {% badge "Sin código de nómina" "error" %}
+    {% badge "Por validar" "info" %}
+    {% badge "Directo" "neutro" %}
+  </div>
+</section>
+
+<section id="avisos" class="u-mb-6">
+  <h2 class="u-mb-4">Avisos</h2>
+  <div class="tarjeta">
+    <div class="u-mb-4">{% alert "Se registró a Andrés Mora. Falta el salario para que pueda entrar a nómina." "ok" %}</div>
+    <div class="u-mb-4">{% alert "El registro está bajo el 40 %. La persona no puede trabajar hasta completarlo." "aviso" %}</div>
+    <div class="u-mb-4">{% alert "No pudimos guardar. Intenta de nuevo o avisa a Tecnología de Información." "error" %}</div>
+    <div class="u-mb-4">{% alert "El cargo deriva el área, el nivel, el jefe, la matriz de capacitación, el turno y el punto de marcación." "info" %}</div>
+    <p class="sensible">Ves esta sección porque tu rol incluye <code>personal.salario.ver</code>. Cada consulta queda en la bitácora.</p>
+  </div>
+</section>
+
+<section id="campos" class="u-mb-6">
+  <h2 class="u-mb-4">Campos</h2>
+  <div class="tarjeta">
+    {% field "text" "documento" "Número de documento" ayuda="Entre 6 y 11 dígitos, sin puntos." %}
+    {% field "text" "codigo" "Código de nómina" error="El código debe ser la cédula más un dígito. No se quitan los ceros a la izquierda." %}
+    {% field "text" "cargo" "Cargo" ayuda="Lo deriva el sistema del área seleccionada." %}
+    {% field "text" "observacion" "Observación" opcional=True %}
+  </div>
+</section>
+
+<section id="tabla" class="u-mb-6">
+  <h2 class="u-mb-4">Tabla</h2>
+  <div class="tabla-caja">
+    <table class="tabla">
+      <caption class="oculto-visual">Ejemplo de listado de personas</caption>
+      <thead>
+        <tr>
+          <th scope="col">Persona</th>
+          <th scope="col">Documento</th>
+          <th scope="col">Cargo</th>
+          <th scope="col">Estado</th>
+          <th scope="col" class="num">Completitud</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Andrés Mora</td>
+          <td class="num">1.020.345.678</td>
+          <td>Operario de extrusión</td>
+          <td>{% badge "Activo" "ok" %}</td>
+          <td class="num">100 %</td>
+        </tr>
+        <tr>
+          <td>Luisa Pardo</td>
+          <td class="num">52.998.112</td>
+          <td>Analista de calidad</td>
+          <td>{% badge "Datos incompletos" "aviso" %}</td>
+          <td class="num">55 %</td>
+        </tr>
+        <tr>
+          <td>Jhon Ramírez</td>
+          <td class="num">1.098.223.004</td>
+          <td>Auxiliar de bodega</td>
+          <td>{% badge "Sin código de nómina" "error" %}</td>
+          <td class="num">30 %</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  {% paginacion 1 1094 %}
+</section>
+
+<section id="vigencia" class="u-mb-6">
+  <h2 class="u-mb-4">Vigencia</h2>
+  <div class="tarjeta">
+    <div class="vigencia vigencia--vigente">
+      <strong class="num">42 h</strong>
+      <span>Desde el 16 de julio de 2025</span>
+      {% badge "Vigente" "ok" %}
+    </div>
+    <div class="vigencia vigencia--historica">
+      <strong class="num">44 h</strong>
+      <span>Del 16/07/2024 al 15/07/2025</span>
+      {% badge "Histórico" "neutro" %}
+    </div>
+  </div>
+</section>
+
+<section id="cuatro-estados" class="u-mb-6">
+  <h2 class="u-mb-4">Los cuatro estados</h2>
+  <div class="rejilla rejilla--2">
+    <div class="tarjeta">
+      <p class="etiqueta u-mb-4">Vacío</p>
+      {% empty_state "Todavía no hay nadie registrado" "Cuando Recursos Humanos registre la primera persona, aparecerá aquí con su estado de completitud." "Registrar persona" %}
+    </div>
+    <div class="tarjeta">
+      <p class="etiqueta u-mb-4">Cargando</p>
+      <div class="esqueleto esqueleto--fila"></div>
+      <div class="esqueleto esqueleto--fila"></div>
+      <div class="esqueleto esqueleto--fila"></div>
+    </div>
+  </div>
+</section>
+
+<section id="iconos">
+  <h2 class="u-mb-4">Iconos</h2>
+  <div class="tarjeta fila">
+    {% for nombre in iconos %}
+      <span class="chip">{% icon nombre 17 %} {{ nombre }}</span>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock %}

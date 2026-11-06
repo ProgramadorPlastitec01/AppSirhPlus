@@ -1,0 +1,74 @@
+{% extends "base_auth.html" %}
+{% load macros %}
+{% comment %}
+E0.7 · Pantalla de ingreso. NO VALIDA NADA.
+
+Es una capa visual que la fase 1 conecta contra el gestor de identidad.
+Referencia: mockups/mockup-portal/Login.dc.html
+
+Dos cosas del mockup no se trajeron, y por una razon, no por olvido:
+«Activa tu cuenta» y «Olvide mi clave» son del gestor de identidad, no de
+SIRH+. Este sistema no crea cuentas ni administra credenciales, asi que no
+puede ofrecer esos dos caminos. En su lugar queda el telefono de RH, que es
+lo que resuelve el problema hoy.
+{% endcomment %}
+
+{% block titulo %}Ingreso{% endblock %}
+
+{% block ingreso %}
+<div class="auth__marca sobre-oscuro">
+  <svg class="auth__fondo" width="620" height="620" viewBox="0 0 620 620" aria-hidden="true">
+    <circle cx="310" cy="310" r="310" fill="var(--marca-2)"/>
+    <circle cx="310" cy="310" r="206" fill="var(--marca-3)"/>
+    <circle cx="310" cy="310" r="104" fill="var(--marca-linea)"/>
+  </svg>
+
+  <div class="auth__logo">
+    <span class="lateral__logo">P</span>
+    <span>
+      <span class="lateral__nombre">{{ EMPRESA }}</span>
+      <span class="lateral__cara">Colaboradores</span>
+    </span>
+  </div>
+
+  <div class="auth__contenido">
+    <h1 class="auth__titulo">Tu portal,<br>tu información.</h1>
+    <p class="auth__bajada">Tus horas, tus vacaciones, tu nómina y tus certificados. Sin pasar por ventanilla, sin esperar a nadie.</p>
+
+    <div class="auth__ventajas">
+      <span class="auth__ventaja">{% icon "check" 17 %} Certificado laboral al instante</span>
+      <span class="auth__ventaja">{% icon "check" 17 %} Tus marcaciones y horas extra</span>
+      <span class="auth__ventaja">{% icon "check" 17 %} Permisos con seguimiento</span>
+    </div>
+  </div>
+
+  <p class="auth__pie">Red interna de {{ EMPRESA }} · Uso exclusivo de colaboradores</p>
+</div>
+
+<div class="auth__panel">
+  <div class="auth__tarjeta">
+    <h1>Ingresa</h1>
+    <p class="u-txt-2 u-mb-6">Con tu número de documento y tu clave.</p>
+
+    {% if intento %}
+      <div class="u-mb-5">
+        {% alert "El ingreso se conecta en la fase 1, cuando exista el gestor de identidad. Por ahora esta pantalla no valida nada." "info" %}
+      </div>
+    {% endif %}
+
+    <form method="post" action="">
+      {% csrf_token %}
+      {% field "text" "documento" "Número de documento" ayuda="El número de tu cédula, sin puntos." extra="campo--grande" %}
+      {% field "password" "clave" "Clave" extra="campo--grande" %}
+      {% btn "Entrar al portal" "primario" tipo="submit" extra="btn--ancho btn--grande" %}
+    </form>
+
+    <div class="aviso aviso--aviso u-mt-6">
+      {% icon "candado" 20 %}
+      <p>Este equipo es compartido. Al terminar <strong>pulsa Salir</strong>. La sesión también se cierra sola tras {{ SESION_MINUTOS }} minutos sin actividad.</p>
+    </div>
+
+    <p class="u-mt-5 u-txt-2">¿Problemas para entrar? Recursos Humanos, extensión 142.</p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base_documento.html" %}
+{% load macros %}
+{% comment %}
+Cara publica. Cualquiera, sin sesion.
+Lo unico que se ve aqui: noticias, organigrama, convocatorias y el espacio del
+Fondo de Empleados. Ningun dato de ninguna persona.
+{% endcomment %}
+
+{% block shell %}
+<header class="sup-cabecera sobre-oscuro">
+  <div class="sup-cabecera__fila">
+    <a class="sup-cabecera__marca" href="{% url 'inicio' %}">
+      <span class="lateral__logo">P</span>
+      <span>
+        <span class="lateral__nombre">{{ SISTEMA }}</span>
+        <span class="lateral__cara">{% block cara %}Publico{% endblock %}</span>
+      </span>
+    </a>
+
+    <nav class="sup-cabecera__nav" aria-label="Secciones">
+      {% block navegacion %}
+      <a class="sup-cabecera__enlace" href="{% url 'inicio' %}" aria-current="page">Inicio</a>
+      {% endblock %}
+    </nav>
+
+    {% block cabecera_derecha %}
+    {% url 'ingreso' as url_ingreso %}
+    {% btn "Ingresar" "primario" icono="candado" href=url_ingreso %}
+    {% endblock %}
+  </div>
+</header>
+
+<main id="contenido" class="portal-contenido">
+  {% block contenido %}{% endblock %}
+</main>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base_documento.html" %}
+{% load macros %}
+{% comment %}
+Cara de colaborador. 1.100 personas que entran dos minutos.
+
+Cabecera superior con pestanas, densidad amplia y texto a --t-md. A la derecha
+van siempre el nombre, el tiempo de sesion y el boton de salir: quien va a
+radicar unas vacaciones necesita saber cuanto tiempo le queda.
+
+El contador en vivo llega en la fase 1, que es cuando hay sesion de verdad.
+Hasta entonces se muestra la duracion configurada.
+{% endcomment %}
+
+{% block shell %}
+<header class="sup-cabecera sobre-oscuro">
+  <div class="sup-cabecera__fila">
+    <a class="sup-cabecera__marca" href="{% url 'inicio' %}">
+      <span class="lateral__logo">P</span>
+      <span>
+        <span class="lateral__nombre">{{ SISTEMA }}</span>
+        <span class="lateral__cara">Colaboradores</span>
+      </span>
+    </a>
+
+    <nav class="sup-cabecera__nav" aria-label="Secciones del portal">
+      {% block navegacion %}{% endblock %}
+    </nav>
+
+    <div class="sup-cabecera__usuario">
+      {% block usuario %}
+      <span class="sesion-reloj" title="Tiempo de sesion">{{ SESION_MINUTOS }} min</span>
+      {% endblock %}
+    </div>
+  </div>
+</header>
+
+<main id="contenido" class="portal-contenido">
+  {% block contenido %}{% endblock %}
+</main>
+{% endblock %}

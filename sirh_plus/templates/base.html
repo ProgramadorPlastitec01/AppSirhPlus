@@ -1,0 +1,49 @@
+{% extends "base_documento.html" %}
+{% load macros %}
+{% comment %}
+Cara de gestion. RH y jefes, ocho horas dentro del sistema.
+
+Barra lateral de 244 px sobre --marca y densidad compacta: ver mas en menos
+espacio y no perder tiempo en movimientos. Es la desviacion D1 del estandar, y
+esta justificada: son dos audiencias, no una preferencia estetica.
+
+Los grupos de la lateral son dos, siempre: Operacion y Administracion.
+Administracion solo aparece para quien tiene permisos de ese grupo — y eso se
+verifica en el servidor, no ocultando el enlace.
+{% endcomment %}
+
+{% block clase_body %}gestion{% endblock %}
+
+{% block shell %}
+<aside class="lateral sobre-oscuro">
+  <div class="lateral__marca">
+    <span class="lateral__logo">P</span>
+    <span>
+      <span class="lateral__nombre">{{ SISTEMA }}</span>
+      <span class="lateral__cara">Gestion</span>
+    </span>
+  </div>
+
+  <nav class="lateral__nav" aria-label="Modulos">
+    {% block navegacion %}{% endblock %}
+  </nav>
+
+  <div class="lateral__pie">
+    {% block lateral_pie %}{% endblock %}
+  </div>
+</aside>
+
+<div class="principal">
+  <header class="cabecera">
+    {% block migas %}{% endblock %}
+    <div class="cabecera__fila">
+      <h1>{% block titulo_pantalla %}{% endblock %}</h1>
+      <div class="cabecera__acciones">{% block acciones %}{% endblock %}</div>
+    </div>
+  </header>
+
+  <main id="contenido" class="contenido">
+    {% block contenido %}{% endblock %}
+  </main>
+</div>
+{% endblock %}

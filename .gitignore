@@ -31,10 +31,13 @@ FINAL_SINER_*.txt
 respaldos/
 backups/
 
-# Fotografías del personal
+# Fotografías y firmas del personal.
+# Con ** porque el proyecto Django vive en sirh_plus/: una ruta anclada a la
+# raíz del repositorio no alcanzaría sirh_plus/static/fotos/.
 media/
-static/fotos/
-static/firmas/
+**/media/
+**/static/fotos/
+**/static/firmas/
 
 # ══ PYTHON ══
 __pycache__/
@@ -80,8 +83,9 @@ db.sqlite3-journal
 
 # Estáticos recolectados. Los de static/ SÍ se versionan,
 # incluidas las tipografías auto-hospedadas de static/vendor/.
-/staticfiles/
-/static_root/
+# Sin anclar: STATIC_ROOT es sirh_plus/staticfiles/, no la raíz.
+staticfiles/
+static_root/
 
 # ══ EDITOR Y SISTEMA ══
 .vscode/

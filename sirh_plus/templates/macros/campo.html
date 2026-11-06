@@ -1,0 +1,13 @@
+{% comment %}
+Toda etiqueta tiene su «for». Un placeholder no es una etiqueta.
+El mensaje de error dice que hacer, no «campo invalido».
+{% endcomment %}
+<div class="campo {% if error %}campo--error{% endif %} {{ extra }}">
+  <label class="campo__etiqueta" for="{{ nombre }}">
+    {{ etiqueta }}{% if opcional %} <span class="campo__opcional">(opcional)</span>{% endif %}
+  </label>
+  <input class="campo__control" id="{{ nombre }}" name="{{ nombre }}" type="{{ tipo }}"
+         value="{{ valor }}"{% if error %} aria-describedby="{{ nombre }}-error"{% elif ayuda %} aria-describedby="{{ nombre }}-ayuda"{% endif %}>
+  {% if ayuda and not error %}<p class="campo__ayuda" id="{{ nombre }}-ayuda">{{ ayuda }}</p>{% endif %}
+  {% if error %}<p class="campo__error" id="{{ nombre }}-error" role="alert">{{ error }}</p>{% endif %}
+</div>

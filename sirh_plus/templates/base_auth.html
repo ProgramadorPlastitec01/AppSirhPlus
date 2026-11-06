@@ -1,0 +1,17 @@
+{% extends "base_publico.html" %}
+{% comment %}
+Shell de ingreso.
+
+Hereda de base_publico.html, con el contenido centrado y sin navegacion: el
+ingreso es la puerta de entrada de las tres caras, no una cuarta cara. Por eso
+reemplaza el shell completo en lugar de agregar uno nuevo.
+
+Referencia visual: mockups/mockup-portal/Login.dc.html
+Detalle: .claude/rules/03-sistema-de-diseno.md seccion 2.4
+{% endcomment %}
+
+{% block shell %}
+<main id="contenido" class="auth">
+  {% block ingreso %}{% endblock %}
+</main>
+{% endblock %}

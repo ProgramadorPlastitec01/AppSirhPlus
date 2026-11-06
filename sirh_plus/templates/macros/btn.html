@@ -1,0 +1,1 @@
+{% load macros %}{% if href %}<a class="btn btn--{{ variante }} {{ extra }}" href="{{ href }}">{% if icono %}{% icon icono 16 %}{% endif %}{{ texto }}</a>{% else %}<button class="btn btn--{{ variante }} {{ extra }}" type="{{ tipo }}">{% if icono %}{% icon icono 16 %}{% endif %}{{ texto }}</button>{% endif %}

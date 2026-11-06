@@ -2,7 +2,7 @@
 
 **Lo primero que se lee al retomar el proyecto.**
 
-Actualizado: 5 de noviembre de 2026 · Fase en curso: 0 — Cimientos
+Actualizado: 6 de noviembre de 2026 · Fase en curso: 0 — Cimientos
 
 ---
 
@@ -38,6 +38,7 @@ Decisiones de negocio sin tomar. No bloquean todavía, pero sí a su fase.
 | A8 | Quién mantiene el maestro de códigos de nómina y por qué cubre 437 de 1.094 personas | RH | Fase 10 |
 | A9 | Dueño definitivo de contrato y salario cuando SINERGY exponga API | RH + Nómina | Sin fecha |
 | A10 | Dónde se guarda la foto del colaborador y con qué compresión. Mil fotos sin comprimir son un problema de disco y de velocidad | TI | Fase 3 |
+| A11 | **Cuánto dura la sesión.** Hoy son 30 minutos, un valor provisional puesto en la fase 0 porque el portal muestra el temporizador y el número tenía que existir. Se cambia con `SESION_MINUTOS` en el `.env`, sin tocar código. El equipo de vestier marca y se va; RH pasa la jornada dentro: puede que no sea un solo número | RH + TI | Fase 1 |
 
 ---
 

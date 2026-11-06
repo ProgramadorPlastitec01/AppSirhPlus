@@ -1,0 +1,9 @@
+<nav class="paginacion" aria-label="Paginacion">
+  <p class="paginacion__conteo">Mostrando {{ desde }}–{{ hasta }} de {{ total }}</p>
+  <div class="paginacion__botones">
+    {% for n in paginas %}
+      <a class="paginacion__boton" href="?pagina={{ n }}"
+         {% if n == pagina %}aria-current="page"{% endif %}>{{ n }}</a>
+    {% endfor %}
+  </div>
+</nav>

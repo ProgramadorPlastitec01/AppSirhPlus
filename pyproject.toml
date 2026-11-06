@@ -4,7 +4,11 @@
 [tool.ruff]
 line-length = 100
 target-version = "py311"
-exclude = [".venv", "venv", "env", "*/migrations/*"]
+# *.md esta excluido a proposito: desde la version 0.15, "ruff format" tambien
+# formatea los bloques de codigo Python dentro de archivos Markdown. Sin esta
+# linea, la compuerta 1 reescribe los documentos del proyecto —incluido el
+# plan de ejecucion, que es normativo— cada vez que se corre.
+exclude = [".venv", "venv", "env", "*/migrations/*", "*.md"]
 
 [tool.ruff.lint]
 # E,W pycodestyle · F pyflakes · I orden de imports · UP modernizacion
@@ -13,8 +17,11 @@ select = ["E", "F", "W", "I", "UP", "B", "S"]
 ignore = ["S101"]            # assert: se usa en las pruebas
 
 [tool.ruff.lint.per-file-ignores]
-"tests/*" = ["S101"]
-"config/settings.py" = ["E501"]
+# Con "**/" porque el proyecto Django vive en sirh_plus/: un patron con barra
+# se compara contra la ruta completa, y "tests/*" no alcanzaria a
+# sirh_plus/tests/.
+"**/tests/*" = ["S101"]
+"**/config/settings.py" = ["E501"]
 
 [tool.ruff.format]
 quote-style = "double"

@@ -1,0 +1,7 @@
+<nav class="migas" aria-label="Ruta">
+  {% for paso in ruta %}
+    {% if not forloop.last and paso.href %}<a href="{{ paso.href }}">{{ paso.texto }}</a>
+    {% else %}<span>{{ paso.texto }}</span>{% endif %}
+    {% if not forloop.last %}<span class="migas__sep" aria-hidden="true">›</span>{% endif %}
+  {% endfor %}
+</nav>

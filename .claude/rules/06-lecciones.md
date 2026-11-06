@@ -59,3 +59,30 @@ Un intento de resolver el token CSRF por una vía razonable fallaba por una coli
 El `CLAUDE.md` de una app afirmaba dos veces que cierto paquete solo lo usaban unos comandos de importación. Dos módulos del camino normal lo importaban. La *intención* se cumplía, pero la afirmación literal era falsa — y un agente que la lea podría borrar ese paquete.
 
 **Ahora:** las afirmaciones absolutas ("solo", "nunca", "ya no se usa") se verifican contra el código antes de escribirlas, y se revisan cuando el código cambia.
+
+---
+
+### L8 — `ruff format` también reescribe los bloques de código dentro de los `.md`
+
+Al correr la compuerta 1 por primera vez en una app nueva, `ruff format --check .` reportó cinco archivos «por reformatear» y **cuatro eran documentos**: dos reglas del estándar y el plan de ejecución del proyecto, que es normativo. Desde la versión 0.15, `ruff format` formatea el código Python embebido en Markdown: reindentaba tablas de permisos alineadas a mano, partía tuplas de una línea en siete y convertía listas de campos de un modelo en llamadas a función.
+
+Nadie lo nota en el momento: la compuerta sale en verde **después** de «arreglar» los archivos, y el daño queda en el diff de un documento que nadie estaba revisando.
+
+**Ahora:** el `pyproject.toml` de la plantilla excluye `*.md`:
+
+```toml
+[tool.ruff]
+exclude = [".venv", "venv", "env", "*/migrations/*", "*.md"]
+```
+
+**La lección de fondo:** una herramienta de formato corre sobre todo lo que encuentra, y su alcance crece entre versiones sin que nadie lo pida. Lo que entra a una compuerta automática se delimita de forma explícita, no por lo que la herramienta hacía cuando se escribió la regla.
+
+---
+
+### L9 — Un patrón con barra se ancla a la raíz, y deja de cubrir lo que debía
+
+Con el árbol de dos niveles del estándar —la carpeta del repositorio y dentro el proyecto Django—, cinco patrones heredados de la plantilla dejaron de alcanzar lo que protegían: `"config/settings.py"` y `"tests/*"` en `pyproject.toml`, y `static/fotos/`, `static/firmas/` y `/staticfiles/` en `.gitignore`. Todos apuntan a la raíz; los archivos reales viven un nivel más abajo.
+
+El de `ruff` solo habría dado ruido. El de `.gitignore` es el grave: **las fotografías del personal habrían entrado al repositorio**, y sacar datos personales del historial después es un dolor.
+
+**Ahora:** en la plantilla, todo patrón con barra lleva `**/` al frente. Y al levantar una app se verifica que `.gitignore` cubra las rutas sensibles **del árbol que quedó**, no las del ejemplo.

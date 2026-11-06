@@ -140,6 +140,11 @@ Un sistema donde el mismo concepto se llama de tres maneras es un sistema que na
 | **Compuerta** | Cada una de las seis verificaciones para cerrar una fase | — |
 | **Fase** | Un bloque de trabajo que entrega algo usable | — |
 | **Módulo** | Una app de Django con su dominio | — |
+| **Cara** | Cada una de las tres audiencias del sistema: pública, colaborador y gestión. Un módulo, tres vistas | — |
+| **Shell** | El marco de una cara: la barra lateral en gestión, la cabecera superior en portal y público | `base*.html` |
+| **Token** | Un valor visual declarado en `:root`. Ningún color, radio o espaciado se escribe fuera de ahí | `--marca`, `--e4` |
+| **Chequeo de salud** | Una verificación de que el sistema puede atender. La misma tupla alimenta `smoke_test` y `/salud/` | `CHEQUEOS` |
+| **Artboard** | Una pantalla del mockup. En la cara de gestión son secciones con id dentro de un solo archivo | `v-hoja` |
 
 ---
 

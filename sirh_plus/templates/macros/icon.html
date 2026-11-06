@@ -1,0 +1,36 @@
+{% comment %}
+Juego de iconos de SIRH+. Uno solo, dibujado en linea.
+
+Reglas: stroke="currentColor" y fill="none" siempre, para que hereden el color
+del contexto; aria-hidden="true" siempre, porque son decorativos y el
+significado va en el texto; viewBox 0 0 24 24 siempre, para que el trazo sea
+consistente entre tamanos.
+
+Nunca un icono solo, sin texto ni aria-label.
+{% endcomment %}
+<svg width="{{ tam }}" height="{{ tam }}" viewBox="0 0 24 24" fill="none"
+     stroke="currentColor" stroke-width="{{ trazo }}" stroke-linecap="round"
+     stroke-linejoin="round" aria-hidden="true">
+{% if nombre == "check" %}<path d="M20 6 9 17l-5-5"/>
+{% elif nombre == "cerrar" %}<path d="M18 6 6 18M6 6l12 12"/>
+{% elif nombre == "info" %}<circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/>
+{% elif nombre == "alerta" %}<path d="M10.3 4.3 2.8 17a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 4.3a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/>
+{% elif nombre == "error" %}<circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/>
+{% elif nombre == "ayuda" %}<circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>
+{% elif nombre == "candado" %}<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3"/>
+{% elif nombre == "buscar" %}<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+{% elif nombre == "usuario" %}<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>
+{% elif nombre == "salir" %}<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l-5-5 5-5M5 12h11"/>
+{% elif nombre == "menu" %}<path d="M4 6h16M4 12h16M4 18h16"/>
+{% elif nombre == "flecha-derecha" %}<path d="M5 12h14M13 6l6 6-6 6"/>
+{% elif nombre == "reloj" %}<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+{% elif nombre == "panel" %}<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>
+{% elif nombre == "personas" %}<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 5.2a3.5 3.5 0 0 1 0 6.6M18 20a6.5 6.5 0 0 0-2.3-5"/>
+{% elif nombre == "estructura" %}<rect x="9" y="3" width="6" height="5" rx="1"/><rect x="2" y="16" width="6" height="5" rx="1"/><rect x="16" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M5 16v-2h14v2"/>
+{% elif nombre == "documento" %}<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5"/>
+{% elif nombre == "reloj-marcacion" %}<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/>
+{% elif nombre == "caja" %}<path d="M3 8 12 3l9 5v8l-9 5-9-5Z"/><path d="M3 8l9 5 9-5M12 13v8"/>
+{% elif nombre == "engranaje" %}<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>
+{% else %}<circle cx="12" cy="12" r="9"/>
+{% endif %}
+</svg>

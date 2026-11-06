@@ -1,0 +1,16 @@
+{% extends "base_publico.html" %}
+{% load macros %}
+{% comment %}
+Pantalla propia de acceso denegado. Explica que paso y ofrece salida, en vez
+de un error crudo del servidor. El detalle tecnico va al registro de eventos,
+nunca a la pantalla.
+{% endcomment %}
+
+{% block titulo %}Sin permiso{% endblock %}
+
+{% block contenido %}
+<div class="tarjeta">
+  {% url 'inicio' as url_inicio %}
+  {% empty_state "No tienes permiso para ver esto" "Tu rol no incluye el permiso que esta pantalla necesita. Si crees que deberías tenerlo, pídeselo a quien administra los roles en Recursos Humanos; el intento quedó registrado." "Volver al inicio" href=url_inicio icono="candado" %}
+</div>
+{% endblock %}

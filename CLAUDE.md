@@ -20,9 +20,12 @@ Reemplaza al SIRH antiguo e integra BioTime y COPEC.
 | | |
 |---|---|
 | **Fase en curso** | 0 — Cimientos |
-| **Entregable en curso** | E0.1 — Repositorio |
+| **Entregable en curso** | ninguno · los ocho están cerrados |
+| **Falta para cerrar la fase** | La compuerta 6: validación humana |
 | **Última fase cerrada** | ninguna |
-| **Fecha de esta nota** | 5 de noviembre de 2026 |
+| **Fecha de esta nota** | 6 de noviembre de 2026 |
+
+**Cómo se levanta, en corto:** `.venv\Scripts\activate` · `cd sirh_plus` · `python manage.py runserver`. El detalle está en el `README.md`.
 
 > Al cerrar cada entregable se actualiza esta tabla. Al cerrar una fase se actualiza además la tabla de módulos y las decisiones de dominio.
 
@@ -171,7 +174,10 @@ Términos fijos. Se usan en la interfaz **y en el código**.
 
 | Módulo | Fase | Qué hace |
 |---|---|---|
-| _ninguno todavía_ | — | — |
+| `core/` | 0 | Chequeos de salud (`smoke_test` y `/salud/`), la librería de componentes, la cara pública y la pantalla de ingreso |
+| `dominio/` | 0 | Vacío a propósito. La primera función entra en E3.9 |
+
+**Lo que todavía no existe, y es correcto que no exista:** `identidad/` —llega con el gestor—, `permisos/`, `auditoria/`, `maestros/`, `personal/`, `firmas/` y `parametros/`.
 
 ---
 

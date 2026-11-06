@@ -1,0 +1,18 @@
+{% extends "base_publico.html" %}
+{% load macros %}
+{% comment %}
+Sin jerga tecnica y sin traceback. El detalle ya quedo en el registro de
+eventos; aqui solo va lo que la persona puede hacer.
+
+Esta plantilla se renderiza con un contexto minimo, asi que no usa nada que
+dependa de la peticion.
+{% endcomment %}
+
+{% block titulo %}Algo falló{% endblock %}
+
+{% block contenido %}
+<div class="tarjeta">
+  {% url 'inicio' as url_inicio %}
+  {% empty_state "No pudimos completar lo que pediste" "El error quedó registrado y Tecnología de Información puede verlo. Intenta de nuevo; si vuelve a pasar, avisa indicando qué estabas haciendo." "Volver al inicio" href=url_inicio icono="alerta" %}
+</div>
+{% endblock %}

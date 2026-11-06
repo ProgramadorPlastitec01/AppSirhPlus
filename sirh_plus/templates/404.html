@@ -1,0 +1,11 @@
+{% extends "base_publico.html" %}
+{% load macros %}
+
+{% block titulo %}No encontrado{% endblock %}
+
+{% block contenido %}
+<div class="tarjeta">
+  {% url 'inicio' as url_inicio %}
+  {% empty_state "Esta dirección no existe" "Puede que el enlace esté mal escrito, o que la pantalla se haya movido. Si llegaste aquí desde un enlace del sistema, avisa a Tecnología de Información." "Volver al inicio" href=url_inicio icono="buscar" %}
+</div>
+{% endblock %}

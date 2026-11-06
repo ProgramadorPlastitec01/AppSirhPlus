@@ -75,7 +75,13 @@ python manage.py smoke_test          # debe salir todo en verde
 python manage.py runserver
 ```
 
-En `http://127.0.0.1:8000/salud/` deberías ver el estado del sistema.
+Tres direcciones para comprobar que quedó bien:
+
+| | |
+|---|---|
+| `http://127.0.0.1:8000/salud/` | El estado del sistema, en JSON |
+| `http://127.0.0.1:8000/ingreso/` | La pantalla de acceso. **Todavía no valida nada** |
+| `http://127.0.0.1:8000/componentes/` | El catálogo del sistema de diseño. Solo existe con `DEBUG=True` |
 
 ---
 

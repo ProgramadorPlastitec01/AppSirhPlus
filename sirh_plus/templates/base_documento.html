@@ -1,0 +1,26 @@
+{% load static %}<!doctype html>
+{% comment %}
+Esqueleto del documento. No es una cara: es lo que las tres caras comparten
+—la cabecera del HTML, la hoja unica de estilos y el salto al contenido— para
+que no haya tres copias del <head> que se separen con el tiempo.
+
+Las caras son las cuatro plantillas que heredan de aqui:
+  base_publico.html   cabecera superior, sin sesion
+  base_portal.html    cabecera superior, con el colaborador
+  base.html           barra lateral de 244 px, cara de gestion
+  base_auth.html      el ingreso, sobre la cara publica, sin navegacion
+{% endcomment %}
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}{{ SISTEMA }}{% endblock %} · {{ SISTEMA }}</title>
+  <meta name="description" content="{% block descripcion %}Sistema de Informacion de Recursos Humanos de {{ EMPRESA }}.{% endblock %}">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body class="{% block clase_body %}{% endblock %}">
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  {% block shell %}{% endblock %}
+  {% block scripts %}{% endblock %}
+</body>
+</html>

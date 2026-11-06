@@ -1,0 +1,21 @@
+{% extends "base_publico.html" %}
+{% load macros %}
+{% comment %}
+Cara publica, fase 0. Todavia no hay noticias, organigrama ni convocatorias:
+esos llegan en sus fases. Lo que hay es la puerta y el estado del sistema.
+
+Es un estado vacio con todas las letras, no una pantalla a medias: dice por
+que esta vacio y que se puede hacer.
+{% endcomment %}
+
+{% block titulo %}Inicio{% endblock %}
+
+{% block contenido %}
+<div class="tarjeta">
+  <h1>{{ SISTEMA }}</h1>
+  <p class="u-txt-2">Sistema de Información de Recursos Humanos de {{ EMPRESA }}.</p>
+
+  {% url 'ingreso' as url_ingreso %}
+  {% empty_state "La cara pública se construye más adelante" "Aquí van las noticias, el organigrama, las convocatorias y el espacio del Fondo de Empleados. Por ahora, si eres colaborador, entra al portal." "Ingresar" href=url_ingreso icono="caja" %}
+</div>
+{% endblock %}

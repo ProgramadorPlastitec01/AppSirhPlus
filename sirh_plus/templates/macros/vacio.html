@@ -1,0 +1,10 @@
+{% load macros %}{% comment %}
+Un estado vacio nunca dice solo «No hay datos»: dice por que esta vacio y que
+se puede hacer.
+{% endcomment %}
+<div class="vacio">
+  <div class="vacio__icono">{% icon icono 24 %}</div>
+  <p class="vacio__titulo">{{ titulo }}</p>
+  <p class="vacio__texto">{{ texto }}</p>
+  {% if accion %}{% btn accion "primario" href=href %}{% endif %}
+</div>

@@ -1,0 +1,42 @@
+{% comment %}
+=============================================================================
+ SIRH+ · Libreria de componentes
+=============================================================================
+
+NINGUN MODULO ESCRIBE SU PROPIO BOTON. Todo lo visual sale de aqui.
+
+Como se usa, en cualquier plantilla:
+
+    {% load macros %}
+    {% btn "Registrar persona" "primario" icono="personas" %}
+    {% badge "Sin codigo de nomina" "error" %}
+    {% kpi "Personas activas" "1.094" "601 directos · 493 temporales" %}
+
+Donde vive cada cosa:
+
+  core/templatetags/macros.py   las firmas y la logica de cada componente
+  templates/macros/*.html       el HTML de cada componente
+  static/css/styles.css         los tokens y las clases
+
+Por que no son macros de verdad: el Django Template Language no las tiene, y
+el estandar prohibe cambiar de motor de plantillas. La forma nativa
+equivalente es la etiqueta de inclusion, que conserva la misma firma del
+sistema de diseno. Esta escrito en el docstring de macros.py.
+
+Catalogo vivo, en desarrollo:  /componentes/
+
+Componentes disponibles en la fase 0:
+
+  icon(nombre, tam)                      campo(tipo, nombre, etiqueta, ...)
+  btn(texto, variante, icono, href)      alert(texto, estado)
+  badge(texto, estado)                   empty_state(titulo, texto, accion)
+  kpi(etiqueta, valor, detalle, fuente)  migas(ruta)
+  avatar(iniciales, tono, tam)           paginacion(pagina, total)
+  fuente(origen, corte)
+
+Los que faltan —tabla, modal, confirmar, timeline, tabs, switch, pasos,
+filtros, select, card, ayuda— tienen sus estilos en styles.css y entran como
+etiqueta cuando el primer modulo los necesite. No se crean antes: una
+abstraccion para un caso que todavia no existe se disena mal.
+=============================================================================
+{% endcomment %}

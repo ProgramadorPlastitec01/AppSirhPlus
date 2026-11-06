@@ -6,6 +6,86 @@ El formato está al final. Las entradas van de la más reciente a la más antigu
 
 ---
 
+## 2026-11-06 · Dos colores de la paleta se corrigen porque no dan el contraste
+
+**Fase:** 0
+**Qué se decidió:** cambiar dos tokens del sistema de diseño, en los tres sitios donde viven —la hoja de estilos, el mockup y el documento normativo—, porque el contraste medido no alcanza el mínimo que el propio documento exige.
+
+| Token | Antes | Medido | Exigido | Ahora | Medido |
+|---|---|---|---|---|---|
+| `--txt-4` | `#8A8FA3` | **3,21:1** | 4,5:1 | `#70758A` | **4,56:1** |
+| `--linea-2` | `#D7D8E2` | **1,42:1** | 3:1 | `#8E93A5` | **3,06:1** |
+
+Los dos se midieron sobre `--sup` (`#FFFFFF`), con la fórmula de luminancia relativa de WCAG 2.1.
+
+**Por qué:**
+La compuerta 5 exige contraste **medido, no estimado**. Al medirlo por primera vez, de los 21 pares que el sistema usa de verdad, 18 pasaban y dos no. No eran colores decorativos:
+
+- **`--txt-4`** sostiene la línea «Fuente: SINERGY · corte 31/10/2026», que el patrón 4.1 hace **obligatoria en todo dato que no nazca en SIRH+**, y también los textos de sugerencia de los campos. Es texto que la gente necesita leer.
+- **`--linea-2`** es el borde de **todo campo de formulario** y del botón secundario. A 1,42:1, un campo es casi invisible para quien tiene poca visión: no se ve dónde hay que escribir.
+
+El error no estuvo en la regla: estuvo en elegir los colores a ojo y no medirlos antes de escribirlos en el documento.
+
+**Qué se evaluó y se descartó:**
+
+| Opción | Por qué no |
+|---|---|
+| **Bajar el umbral del documento** de 3:1 a lo que `--linea-2` diera | Es resolver el examen cambiando la nota. El umbral existe por una razón que no cambia porque el color nos guste |
+| Dejar `--txt-4` y usar `--txt-3` en la línea de origen | Tapa el síntoma: el token seguiría en la paleta, disponible para que el siguiente módulo lo use en texto |
+| Un valor intermedio para `--linea-2`, como `#A8ABBE`, menos oscuro | 2,27:1. Sigue sin cumplir. Un valor que no pasa no es un punto medio: es el mismo problema más disimulado |
+| Cambiar también `--d6`, que compartía el `#8A8FA3` | Es un color de **datos**, no de texto: a 3,21:1 cumple el 3:1 que le aplica a un objeto gráfico. Se deja |
+| Cambiar `--linea`, que da 1,23:1 | Es separador interno de tarjetas y filas, no borde de control. El documento exige 3:1 solo en bordes de control |
+
+**Qué cambia si esto resulta equivocado:**
+`--linea-2` se nota: todos los campos y botones secundarios quedan con un borde bastante más oscuro que en el mockup original. Si al verlo en pantalla resulta pesado, el camino **no** es volver a `#D7D8E2`, sino buscar otra forma de delimitar el control —un fondo distinto al de la tarjeta, por ejemplo— que cumpla igual. El umbral se queda.
+
+**Lo que esto deja escrito:** el §1.1 del sistema de diseño ahora dice que los tokens están medidos y que un token nuevo se mide **antes** de escribirlo.
+
+---
+
+## 2026-11-06 · Nueve decisiones de la fase 0, al construir los cimientos
+
+**Fase:** 0
+**Qué se decidió:** seis decisiones de construcción que el plan no detallaba, y tres correcciones a cosas que estaban mal en la plantilla heredada del estándar. Validadas por Sebastián en el alto del E0.4.
+
+**Por qué:**
+El plan dice qué entregar, no siempre con qué forma. Al construir aparecieron seis puntos donde había que elegir, y tres donde lo heredado no funcionaba en este árbol. Se escriben aquí porque la próxima persona —o el próximo agente— va a encontrarse con el resultado y no con el razonamiento.
+
+**Las seis decisiones:**
+
+| # | Qué se decidió | Por qué |
+|---|---|---|
+| 1 | **No se instala `django.contrib.auth` ni `django.contrib.admin`** | Es la consecuencia técnica de «SIRH+ no gestiona usuarios». Con `auth` instalado, Django crea su propia tabla de usuarios, que es justo lo que la regla prohíbe; `admin` abriría una puerta de administración que nadie diseñó ni auditó. La primera migración aplicó **solo `sessions`**. Sin `auth` no hay `AUTH_PASSWORD_VALIDATORS` ni `AuthenticationMiddleware`: no es un olvido, es que no hay contraseñas que validar |
+| 2 | **Los componentes son etiquetas de inclusión de Django, no macros** | El DTL no tiene macros y el estándar prohíbe cambiar de motor de plantillas. La etiqueta de inclusión conserva la firma del §3.16 intacta: `{% btn "Guardar" "primario" %}`. La lógica vive en `core/templatetags/macros.py` y el HTML en `templates/macros/`. El §3.16 se corrigió para describir lo que hay |
+| 3 | **Existe `base_documento.html`**, un quinto archivo que el plan no nombra | Es el `<head>` y el salto al contenido que las cuatro caras comparten. Sin él habría tres copias del `<head>` divergiendo con el tiempo. No es una cara: es el esqueleto del documento |
+| 4 | **`/componentes/` solo existe con `DEBUG=True`** | Es el catálogo vivo del sistema de diseño: sirve para revisar contra el mockup y para que nadie escriba su propio botón. Es herramienta de desarrollo, no pantalla del sistema: no tiene ayuda contextual ni entra en la compuerta 5 |
+| 5 | **La pantalla de ingreso no trae «Activa tu cuenta» ni «Olvidé mi clave»**, que sí están en el artboard | Las dos son del gestor de identidad. SIRH+ no crea cuentas ni administra credenciales, así que no puede ofrecer esos caminos sin mentir. En su lugar queda el teléfono de RH, que es lo que resuelve el problema hoy |
+| 6 | **La sesión dura 30 minutos** | Valor provisional. El portal muestra el temporizador, así que el número tenía que existir. Se cambia con `SESION_MINUTOS` en el `.env`, sin tocar código. **El definitivo lo deciden RH y TI** — es A11 de `docs/pendientes.md` |
+
+**Las tres correcciones:**
+
+| # | Qué estaba mal | Qué quedó |
+|---|---|---|
+| 7 | `ruff format` reescribía los bloques de código dentro de los `.md`, incluidos `claude/02` —que es normativo— y dos reglas del estándar. Desde la versión 0.15 formatea el Python embebido en Markdown | `*.md` excluido en `pyproject.toml`. Quedó como **L8** en `.claude/rules/06-lecciones.md`: es un problema del estándar, no de SIRH+ |
+| 8 | Los `per-file-ignores` de `ruff` apuntaban a `config/settings.py` y `tests/*`, rutas que en el árbol de dos niveles viven bajo `sirh_plus/` | Los dos patrones llevan `**/` al frente |
+| 9 | `.gitignore` tenía `static/fotos/`, `static/firmas/` y `/staticfiles/` anclados a la raíz, y el proyecto vive un nivel más abajo | Los tres con `**/`. Quedó como **L9** en lecciones. Es la más grave de las tres: **las fotografías del personal habrían entrado al repositorio** |
+
+**Qué se evaluó y se descartó:**
+
+| Opción | Por qué no |
+|---|---|
+| Instalar `auth` «porque Django lo trae por defecto» y simplemente no usarlo | Una tabla de usuarios que existe termina usándose. La regla se sostiene en que la tabla no exista |
+| Resolver los componentes con `{% include %}` y `with` en cada llamada | No valida argumentos, no permite valores por defecto y obliga a repetir el nombre del archivo. Un error de escritura ahí falla en silencio, mostrando nada |
+| Repetir el `<head>` en las tres caras para no agregar un archivo fuera del plan | Tres copias de lo mismo divergen. El plan nombra cuatro caras, no prohíbe un esqueleto compartido |
+| Dejar el catálogo de componentes accesible en producción | Es una pantalla sin ayuda contextual y sin dueño. Lo que no tiene dueño no se mantiene |
+| Dejar los enlaces de «Olvidé mi clave» apuntando a nada, para parecerse más al artboard | Un enlace muerto en la puerta de entrada del sistema. El artboard se respeta en estructura, no a costa de mentir |
+| Silenciar el reformateo de los `.md` corriendo `ruff format` solo sobre `sirh_plus/` | Habría dejado la trampa puesta para quien corriera el comando del `README`, que dice `ruff format .` |
+
+**Qué cambia si esto resulta equivocado:**
+La 1 es la de más peso: si algún día SIRH+ necesitara el sistema de usuarios de Django, habría que instalar `auth` y migrar, y eso contradiría la regla antes que al código. Las demás son reversibles en horas. La 6 es provisional por diseño y ya tiene dueño.
+
+---
+
 ## 2026-11-06 · SIRH+ no gestiona usuarios: `cuentas/` no existe y no va a existir
 
 **Fase:** 0
