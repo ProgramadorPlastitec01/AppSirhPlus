@@ -16,7 +16,7 @@ Este archivo existe porque los agentes `developer` y `qa` lo exigen: el primero 
 | `claude/00-contexto-maestro-sirh-plus.md` | El proyecto completo y el porqué de cada decisión |
 | `claude/01-inventario-y-fases-sirh-plus.md` | 28 módulos, 314 funciones, 23 fases |
 | `claude/02-plan-de-ejecucion-sirh-plus.md` | **Normativo.** Reglas, compuertas, fases 0 a 3 en detalle |
-| `claude/03-sistema-de-diseno.md` | **Normativo.** Tokens, componentes, patrones de pantalla |
+| `.claude/rules/03-sistema-de-diseno.md` | **Normativo.** Tokens, componentes, patrones de pantalla |
 | `mockups/mockup-sirh-plus-completo.html` | 17 pantallas de la cara de gestión |
 | `mockups/mockup-portal/` | La cara de colaborador |
 
@@ -74,13 +74,15 @@ Las reglas están enumeradas en `claude/00` §5, §8 y §10, y en `claude/02` §
 
 ## 3 · Módulos funcionales
 
-Una app de Django por módulo. El inventario completo está en `claude/01`; estos son los de las fases 0 a 3:
+Una app de Django por módulo. El inventario completo está en `claude/01`; estos son los de las fases 0 a 3.
+
+**No hay un módulo `cuentas/`.** SIRH+ no gestiona usuarios: no crea cuentas, no guarda contraseñas y no administra credenciales. Eso es del gestor de identidad, del que SIRH+ es la fuente de verdad de las personas. La regla completa está en `CLAUDE.md`, «SIRH+ no gestiona usuarios».
 
 | App | Responsabilidad |
 |---|---|
 | `core/` | Chequeos de salud, utilidades y plantillas base |
-| `cuentas/` | Adaptador de identidad. **Copiado del estándar, no se modifica** |
-| `permisos/` | Catálogo granular, roles y resolución del alcance |
+| `identidad/` | Autenticación contra el gestor y aviso de altas y bajas. **Se escribe cuando el gestor exista** |
+| `permisos/` | Catálogo granular, roles y resolución del alcance. **Propio, de cero** |
 | `auditoria/` | Bitácora inmutable de cambios y consultas sensibles |
 | `maestros/` | Áreas, cargos, estructura, organigrama y puntos de marcación |
 | `personal/` | Personas, vínculos, historial temporal y completitud |
@@ -114,16 +116,18 @@ El detalle de cada modelo está en `claude/02`, §3 a §5. Resumen:
 
 **Ningún modelo propio tiene llave foránea hacia el usuario.** Se guarda el identificador y el nombre como texto.
 
-### Sistemas ajenos, en modo lectura
+### Sistemas ajenos
 
-| Capa | Sistema | Qué se lee | Desde |
-|---|---|---|---|
-| `sirh_legacy_db/` | MySQL del SIRH viejo | Migración y conciliación | Fase 2 |
-| `glpi_api/` | GLPI | **Escritura**: creación de usuario. Lógica existente que se conserva | Fase 3 |
-| `identidad_api/` | Gestor de identidad | Autenticación y ciclo de vida | Cuando exista |
-| `biometricos_api/` | Dispositivos en LAN | Marcaciones crudas | Fase 6 |
-| `daruma_db/` | MySQL de calidad | Documentos y versiones | Fase 14 |
-| `mant_db/` | SQL Server de dotación | Catálogo de elementos | Fase 18 |
+| Capa | Sistema | Modo | Qué se lee o se escribe | Desde |
+|---|---|---|---|---|
+| `sirh_legacy_db/` | MySQL del SIRH viejo | Lectura | Migración y conciliación | Fase 2 |
+| `glpi_api/` | GLPI | **Escritura**, por API | Creación de usuario. Lógica existente que se conserva | Fase 3 |
+| `identidad_api/` | Gestor de identidad | **Escritura**, por API | Autenticación y ciclo de vida de la persona | Cuando exista |
+| `biometricos_api/` | Dispositivos en LAN | Lectura | Marcaciones crudas | Fase 6 |
+| `daruma_db/` | MySQL de calidad | Lectura | Documentos y versiones | Fase 14 |
+| `mant_db/` | SQL Server de dotación | Lectura | Catálogo de elementos | Fase 18 |
+
+**Lo que el estándar prohíbe es escribir en la BASE de un sistema ajeno, no llamar a su API.** Las dos capas que escriben lo hacen por la interfaz pública del otro sistema, que es su contrato y lo que ese sistema puede validar. A ninguna base ajena se le escribe.
 
 **Nunca en `DATABASES`.** Cada una en su capa aislada.
 
@@ -131,7 +135,7 @@ El detalle de cada modelo está en `claude/02`, §3 a §5. Resumen:
 
 ## 5 · Pantallas
 
-Cada pantalla corresponde a uno de los **cinco arquetipos** de `claude/03-sistema-de-diseno.md` §5, y todas resuelven los **cuatro estados** de §4.8.
+Cada pantalla corresponde a uno de los **cinco arquetipos** de `.claude/rules/03-sistema-de-diseno.md` §5, y todas resuelven los **cuatro estados** de §4.8.
 
 | Pantalla | Arquetipo | Fase | Artboard |
 |---|---|---|---|
@@ -221,7 +225,7 @@ Cuatro, todas declaradas con su justificación. **No se corrigen.**
 
 **Por qué:** SIRH+ maneja salarios, procesos disciplinarios y datos de salud ocupacional. Dos roles no pueden expresar que un analista vea el salario pero no lo edite.
 
-**Cómo se respeta el estándar:** `cuentas/` **no se modifica**. El estándar resuelve el acceso a la aplicación; SIRH+ resuelve la autorización dentro, en un módulo `permisos/` propio.
+**Cómo se respeta el estándar:** la frontera se mantiene. El gestor de identidad resuelve el acceso a la aplicación; SIRH+ resuelve la autorización dentro, en un módulo `permisos/` propio.
 
 ### D3 · El alcance del dato como eje aparte
 
@@ -233,13 +237,15 @@ Cuatro, todas declaradas con su justificación. **No se corrigen.**
 
 **El estándar exige**, en la fase 1 de su checklist: conexión `identidad` con su router, la app registrada en la tabla `aplicacion`, un usuario de MySQL propio, los dos chequeos de salud de identidad, y login y cambio de contraseña funcionando.
 
-**SIRH+ construye** en su lugar: pantalla de login sin lógica, adaptador local transitorio detrás de la misma interfaz, catálogo de permisos completo pero con `PERMISOS_EXIGIR=false`, y los dos chequeos de salud declarados y desactivados.
+**SIRH+ construye** en su lugar: pantalla de ingreso sin lógica de validación, catálogo de permisos completo pero con `PERMISOS_EXIGIR=false`, y los dos chequeos de salud declarados y desactivados.
+
+**Y no construye:** autenticación local, tabla de usuarios, contraseñas, ni nada provisional en su lugar. SIRH+ no gestiona usuarios. El módulo `identidad/` se escribe cuando el gestor exista.
 
 **Por qué:** el gestor de identidad está en construcción y SIRH+ va a ser su fuente de verdad de personas. Esperar a que exista detendría el proyecto; construir sin pensar en él obligaría a rehacerlo.
 
-**Cómo se mitiga el riesgo:** el adaptador está detrás de una interfaz y se intercambia por configuración. El catálogo de permisos existe desde la fase 1 y **se corre con la verificación exigida al menos una vez por fase**, revisando el registro. Esa es la salvaguarda contra repetir la autorización cosmética del sistema viejo.
+**Cómo se mitiga el riesgo:** no queda nada que desmontar, porque no se construye nada en lugar del gestor. El catálogo de permisos existe desde la fase 1 y **se corre con la verificación exigida al menos una vez por fase**, revisando el registro. Esa es la salvaguarda contra repetir la autorización cosmética del sistema viejo.
 
-**Cuándo se paga:** al conectar el gestor. El adaptador local **nunca sale a producción**, y el sistema no sale a producción sin el gestor funcionando.
+**Cuándo se paga:** al conectar el gestor. **La pantalla de ingreso sin validación nunca sale a producción**, y el sistema no sale a producción sin el gestor funcionando.
 
 ---
 

@@ -55,7 +55,7 @@ cp .env.example .env
 Abre `.env` y genera la clave secreta:
 
 ```bash
-python -c "import secrets; print(secrets.token_urlsafe(50))"
+python -c "import secrets; print(secrets.token_hex(32))"
 ```
 
 Crea la base de datos y su usuario:
@@ -66,9 +66,10 @@ CREATE USER sirh_app WITH PASSWORD 'la-que-pongas-en-el-.env';
 GRANT ALL PRIVILEGES ON DATABASE sirh_plus TO sirh_app;
 ```
 
-Y levanta:
+Y levanta, desde `sirh_plus/`, que es donde está `manage.py`:
 
 ```bash
+cd sirh_plus
 python manage.py migrate
 python manage.py smoke_test          # debe salir todo en verde
 python manage.py runserver
@@ -84,37 +85,51 @@ En `http://127.0.0.1:8000/salud/` deberías ver el estado del sistema.
 ruff format .                              # formatear
 ruff check .                               # revisar
 python -m unittest discover -s tests       # pruebas del núcleo
-python manage.py test                      # pruebas con Django
 python manage.py smoke_test                # chequeo de salud
 python manage.py check --deploy            # revisión de seguridad
+python manage.py test                      # pruebas con Django, cuando el módulo las tenga
 ```
 
-**Los cuatro primeros deben pasar antes de cualquier commit.** No se usa `--no-verify`.
+**Antes de cualquier commit pasan los tres primeros:** `ruff format`, `ruff check` y las pruebas del núcleo. No se usa `--no-verify`.
+
+`smoke_test` y `check --deploy` son compuertas de fase, no de commit: se corren al cerrar la fase. `manage.py test` no es compuerta.
 
 ---
 
 ## Cómo está organizado
 
 ```
-sirh-plus/
-├── config/             settings, urls, wsgi
-├── core/               chequeos de salud, utilidades, base
-├── cuentas/            adaptador de identidad — NO se modifica
-├── dominio/            ★ reglas puras: sin Django, sin entrada/salida
-├── tests/              pruebas del núcleo, sin Django
+sirh-plus/                   raíz del repositorio
+├── .env                     secretos reales — NUNCA versionado
+├── .env.example             la plantilla documentada — SÍ versionado
+├── .gitignore
+├── README.md
+├── CLAUDE.md
+├── requirements.txt
+├── pyproject.toml
 │
-├── personal/           personas, vínculos, historial, completitud
-├── maestros/           áreas, cargos, estructura, puntos de marcación
-├── permisos/           catálogo granular, roles y alcance
-├── auditoria/          bitácora inmutable
-├── firmas/             captura, validación y estampado
-│   └── …               el resto de los módulos, por fase
-│
-├── <fuente>_db/        conexiones de solo lectura a sistemas ajenos
-├── templates/
-├── static/             css y vendor; sin build
-└── deploy/
+└── sirh_plus/               el proyecto Django
+    ├── manage.py
+    ├── config/              settings, urls, wsgi
+    ├── core/                chequeos de salud, utilidades, base
+    ├── dominio/             ★ reglas puras: sin Django, sin entrada/salida
+    ├── tests/               pruebas del núcleo, sin Django
+    │
+    ├── personal/            personas, vínculos, historial, completitud
+    ├── maestros/            áreas, cargos, estructura, puntos de marcación
+    ├── identidad/           autenticación contra el gestor, altas y bajas
+    ├── permisos/            catálogo granular, roles y alcance
+    ├── auditoria/           bitácora inmutable
+    ├── firmas/              captura, validación y estampado
+    │   └── …                el resto de los módulos, por fase
+    │
+    ├── <fuente>_db/         conexiones de solo lectura a sistemas ajenos
+    ├── templates/
+    ├── static/              css y vendor; sin build
+    └── deploy/
 ```
+
+**Son dos niveles, como manda `.claude/rules/01-estructura-y-capas.md` §1:** la carpeta del repositorio, con la configuración y los documentos, y dentro el proyecto Django autocontenido. `manage.py` vive junto a `config/`, dentro de `sirh_plus/`, y desde ahí se corren todos los comandos de `manage.py`.
 
 **La regla de dependencias:** `config/ → módulos → dominio/`. Nunca hacia arriba, nunca circular.
 
@@ -130,7 +145,7 @@ Léela en este orden antes de tocar código:
 |---|---|---|
 | 1 | `claude/02-plan-de-ejecucion-sirh-plus.md` | **Normativo.** Reglas, compuertas y fases |
 | 2 | `claude/00-contexto-maestro-sirh-plus.md` | El proyecto y el porqué de cada decisión |
-| 3 | `claude/03-sistema-de-diseno.md` | **Normativo.** Tokens, componentes, patrones |
+| 3 | `.claude/rules/03-sistema-de-diseno.md` | **Normativo.** Tokens, componentes, patrones |
 | 4 | `claude/01-inventario-y-fases-sirh-plus.md` | Todos los módulos y sus funciones |
 | 5 | `CLAUDE.md` | Resumen operativo y estado actual |
 
@@ -187,7 +202,7 @@ El sistema maneja datos de salud ocupacional, incapacidades y salarios. Aplica l
 
 ## Despliegue
 
-Gunicorn tras Nginx, bajo systemd, en Rocky Linux 9. Los archivos de `deploy/` y el procedimiento completo están en `docs/instalacion-despliegue.md`.
+Gunicorn tras Nginx, bajo systemd, en Rocky Linux 9. Los archivos de `deploy/` y el procedimiento completo están en `docs/instalacion-despliegue.md` **(se escribe en la fase 6)**.
 
 El sistema sale **solo a la red interna** en su primera etapa, y no sale a producción sin el gestor de identidad funcionando.
 

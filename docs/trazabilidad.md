@@ -6,6 +6,89 @@ El formato está al final. Las entradas van de la más reciente a la más antigu
 
 ---
 
+## 2026-11-06 · SIRH+ no gestiona usuarios: `cuentas/` no existe y no va a existir
+
+**Fase:** 0
+**Qué se decidió:** SIRH+ no crea usuarios, no guarda contraseñas y no administra credenciales. Eso es del gestor de identidad centralizado. SIRH+ es la **fuente de verdad de las personas**: el alta de un registro dispara la creación de la identidad y el retiro dispara su revocación. La relación va de SIRH+ hacia el gestor.
+
+Los permisos sí son de SIRH+: viven en `permisos/`, se construyen de cero y el gestor no los conoce. Los módulos son dos —`identidad/` y `permisos/`— y **ninguno se llama `cuentas/`**.
+
+Mientras el gestor no exista, la pantalla de ingreso no valida nada: es una puerta abierta durante el desarrollo. **No se construye autenticación local**, ni tabla de usuarios, ni contraseñas, ni nada provisional.
+
+**Por qué:**
+Los documentos venían diciendo dos cosas a la vez. Por un lado, que `cuentas/` se copiaba del estándar sin modificar y que un «adaptador local transitorio» viviría detrás de su interfaz, leyendo de una tabla propia de desarrollo. Por otro, que el gestor de identidad sería alimentado por SIRH+. Las dos no caben juntas: la primera convierte a SIRH+ en un consumidor más de la tabla `usuario` del estándar, y de paso le pide construir —para tirar después— un maestro de usuarios local con sus contraseñas.
+
+Un maestro de usuarios provisional es la clase de cosa que no se desmonta nunca. Y mientras exista, hay dos sitios donde vive una credencial, que es exactamente lo que el estándar intenta evitar con una sola base de identidad.
+
+**Qué se corrigió:**
+
+| Dónde | Qué quedó |
+|---|---|
+| `CLAUDE.md` | Regla nueva, «SIRH+ no gestiona usuarios», en la sección de las reglas que no se rompen. La D4 ya no menciona el adaptador |
+| `claude/02` §1.2 | La D4 dice qué se construye —una pantalla de ingreso que no valida— y qué **no**: autenticación local, tabla de usuarios, contraseñas ni nada provisional |
+| `claude/02` E0.2 y E1.6 | El esqueleto no lleva paquete de identidad. E1.6 pasó de «Adaptador de identidad» a «Identidad: lo que esta fase no construye» |
+| `claude/01` A.2 | El módulo es `identidad/` y se escribe cuando el gestor exista. El cambio de contraseña salió de la lista: es del gestor |
+| `claude/00` §21 y el árbol | `identidad/` y `permisos/` en lugar de `cuentas/`; `permisos/roles.py` en lugar de `cuentas/roles.py` |
+| `docs/diseno.md` §3 y §8 | La tabla de módulos lista `identidad/` y `permisos/`, los dos propios |
+| `.claude/rules/07` | Nota en el encabezado: SIRH+ se aparta de esa regla porque es la fuente de verdad del gestor, no un consumidor más |
+| `.claude/rules/05` | El checklist ya no pide copiar `cuentas/`, y separa lo que se difiere de lo que no llega nunca |
+| `.env.example` | Se eliminó `IDENTIDAD_ADAPTADOR`. No queda ninguna variable de autenticación |
+| `docs/pendientes.md` | La deuda D4 es ahora la pantalla de ingreso sin validación, no el adaptador |
+
+**Qué se evaluó y se descartó:**
+
+| Opción | Por qué no |
+|---|---|
+| Conservar el adaptador local «por si el gestor se demora» | Es construir un maestro de usuarios para desmontarlo. Mientras exista, hay dos sitios donde vive una credencial |
+| Llamar `cuentas/` al módulo propio, para no separarse del nombre del estándar | El nombre del estándar trae su contenido: un paquete idéntico en todas las apps, conectado por ORM a la base de identidad. SIRH+ no hace eso |
+| Reescribir `.claude/rules/07` para que no hable de `cuentas/` | Es el estándar, y la desviación solo se entiende contra él. Se le puso una nota al encabezado, no se le cambió el cuerpo |
+| Dejar la autenticación fuera de todo módulo y resolverla en `core/` | La autenticación tiene un sistema ajeno al otro lado. Merece su capa, como `glpi_api/` o `daruma_db/` |
+
+**Qué cambia si esto resulta equivocado:**
+Si el gestor se demora más allá de la fase 3, SIRH+ llega a producción sin poder salir —no sale sin él— y hay que decidir entonces. La decisión de hoy hace que ese día no haya nada que desmontar: lo que falta es escribir `identidad/`, no deshacer un provisional. El riesgo que sí corre es de desarrollo: una pantalla de ingreso que no valida nada da acceso a cualquiera que alcance el servidor, y por eso **nunca sale de la red de desarrollo**.
+
+---
+
+## 2026-11-06 · Corrección documental previa a la fase 0
+
+**Fase:** 0
+**Qué se decidió:** corregir nueve contradicciones entre los documentos **antes** de escribir la primera línea de código, y cerrar con una decisión escrita las cinco que no eran solo una referencia rota.
+
+**Por qué:**
+Una lectura completa de los dieciséis documentos, hecha para arrancar la fase 0, encontró que los documentos se contradecían entre sí en cosas que cambian lo que se construye. La lección L7 del estándar dice que una afirmación que el código contradice desinforma a quien la lee después; aquí todavía no hay código, así que lo barato era corregir los documentos ahora.
+
+**Qué se corrigió:**
+
+| # | Qué estaba mal | Qué quedó |
+|---|---|---|
+| 1 | `claude/02` §1.2 declaraba **tres** desviaciones; `docs/diseno.md` §8 y el checklist declaraban cuatro, y citaban §1.2 como fuente de la D4 | La D4 —la identidad diferida— se declaró en el documento normativo, con el mismo formato que las otras tres. `CLAUDE.md` pasó a cuatro |
+| 2 | Las seis compuertas eran distintas en tres documentos: `claude/00` §23.1 y `claude/01` no incluían el lint y separaban visual de cuatro estados | `claude/00` y `claude/01` ahora dicen lo mismo que `claude/02` §0.3, y remiten a él como versión normativa |
+| 3 | Seis archivos citaban `claude/03-sistema-de-diseno.md`, que no existe; y se citaban `03-frontend-ux.md`, `04-modulo-marcaciones.md`, `08-modulo-marcaciones.md`, `13-sistema-de-diseno.md` y un mapa de documentos con la numeración vieja completa | Todas las rutas apuntan a `.claude/rules/03-sistema-de-diseno.md`. El mapa de `claude/00` §27 lista los archivos que existen. El documento de marcaciones se nombra por lo que es: por escribir, antes de la fase 6 |
+| 4 | `claude/02` citaba seis artboards como archivos `*.dc.html` que no existen | Se reemplazaron por los ids reales (`v-permisos`, `v-usuarios`, `v-cargos`, `v-estructura`, `v-organigrama`, `v-hoja`) y §0.1 aclara que los artboards de gestión son secciones con id dentro de `mockups/mockup-sirh-plus-completo.html` |
+| 5 | `parametros/` estaba en la fase 5, pero la fase 3 necesita dos parámetros: el plazo del registro incompleto y los sufijos del código de nómina | Se partió en dos. **E3.9** crea el modelo `Parametro`, su vigencia y `dominio/parametros.vigente_en()`, sin pantalla. La fase 5 entrega la administración, el catálogo por módulo, el historial y los festivos |
+| 6 | La compuerta 4 exige `check --deploy` **sin hallazgos**, y en local eso es inalcanzable con `DEBUG=True` y sin HTTPS. El estándar exige además que la postura sobre HTTPS en red interna quede escrita, y no estaba | `CLAUDE.md` tiene una sección con los cuatro avisos que se aceptan en local y la regla de que cualquier otro se arregla. En producción, HTTPS obligatorio y cero hallazgos: la red interna no exime del certificado |
+| 7 | E0.2 pedía `base_auth.html` y el sistema de diseño definía tres caras, sin decir qué shell usa el ingreso | El ingreso **hereda de `base_publico.html`**, centrado y sin navegación. Es la puerta de entrada de las tres caras, no una cuarta. Quedó como §2.4 del sistema de diseño, y su referencia visual es `mockups/mockup-portal/Login.dc.html` |
+| 8 | El árbol del `README.md` aplanaba los dos niveles de `.claude/rules/01-estructura-y-capas.md` §1 y no mostraba `manage.py` | Dos niveles, como el estándar: la carpeta del repositorio con la configuración y los documentos, y dentro `sirh_plus/` con `manage.py` junto a `config/` |
+| 9 | `README.md` pedía cuatro comandos antes de cada commit, incluyendo `manage.py test`, que no es compuerta, y dejando fuera `check --deploy`, que sí lo es. `docs/diseno.md` §4 titulaba «en modo lectura» una tabla con dos capas de escritura | Antes de un commit van tres: `ruff format`, `ruff check` y las pruebas del núcleo. La tabla de sistemas ajenos tiene columna de modo, y queda dicho que lo prohibido es escribir en la **base** de un sistema ajeno, no llamar a su API |
+
+**Qué se evaluó y se descartó:**
+
+| Opción | Por qué no |
+|---|---|
+| Quitar la D4 de `docs/diseno.md` para que fueran tres | La D4 es la desviación de mayor impacto operativo: es la que apaga la verificación de permisos. Borrarla del papel no la quita del sistema |
+| Dejar las tres versiones de las compuertas y confiar en la regla de precedencia | Un agente que lea el maestro primero correría cinco compuertas creyendo que corrió seis |
+| Mover `parametros/` entero a la fase 3 | La fase 3 necesita dos parámetros, no un módulo de administración. Adelantarlo completo contradice «no construir algo de una fase posterior» |
+| Guardar los dos parámetros de la fase 3 como constantes en código | RN-04 dice que el sufijo del código de nómina es parametrizable por RH. Una constante hoy es una migración de datos mañana |
+| Darle al ingreso su propio shell | Son tres caras, no cuatro. Un cuarto shell es un cuarto sitio donde divergir |
+| Aplanar el árbol y poner `manage.py` en la raíz | Habría sido una quinta desviación del estándar, sin más razón que la comodidad |
+
+**Qué cambia si esto resulta equivocado:**
+Bajo, salvo en dos puntos. El **E3.9** es la única corrección que mueve alcance: si resulta que la fase 3 no necesitaba el modelo de parámetros, sobra un modelo de dos tablas y se arrastra a la fase 5, que es donde iba. Y la **postura sobre HTTPS**: si se decide que la red interna sí exime del certificado, hay que reescribirla y decir por qué — pero escrita, porque el estándar no admite el silencio.
+
+**Lo que esta corrección no tocó:** ninguna regla de negocio, ninguna decisión de diseño, ningún mockup. Las cuatro desviaciones no se corrigen: se declaran.
+
+---
+
 ## 2026-11-05 · Un punto de marcación es un conjunto de dispositivos
 
 **Fase:** 2
@@ -110,6 +193,8 @@ El estándar fija dos roles iguales en todas las aplicaciones. SIRH+ maneja sala
 El alcance va aparte porque dos usuarios con el mismo `personal.ver` deben ver conjuntos de personas distintos. Mezclarlo con el permiso multiplicaría el catálogo por cuatro.
 
 **Cómo se respeta el estándar:** `cuentas/` no se modifica. El estándar resuelve el acceso a la aplicación; SIRH+ resuelve la autorización dentro, en un módulo `permisos/` propio.
+
+> **Esta última frase quedó superada** el 6 de noviembre de 2026: SIRH+ no usa `cuentas/` en absoluto. El resto de la entrada sigue vigente. Ver «SIRH+ no gestiona usuarios», arriba.
 
 **Qué se evaluó y se descartó:**
 

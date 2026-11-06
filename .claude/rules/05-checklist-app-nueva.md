@@ -44,7 +44,7 @@ Todo lo de esta fase está decidido por el estándar. No se consulta: se constru
 - [ ] `LOGGING` configurado (04 §4).
 - [ ] `.env.example` con todas las variables documentadas. `.env` real fuera de git.
 - [ ] `requirements.txt` con cada dependencia justificada (02 §3).
-- [ ] `cuentas/` copiado de la plantilla, **sin modificar** (ver 07).
+- [ ] **Ningún paquete de identidad.** SIRH+ no gestiona usuarios, así que no se copia `cuentas/` ni se escribe nada en su lugar (ver 07, la nota del encabezado).
 - [ ] `core/checks.py` con los chequeos de salud + comando + ruta `/salud/`.
 - [ ] `static/css/styles.css` con los tokens de `03-sistema-de-diseno.md §1.1`.
 - [ ] `templates/base.html`, `base_portal.html`, `base_publico.html`, `base_auth.html`, `macros.html`, `403.html`.
@@ -55,13 +55,14 @@ Todo lo de esta fase está decidido por el estándar. No se consulta: se constru
 
 El gestor de identidad está en construcción. En su lugar:
 
-- [ ] Pantalla de ingreso **sin lógica de validación**, con el lenguaje visual de SIRH+.
-- [ ] Adaptador local transitorio **detrás de la interfaz de `cuentas/`**, intercambiable con `IDENTIDAD_ADAPTADOR` en `.env`.
+- [ ] Pantalla de ingreso **sin lógica de validación**, con el lenguaje visual de SIRH+. Durante el desarrollo es una puerta abierta.
+- [ ] **Nada de autenticación local**: ni tabla de usuarios, ni contraseñas, ni «algo provisional» que después haya que desmontar.
 - [ ] Los dos chequeos de salud de identidad **declarados y desactivados**, listos para encenderse.
 - [ ] `PERMISOS_EXIGIR=false` en `.env`, documentado.
-- [ ] El adaptador local lee de una tabla propia de desarrollo que **nunca sale a producción**.
 
-**Lo que se difiere hasta que el gestor exista:** conexión `identidad` con su router, registro en la tabla `aplicacion`, usuario de MySQL propio, `IDENTIDAD_ES_PROPIETARIA`, y login y cambio de contraseña funcionando de verdad.
+**Lo que se difiere hasta que el gestor exista:** el módulo `identidad/` completo —autenticar contra el gestor y avisarle de las altas y las bajas—, el registro de SIRH+ en el catálogo del gestor, y el inicio de sesión funcionando de verdad.
+
+**Lo que no se difiere: no llega nunca.** El cambio de contraseña, la administración de usuarios y el almacenamiento de credenciales son del gestor. SIRH+ no los construye en ninguna fase.
 
 **En este punto la app no hace nada útil todavía, pero ya se ve y se comporta como una app de Plastitec.**
 

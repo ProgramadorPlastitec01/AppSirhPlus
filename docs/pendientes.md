@@ -50,7 +50,7 @@ Cosas que se hacen mal **a propósito**, con su fecha de pago.
 | D1 | SIRH+ sostiene salario, cargo y fecha de ingreso para el certificado laboral, aunque el dueño sea SINERGY | SINERGY no expone API. Sin esto no hay certificado | Cuando SINERGY se conecte. El certificado lleva fecha de corte visible |
 | D2 | El saldo de vacaciones se calcula en SIRH+ desde la fecha de contrato | Mismo motivo | Igual |
 | D3 | Los permisos se declaran pero no se verifican por defecto | El gestor de identidad no existe todavía | Al conectar el gestor. Mientras tanto, `PERMISOS_EXIGIR=true` al menos una vez por fase |
-| D4 | El adaptador local de identidad lee de una tabla propia de desarrollo | Igual | **Nunca sale a producción** |
+| D4 | La pantalla de ingreso no valida nada: durante el desarrollo es una puerta abierta | Igual. **No se construye autenticación local en su lugar**: SIRH+ no gestiona usuarios | Al conectar el gestor. **Así nunca sale a producción** |
 | D5 | Los enlaces a documentos de Daruma se registran a mano | Daruma no expone API | Si Daruma algún día la expone |
 
 ---

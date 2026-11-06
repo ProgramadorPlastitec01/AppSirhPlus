@@ -3,6 +3,8 @@
 Sistema de Información de Recursos Humanos de **Plastitec S.A.S.**
 Reemplaza al SIRH antiguo e integra BioTime y COPEC.
 
+> **Este documento es normativo.** No es una guía de sugerencias ni una lista de buenas intenciones: lo que dice se cumple. Una regla no se pondera contra la prisa del momento. Si una regla parece equivocada, se discute y se corrige aquí —y queda en `docs/trazabilidad.md`—, pero no se ignora en silencio ni se deja «para esta vez».
+
 ---
 
 ## Lo primero que se lee al retomar
@@ -57,6 +59,18 @@ El Portal **no es una aplicación aparte**: es la capa de visibilidad de colabor
 9. **Ningún valor visual fuera de `:root`.** Ni un color, ni un radio, ni un espaciado.
 10. **Ningún modelo propio tiene llave foránea hacia el usuario.** Se guarda el identificador y el nombre como texto.
 
+### SIRH+ no gestiona usuarios
+
+**SIRH+ no crea usuarios, no guarda contraseñas y no administra credenciales.** Eso es del gestor de identidad centralizado.
+
+**SIRH+ es la fuente de verdad de las personas.** Cuando RH registra a alguien, SIRH+ le dispara al gestor para que cree la identidad; cuando registra un retiro, le dispara para que la revoque. La relación va de SIRH+ hacia el gestor, no al revés.
+
+**Lo que sí es de SIRH+ son los permisos:** qué puede hacer cada quien dentro de este sistema. Viven en `permisos/`, se construyen de cero, y el gestor no los conoce.
+
+**Dos módulos, no tres:** `identidad/` —autenticar contra el gestor y avisarle de las altas y las bajas— y `permisos/` —catálogo, roles y alcance—. **No existe un módulo `cuentas/` y no va a existir.** No hay nada que copiar del estándar: los dos módulos son propios.
+
+**Mientras el gestor no exista:** la pantalla de ingreso no valida nada. Es una puerta abierta que da acceso durante el desarrollo. **No se construye autenticación local**, ni tabla de usuarios, ni contraseñas, ni «algo provisional» que después haya que desmontar. Cuando el gestor esté listo se escribe `identidad/` y se conecta.
+
 ---
 
 ## Arquitectura
@@ -82,7 +96,7 @@ Nunca hacia arriba. Nunca circular.
 8. Las seis compuertas
 ```
 
-Una función de `views.py` no debería pasar de 30 líneas. Si crece, la lógica pertenece abajo.
+Una función de `views.py` no pasa de 30 líneas. Si crece, la lógica pertenece abajo.
 
 ---
 
@@ -94,19 +108,20 @@ Python 3.11+ · Django 5.2 LTS · PostgreSQL 17 · CSS plano y JavaScript vanill
 
 ---
 
-## Las tres desviaciones declaradas del estándar
+## Las cuatro desviaciones declaradas del estándar
 
-Están justificadas en `claude/02-plan-de-ejecucion-sirh-plus.md` §1.2. **No se corrigen.**
+Están justificadas en `claude/02-plan-de-ejecucion-sirh-plus.md` §1.2 y en `docs/diseno.md` §8. **No se corrigen.**
 
 | # | Desviación | Por qué |
 |---|---|---|
 | **D1** | Cabecera superior en la cara de colaborador, no sidebar | Dos audiencias distintas: ocho horas contra dos minutos |
 | **D2** | Permisos granulares por módulo y acción, no dos roles | El sistema maneja salarios, descargos y datos de salud |
 | **D3** | El alcance del dato como eje aparte del permiso | Dos roles con el mismo permiso ven conjuntos distintos |
+| **D4** | La identidad llega después: ingreso sin validación y `PERMISOS_EXIGIR=false` | El gestor de identidad está en construcción y SIRH+ será su fuente de verdad. Se mitiga corriendo con la verificación exigida una vez por fase |
 
-En las tres, **`cuentas/` no se modifica**. El estándar resuelve el acceso a la aplicación; SIRH+ resuelve la autorización dentro, en un módulo `permisos/` propio.
+En las cuatro, **el acceso no se resuelve con el paquete `cuentas/` del estándar**: SIRH+ no gestiona usuarios. La autenticación vive en `identidad/`, contra el gestor, y la autorización dentro del sistema en `permisos/`. Los dos son propios y se construyen de cero. Ver «SIRH+ no gestiona usuarios», arriba.
 
-`.claude/rules/03-frontend-ux.md` está **reemplazada** por `claude/03-sistema-de-diseno.md`.
+La regla de frontend del estándar está **reemplazada** por `.claude/rules/03-sistema-de-diseno.md`.
 
 ---
 
@@ -175,6 +190,43 @@ Una fase está terminada cuando las seis pasan. Ninguna es opcional.
 
 ---
 
+## Nada se acumula
+
+Las compuertas dicen cuándo termina una fase. Esta sección dice cuándo termina un entregable, que es donde empieza la deuda. Un sistema de 28 módulos no se degrada de golpe: se degrada por un aviso que nadie cerró, repetido cien veces.
+
+**1 · Un aviso es un error.** Si `ruff`, Django, Python o el navegador emiten un aviso, se arregla antes de seguir. No se reporta: se cierra. Un aviso que sobrevive a una sesión ya es deuda, y la deuda que nadie escribió es la que nunca se paga.
+
+**2 · No se entrega nada con pendientes pequeños.** Si al terminar un entregable quedan tres cosas menores, el entregable **no está terminado**. Se cierran, y después se reporta. «Listo, salvo dos detalles» no es listo.
+
+**3 · Si un arreglo abre otro problema, se para.** No se encadenan correcciones. Se deshace lo que se tocó, se explica qué pasó y se pregunta. Una bola de nieve de errores cuesta más que una sesión perdida.
+
+**4 · Lo que no se puede cerrar va a `docs/pendientes.md` el mismo día**, con qué es, por qué no se cerró y quién lo destraba. No se menciona de pasada en una respuesta y se olvida: lo que solo vive en una conversación desaparece con ella.
+
+**5 · No se inventan problemas.** Si algo funciona y cumple el plan, está bien. No se abren frentes que nadie pidió, ni se «mejora de paso» lo que ya estaba cerrado.
+
+**6 · Una cosa a la vez.** Si en medio de un entregable aparece algo bueno que no es de ese entregable, va a `docs/pendientes.md`. **No al código.**
+
+El objetivo de estas reglas es que al terminar cada entregable el repositorio esté limpio: sin avisos, sin cabos sueltos, sin «lo vemos después». Si eso no se puede, el entregable no está listo y **hay que decirlo claramente**, no entregarlo con notas al pie.
+
+---
+
+## Postura sobre HTTPS y `check --deploy`
+
+El estándar (`.claude/rules/04-seguridad.md` §6) exige que esto quede escrito. Un silencio aquí no es una postura.
+
+**En desarrollo local** se aceptan los avisos que se derivan de `DEBUG=True` y de la ausencia de HTTPS, y solo esos:
+
+- `security.W004` — `SECURE_HSTS_SECONDS` sin definir
+- `security.W008` — `SECURE_SSL_REDIRECT` en falso
+- `security.W012` — `SESSION_COOKIE_SECURE` en falso
+- `security.W016` — `CSRF_COOKIE_SECURE` en falso
+
+**Cualquier otro hallazgo de `check --deploy` se arregla.** No se silencia con `SILENCED_SYSTEM_CHECKS` ni se deja «para después».
+
+**En producción, HTTPS es obligatorio y `check --deploy` debe salir sin ningún hallazgo.** El sistema sale solo a la red interna en su primera etapa, y eso **no** exime del certificado: la red interna es donde están las 1.100 personas cuyos salarios y datos de salud viajan por ese cable.
+
+---
+
 ## Qué no hacer
 
 - No construir algo de una fase posterior porque «ya que estamos»
@@ -208,7 +260,7 @@ Decisiones que se tomaron y se revirtieron. Están aquí para no repetirlas.
 | `claude/00-contexto-maestro-sirh-plus.md` | El proyecto completo y el porqué de cada decisión |
 | `claude/01-inventario-y-fases-sirh-plus.md` | 28 módulos, 314 funciones, 23 fases |
 | `claude/02-plan-de-ejecucion-sirh-plus.md` | **Normativo.** Reglas, compuertas, fases 0 a 3 en detalle |
-| `claude/03-sistema-de-diseno.md` | **Normativo.** Tokens, componentes, patrones |
+| `.claude/rules/03-sistema-de-diseno.md` | **Normativo.** Tokens, componentes, patrones |
 | `mockups/mockup-sirh-plus-completo.html` | 17 pantallas de la cara de gestión |
 | `mockups/mockup-portal/` | La cara de colaborador |
 | `docs/trazabilidad.md` | Cada decisión con su porqué |

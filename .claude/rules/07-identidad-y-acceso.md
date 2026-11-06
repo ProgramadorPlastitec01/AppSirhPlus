@@ -1,6 +1,7 @@
 ---
 paths:
-  - "cuentas/**"
+  - "identidad/**"
+  - "permisos/**"
   - "config/settings.py"
   - "**/models.py"
   - "**/views.py"
@@ -8,6 +9,16 @@ paths:
 ---
 
 # 07 — Identidad y control de acceso
+
+> ## SIRH+ se aparta de esta regla
+>
+> **SIRH+ no es un consumidor más del gestor de identidad: es su fuente de verdad de las personas.** Cuando RH registra a alguien, SIRH+ le dispara al gestor para que cree la identidad; cuando registra un retiro, le dispara para que la revoque. La relación va de SIRH+ hacia el gestor, no al revés.
+>
+> Por eso **SIRH+ no tiene el paquete `cuentas/`** que describe este documento, ni lo va a tener, y no se conecta a la base de identidad con el ORM. Tiene dos módulos propios: `identidad/`, que autentica contra el gestor y le avisa de las altas y las bajas, y `permisos/`, que resuelve qué puede hacer cada quien dentro del sistema y que el gestor no conoce.
+>
+> **Lo que sí se conserva de este documento:** la identidad no se define por aplicación, las contraseñas no viven en SIRH+, y ningún modelo propio tiene llave foránea hacia el usuario (§3).
+>
+> El detalle está en la desviación **D4** de `claude/02-plan-de-ejecucion-sirh-plus.md` §1.2, y la regla completa en `CLAUDE.md`, «SIRH+ no gestiona usuarios». **Lo que sigue es el estándar, y se lee sabiendo esto.**
 
 Toda app interna de Plastitec autentica contra **una sola base de datos maestra de identidad**, compartida por todas las aplicaciones. Ningún aplicativo define su propio maestro de usuarios.
 

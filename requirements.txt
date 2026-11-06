@@ -1,0 +1,70 @@
+# =============================================================================
+#  SIRH+ - Dependencias de Python
+#
+#  Versiones fijas con "==", nunca rangos, y una justificacion por linea:
+#  para que se usa, que pasa si falta, y si es transitoria, cuando se quita.
+#  Ver .claude/rules/02-stack.md seccion 3.
+#
+#  Instalar:   pip install -r requirements.txt
+#  Verificar:  pip freeze    -- los pines escritos a mano se desfasan solos
+#
+#  Versiones confirmadas contra PyPI el 6 de noviembre de 2026.
+# =============================================================================
+
+
+# --- Ejecucion ---------------------------------------------------------------
+
+# El framework. Lo importa toda la aplicacion.
+# Serie 5.2 LTS porque lo fija el estandar (02-stack.md seccion 1): tiene
+# soporte hasta abril de 2028. Hay 6.x publicado; no se sube hasta que el
+# estandar lo diga. Sin esto no hay aplicacion. Permanente.
+Django==5.2.19
+
+# Driver de PostgreSQL 17, la base propia (config/settings.py, DATABASES).
+# El extra [binary] trae la biblioteca ya compilada: evita exigir compilador
+# y cabeceras de libpq en cada maquina. Sin esto la aplicacion no arranca.
+# Permanente.
+psycopg[binary]==3.3.8
+
+# Lectura de .env en config/settings.py. Sin esto no hay configuracion por
+# entorno y los secretos terminarian en el codigo, que es justo lo que
+# 04-seguridad.md seccion 1 prohibe. Permanente.
+django-environ==0.14.0
+
+# Servidor WSGI de produccion: Gunicorn tras Nginx, bajo systemd (deploy/).
+# En local no se usa, ahi corre "manage.py runserver".
+# El marcador de plataforma no es un capricho: Gunicorn depende de fcntl, que
+# solo existe en POSIX. En Windows se instala y despues falla al arrancar.
+# Sin esto, la aplicacion no se puede servir en produccion. Permanente.
+gunicorn==26.2.0 ; sys_platform != "win32"
+
+
+# --- Desarrollo --------------------------------------------------------------
+
+# Formateador y linter, en una sola herramienta. Es la compuerta 1 de cada
+# fase:  ruff format .  y  ruff check .
+# No se importa en tiempo de ejecucion, pero se instala tambien en el servidor
+# porque el repositorio es el mismo y la compuerta se puede correr ahi.
+# Permanente.
+ruff==0.17.4
+
+
+# =============================================================================
+#  Lo que todavia NO esta aqui, y en que fase entra
+#
+#  Un paquete instalado y sin usar es superficie de ataque que nadie esta
+#  vigilando (04-seguridad.md seccion 5). Ninguno entra antes de la fase que
+#  lo necesita.
+#
+#  mysqlclient   Fase 2 -- sirh_legacy_db/, lectura del SIRH viejo (MySQL).
+#                Lo necesita tambien la conexion 'identidad' cuando el gestor
+#                exista y se pague la desviacion D4.
+#  openpyxl      Cuando exista la primera exportacion a Excel de un listado.
+#  reportlab     Motor de registros firmados: el PDF con folio y firmas.
+#  pyodbc        Fase 18 -- mant_db/, SQL Server de dotacion. Requiere el
+#                ODBC Driver 17 instalado en el sistema operativo.
+#
+#  Para GLPI (fase 3) y los biometricos (fase 6) no hay decision tomada sobre
+#  como se llama a una API: urllib de la biblioteca estandar, o un paquete con
+#  su justificacion. Se decide en su fase, no antes.
+# =============================================================================

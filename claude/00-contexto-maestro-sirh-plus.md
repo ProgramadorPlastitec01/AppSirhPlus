@@ -18,7 +18,7 @@ Contiene tres cosas, en este orden:
 2. **Qué se decidió** — stack, arquitectura, principios, y el porqué de cada uno.
 3. **Qué se va a construir** — cada módulo, con el detalle funcional que se levantó con el área.
 
-**Regla de precedencia:** si este documento contradice a un documento más específico (por ejemplo `08-modulo-marcaciones.md`), gana el específico — y entonces este archivo está desactualizado y hay que corregirlo. Si este documento contradice al código, gana el código y hay que corregir este archivo.
+**Regla de precedencia:** si este documento contradice a un documento más específico (por ejemplo `claude/02-plan-de-ejecucion-sirh-plus.md`), gana el específico — y entonces este archivo está desactualizado y hay que corregirlo. Si este documento contradice al código, gana el código y hay que corregir este archivo.
 
 ---
 
@@ -319,7 +319,8 @@ sirh_plus/
 │
 ├── config/                  settings, urls, wsgi
 ├── core/                    checks, utilidades, base
-├── cuentas/                 adaptador de identidad, roles, permisos
+├── identidad/               autenticación contra el gestor, altas y bajas
+├── permisos/                ★ transversal: catálogo, roles y alcance
 │
 ├── personal/                personas, vínculos, historial temporal
 ├── maestros/                áreas, cargos, dependencias, calendario
@@ -610,7 +611,7 @@ El organigrama **es la tabla de enrutamiento del sistema**. De él dependen:
 
 ## 12. Marcaciones
 
-Es el módulo **más grande, más riesgoso y mejor documentado** del proyecto. Tiene su propio documento: `08-modulo-marcaciones.md`.
+Es el módulo **más grande, más riesgoso y mejor documentado** del proyecto. Tiene su propio documento, que se escribe antes de la fase 6.
 
 ### 12.1 Qué hace
 
@@ -1034,9 +1035,9 @@ Cada uno se despliega en detalle: por área, por cargo, por motivo, por período
 
 | Frente | Decisión |
 |---|---|
-| Autenticación | IAM centralizado. Adaptador local transitorio **detrás de una interfaz**, reemplazable por configuración |
+| Autenticación | IAM centralizado, en el módulo `identidad/`. **SIRH+ no gestiona usuarios.** Hasta que el gestor exista, la pantalla de ingreso no valida nada y no se construye autenticación local |
 | Credenciales viejas | **Las contraseñas MD5 del SIRH no se migran.** Se crean identidades nuevas con cambio forzado al primer ingreso |
-| Autorización | Roles de alto nivel del IAM, traducidos a permisos internos en `cuentas/roles.py`. **Verificada en cada ruta, no solo en el menú** |
+| Autorización | Roles de alto nivel del IAM, traducidos a permisos internos en `permisos/roles.py`. **Verificada en cada ruta, no solo en el menú** |
 | Consultas | ORM de Django o SQL parametrizado. Nunca concatenación |
 | Entradas | Validación en servidor **siempre**. La del navegador es cortesía |
 | Sesiones | Expiración, renovación, cierre explícito |
@@ -1078,7 +1079,7 @@ El alcance explícito del proyecto es no construir «formularios de guardar». S
 
 ### 22.3 Sistema de diseño
 
-Design tokens en `:root`, componentes reutilizables en plantillas, y un documento `13-sistema-de-diseno.md` que define la tipografía, el color, el espaciado y los patrones de pantalla.
+Design tokens en `:root`, componentes reutilizables en plantillas, y el sistema de diseño, en `.claude/rules/03-sistema-de-diseno.md`, que define la tipografía, el color, el espaciado y los patrones de pantalla.
 
 El portal público no se ve como una herramienta interna de RH. Es la cara de la empresa hacia 1.100 personas que no tienen ninguna gana de entrar a un sistema.
 
@@ -1092,12 +1093,14 @@ Un módulo está terminado cuando las seis pasan. Ninguna es opcional.
 
 | # | Compuerta | Cómo se verifica |
 |---|---|---|
-| 1 | Pruebas del núcleo en verde | `python -m unittest discover -s tests` |
-| 2 | Chequeo de salud en verde | `python manage.py smoke_test` y la ruta `/salud/` |
-| 3 | Revisión de seguridad | `python manage.py check --deploy` sin hallazgos |
-| 4 | Revisión visual contra el diseño | Cada pantalla comparada con su referencia |
-| 5 | Los cuatro estados resueltos | En cada pantalla |
-| 6 | Validación humana | Contra un caso real. Nadie más puede dar esta |
+| 1 | **Formato y lint en verde** | `ruff format .` y `ruff check .` sin hallazgos |
+| 2 | **Pruebas del núcleo en verde** | `python -m unittest discover -s tests` sin fallos |
+| 3 | **Chequeo de salud en verde** | `python manage.py smoke_test` y la ruta `/salud/` |
+| 4 | **Revisión de seguridad** | `python manage.py check --deploy` sin hallazgos, más la revisión del agente de seguridad |
+| 5 | **Revisión visual y los cuatro estados** | Cada pantalla contra su artboard, con datos, vacía, con error y cargando |
+| 6 | **Validación humana** | Contra un caso real, más la revisión del QA. **Nadie más puede dar esta** |
+
+La versión normativa de esta tabla está en `claude/02-plan-de-ejecucion-sirh-plus.md` §0.3. Si las dos se separan, gana el plan de ejecución.
 
 ### 23.2 Orden de construcción dentro de un módulo
 
@@ -1218,21 +1221,22 @@ No se usa «evento», «seguimiento» ni «empleado» en la interfaz.
 
 ## 27. Mapa de documentos
 
-| Documento | Para qué | Vigencia |
-|---|---|---|
-| `claude/00-contexto-maestro-sirh-plus.md` | **Este archivo.** El mapa completo | Vigente |
-| `claude/01-diagnostico-sistema-actual.md` | Qué hay hoy y por qué no se refactoriza | Vigente |
-| `claude/02-propuesta-stack-y-arquitectura.md` | Diseño general | ⚠️ Stack y frontend obsoletos, corregidos por el 05 |
-| `claude/03-arquitectura-de-identidad-centralizada.md` | Cómo se separa identidad de permisos | Vigente |
-| `claude/04-contrato-integracion-app-maestra.md` | Para entregar al desarrollador del IAM | Vigente, falta acordarlo |
-| `claude/05-alineacion-con-el-estandar-plastitec.md` | La corrección del stack, razonada | Vigente |
-| `claude/06-propuesta-portal-colaborador.md` | Propuesta funcional del Portal | ⚠️ El Portal ya no es app aparte — ver §6.6 |
-| `claude/07-plan-de-ejecucion-portal.md` | 14 fases del Portal | ⚠️ A reescribir dentro del plan general |
-| `claude/08-modulo-marcaciones.md` | **Por escribir.** El módulo en detalle | — |
-| `claude/09-modelo-de-datos.md` | **Por escribir.** Esquema completo | — |
-| `claude/10-plan-de-ejecucion-sirh-plus.md` | **Por escribir.** Fases y compuertas | — |
-| `claude/11-plan-de-migracion.md` | **Por escribir.** Mapeo y conciliación | — |
-| `claude/12-sistema-de-diseno.md` | **Por escribir.** Tokens, componentes, patrones | — |
+Estos son los archivos que existen hoy. La numeración anterior —del 01 al 12— quedó obsoleta cuando el material se consolidó en tres documentos y los vivos pasaron a `docs/`.
+
+| Documento | Para qué |
+|---|---|
+| `claude/00-contexto-maestro-sirh-plus.md` | **Este archivo.** El proyecto completo y el porqué de cada decisión: diagnóstico del sistema actual, ecosistema, identidad y permisos, módulos |
+| `claude/01-inventario-y-fases-sirh-plus.md` | Los 28 módulos con sus 314 opciones, y las 23 fases |
+| `claude/02-plan-de-ejecucion-sirh-plus.md` | **Normativo.** Reglas, compuertas, desviaciones y el detalle de las fases 0 a 3 |
+| `.claude/rules/03-sistema-de-diseno.md` | **Normativo.** Tokens, componentes y patrones de pantalla |
+| `docs/diseno.md` | El diseño validado, en las nueve secciones que exige el agente `arquitecto` |
+| `docs/pendientes.md` | Lo abierto, lo bloqueado y la deuda asumida. Lo primero que se lee al retomar |
+| `docs/trazabilidad.md` | Cada decisión con su porqué y lo que se descartó |
+| `docs/glosario.md` | El vocabulario, en la interfaz y en el código |
+| `mockups/mockup-sirh-plus-completo.html` | Las pantallas de la cara de gestión, como secciones con id |
+| `mockups/mockup-portal/` | La cara de colaborador, en archivos |
+
+**Por escribir:** el documento del módulo de marcaciones, antes de la fase 6, y el plan de migración, antes de la fase 4.
 
 ### 27.1 Insumos pendientes
 
@@ -1284,4 +1288,4 @@ En este orden. Los primeros no dependen de TI y pueden arrancar ya.
 3. **Conseguir el esquema MySQL y los 207 procedimientos.** Es el cuello de botella de todo lo que no sea marcaciones.
 4. **Poner bajo control de versiones** el código del SIRH viejo, el de COPEC y la plantilla del estándar.
 5. **Correr el motor validado sobre septiembre** y comparar su archivo contra el que se envió. Si la brecha se confirma, hay caso de negocio medido en pesos.
-6. **Escribir `08-modulo-marcaciones.md`** y empezar por los cimientos.
+6. **Escribir el documento del módulo de marcaciones** —antes de la fase 6— y empezar por los cimientos.

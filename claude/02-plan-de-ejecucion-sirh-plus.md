@@ -14,11 +14,13 @@ Este documento es **el contrato de ejecución**. Dice qué se construye, en qué
 
 | Dónde vive qué | Documento |
 |---|---|
-| El contexto del proyecto y las decisiones | `00-contexto-maestro-sirh-plus.md` |
-| Todos los módulos y todas sus opciones | `01-inventario-y-fases-sirh-plus.md` |
+| El contexto del proyecto y las decisiones | `claude/00-contexto-maestro-sirh-plus.md` |
+| Todos los módulos y todas sus opciones | `claude/01-inventario-y-fases-sirh-plus.md` |
 | **Cómo se ejecuta** | **Este documento** |
-| El diseño visual y de interacción | `03-sistema-de-diseno.md` |
-| El detalle del módulo de marcaciones | `04-modulo-marcaciones.md` |
+| El diseño visual y de interacción | `.claude/rules/03-sistema-de-diseno.md` |
+| El detalle del módulo de marcaciones | **Por escribir.** El documento del módulo de marcaciones se escribe antes de la fase 6 |
+
+**Los artboards son ids dentro de un solo archivo.** Las pantallas de la cara de gestión viven como secciones con id —`v-permisos`, `v-cargos`, `v-hoja`…— dentro de `mockups/mockup-sirh-plus-completo.html`. No son archivos sueltos. La correspondencia completa de pantalla a id está en `docs/diseno.md` §5. La cara de colaborador sí está en archivos, en `mockups/mockup-portal/`.
 
 Si este documento contradice al código, gana el código y hay que corregir este documento. Si contradice al estándar de Plastitec, gana el estándar, salvo donde aquí se declare una desviación.
 
@@ -37,7 +39,7 @@ Una fase está terminada cuando las seis pasan. **Ninguna es opcional.**
 | 1 | **Formato y lint en verde** | `ruff format .` y `ruff check .` sin hallazgos |
 | 2 | **Pruebas del núcleo en verde** | `python -m unittest discover -s tests` sin fallos |
 | 3 | **Chequeo de salud en verde** | `python manage.py smoke_test` y la ruta `/salud/` |
-| 4 | **Revisión de seguridad** | `python manage.py check --deploy` sin hallazgos, más la revisión del agente de seguridad |
+| 4 | **Revisión de seguridad** | `python manage.py check --deploy` sin hallazgos, más la revisión del agente de seguridad. Qué avisos se aceptan en local y cuáles no: ver «Postura sobre HTTPS y `check --deploy`» en `CLAUDE.md` |
 | 5 | **Revisión visual y los cuatro estados** | Cada pantalla contra su artboard, con datos, vacía, con error y cargando |
 | 6 | **Validación humana** | Sebastián usa la fase contra un caso real; después el QA la revisa y envía su informe. **Nadie más puede dar esta compuerta** |
 
@@ -103,7 +105,7 @@ Estos aplican a todas las fases, desde la primera línea.
 
 **Prohibido sin excepción:** build de frontend, librerías JavaScript de terceros, recursos desde CDN, escribir en la base de un sistema ajeno, duplicar una regla de negocio en JavaScript.
 
-## 1.2 Las tres desviaciones declaradas del estándar
+## 1.2 Las cuatro desviaciones declaradas del estándar
 
 Se declaran aquí, con su justificación, porque el estándar exige que toda desviación se escriba.
 
@@ -113,7 +115,7 @@ Se declaran aquí, con su justificación, porque el estándar exige que toda des
 
 **SIRH+ usa:** sidebar de 244 px para la cara de gestión, y **cabecera superior** para la cara pública y la de colaborador.
 
-**Por qué:** el estándar está escrito para herramientas internas de consulta, que usan decenas de personas. La cara de colaborador la usan 1.100 personas que no quieren entrar a un sistema. Son dos audiencias con necesidades distintas. El detalle está en `03-sistema-de-diseno.md`.
+**Por qué:** el estándar está escrito para herramientas internas de consulta, que usan decenas de personas. La cara de colaborador la usan 1.100 personas que no quieren entrar a un sistema. Son dos audiencias con necesidades distintas. El detalle está en `.claude/rules/03-sistema-de-diseno.md`.
 
 ### D2 · Los permisos no son dos roles
 
@@ -123,13 +125,29 @@ Se declaran aquí, con su justificación, porque el estándar exige que toda des
 
 **Por qué:** SIRH+ maneja salarios, procesos disciplinarios y datos de salud ocupacional. Dos roles no pueden expresar que un analista vea el salario pero no lo edite, ni que un jefe vea solo su rama del organigrama.
 
-**Cómo se respeta el estándar:** `cuentas/` **no se modifica**. El estándar resuelve el acceso a la aplicación —quién entra y con qué rol de alto nivel—; SIRH+ resuelve la autorización dentro de la aplicación, en un módulo `permisos/` propio. El rol que entrega el gestor de identidad se traduce a permisos internos en `permisos/roles.py`.
+**Cómo se respeta el estándar:** la frontera se mantiene. El gestor de identidad resuelve el acceso a la aplicación —quién entra y con qué rol de alto nivel—; SIRH+ resuelve la autorización dentro de la aplicación, en un módulo `permisos/` propio. El rol que entrega el gestor se traduce a permisos internos en `permisos/roles.py`.
 
 ### D3 · Más de dos niveles de alcance
 
 **SIRH+ añade** el alcance del dato: propio, área, rama del organigrama, toda la empresa.
 
 **Por qué:** dos usuarios con el mismo permiso `personal.ver` deben ver conjuntos de personas distintos. Eso no es un permiso: es una dimensión aparte, y mezclarla con el permiso multiplicaría el catálogo por cuatro.
+
+### D4 · La identidad llega después, no en la fase 1
+
+**El estándar exige**, en la fase 1 de su checklist: la conexión `identidad` con su router, la aplicación registrada en la tabla `aplicacion`, un usuario de MySQL propio, los dos chequeos de salud de identidad, y login y cambio de contraseña funcionando de verdad.
+
+**SIRH+ construye** en su lugar: pantalla de ingreso **sin lógica de validación** —una puerta abierta durante el desarrollo—, catálogo de permisos completo pero con `PERMISOS_EXIGIR=false`, y los dos chequeos de salud de identidad declarados y desactivados, listos para encenderse.
+
+**Lo que SIRH+ no construye, y conviene que quede escrito:** autenticación local, tabla de usuarios, contraseñas, ni «algo provisional» mientras tanto. Construirlo significaría desmontarlo después y, peor, tener dos sitios donde vive una credencial.
+
+**Por qué:** el gestor de identidad está en construcción y SIRH+ va a ser su fuente de verdad de personas. Esperar a que exista detendría el proyecto; construir sin pensar en él obligaría a rehacerlo.
+
+**Cómo se respeta el estándar:** no se toca el paquete `cuentas/` del estándar porque **SIRH+ no lo usa**. SIRH+ no gestiona usuarios: es la fuente de verdad de las personas del gestor, no un consumidor más de su tabla. La autenticación se escribe en un módulo propio, `identidad/`, el día que el gestor exista. Ver «SIRH+ no gestiona usuarios» en `CLAUDE.md`.
+
+**Cómo se mitiga el riesgo:** el catálogo de permisos existe desde la fase 1 y se corre con `PERMISOS_EXIGIR=true` **al menos una vez por fase**, revisando el registro de las verificaciones que habrían fallado. Esa es la salvaguarda contra repetir la autorización cosmética del sistema viejo.
+
+**Cuándo se paga:** al conectar el gestor. SIRH+ no sale a producción sin él.
 
 ## 1.3 Reglas de arquitectura
 
@@ -207,7 +225,7 @@ Primer commit **antes** de la primera línea de código, con la plantilla del es
 | `.claude/rules/` | Los estándares, copiados |
 | `.claude/agents/` | Los cinco agentes, copiados |
 
-**Nota:** `.claude/rules/03-frontend-ux.md` se **vacía y se reescribe** con el contenido de `03-sistema-de-diseno.md`. El shell del estándar no aplica a SIRH+ — ver D1.
+**Nota: ya hecho.** La regla de frontend del estándar fue reemplazada por `.claude/rules/03-sistema-de-diseno.md`. El shell del estándar no aplica a SIRH+ — ver D1.
 
 ### E0.2 · Esqueleto de Django
 
@@ -216,20 +234,23 @@ sirh_plus/
 ├── manage.py
 ├── config/           settings, urls, wsgi, asgi
 ├── core/             checks.py, vistas base, utilidades
-├── cuentas/          copiado del estándar, NO se modifica
 ├── dominio/          vacío por ahora, con su __init__.py
 ├── tests/            vacío por ahora
 ├── templates/
 │   ├── base.html             cara de gestión
 │   ├── base_portal.html      cara de colaborador
 │   ├── base_publico.html     sin sesión
-│   ├── base_auth.html        ingreso
+│   ├── base_auth.html        ingreso, hereda de base_publico.html
 │   └── macros.html
 ├── static/
 │   ├── css/styles.css
 │   └── vendor/               tipografías auto-hospedadas
 └── deploy/
 ```
+
+**No hay paquete de identidad en el esqueleto.** SIRH+ no gestiona usuarios, así que no se copia el `cuentas/` del estándar ni se escribe nada en su lugar. El módulo `identidad/` nace el día que exista el gestor; hasta entonces la pantalla de ingreso no valida nada.
+
+**El ingreso no tiene shell propio.** `base_auth.html` hereda de `base_publico.html`, con el contenido centrado y sin navegación: es la puerta de entrada de las tres caras, no una cuarta. Su referencia visual es `mockups/mockup-portal/Login.dc.html`.
 
 ### E0.3 · Base de datos
 
@@ -242,12 +263,14 @@ sirh_plus/
 | Qué | Dónde |
 |---|---|
 | Design tokens en `:root` | `static/css/styles.css` |
-| Las cuatro plantillas base | `templates/` |
+| Las cuatro plantillas base | `templates/` — `base.html`, `base_portal.html`, `base_publico.html` y `base_auth.html`, que hereda de `base_publico.html` |
 | Librería de componentes | `templates/macros.html` |
 | Tipografías Archivo e Inter | `static/vendor/`, **auto-hospedadas** |
 | Juego de iconos, uno solo, SVG en línea | `templates/macros.html` |
 
-**Los tokens salen de `03-sistema-de-diseno.md`.** Ningún color, radio, sombra o espaciado se escribe a mano fuera de `:root`.
+**Los tokens salen de `.claude/rules/03-sistema-de-diseno.md`.** Ningún color, radio, sombra o espaciado se escribe a mano fuera de `:root`.
+
+El shell de ingreso está en §2.4 de ese documento: contenido centrado sobre `base_publico.html`, sin navegación, con `mockups/mockup-portal/Login.dc.html` como referencia visual.
 
 Componentes mínimos de la fase 0: `icon`, `btn`, `card`, `kpi`, `badge`, `field`, `tabla`, `empty_state`, `alert`, `modal`, `paginacion`, `migas`, `ayuda`.
 
@@ -295,8 +318,8 @@ Se crean los cuatro, con las plantillas de la sección 7 de este documento:
 | 1 | `ruff format .` y `ruff check .` sin hallazgos |
 | 2 | `python -m unittest discover -s tests` corre, aunque no haya pruebas |
 | 3 | `python manage.py smoke_test` en verde y `/salud/` responde |
-| 4 | `python manage.py check --deploy` sin hallazgos |
-| 5 | La pantalla de ingreso coincide con su artboard |
+| 4 | `python manage.py check --deploy` sin hallazgos distintos de los aceptados en la postura de `CLAUDE.md` |
+| 5 | La pantalla de ingreso coincide con su artboard: `mockups/mockup-portal/Login.dc.html` |
 | 6 | Sebastián levanta el proyecto en su máquina siguiendo solo el `README.md` |
 
 ---
@@ -382,7 +405,7 @@ def personas_visibles(usuario, fecha=None):
 | Usuarios | Quién tiene acceso, con qué rol y qué alcance |
 | Simulador | Ver el sistema como lo vería un rol |
 
-Artboards: `RolesPermisos.dc.html` y `Usuarios.dc.html`.
+Artboards: `v-permisos` y `v-usuarios`.
 
 ### E1.4 · El interruptor
 
@@ -418,16 +441,19 @@ auditoria/
 
 **La tabla no tiene vistas de edición ni de borrado.** Ni para el administrador.
 
-### E1.6 · Adaptador de identidad
+### E1.6 · Identidad: lo que esta fase **no** construye
 
-`cuentas/` se copia del estándar **sin modificar**. Se agrega un adaptador local transitorio detrás de la misma interfaz, intercambiable por configuración:
+**SIRH+ no gestiona usuarios.** La fase 1 entrega el rol y el alcance, no la autenticación.
 
-```
-# .env
-IDENTIDAD_ADAPTADOR=local     # o 'gestor' cuando el IAM exista
-```
+| Qué | Estado en esta fase |
+|---|---|
+| Pantalla de ingreso | Existe desde E0.7 y **no valida nada**. Puerta abierta durante el desarrollo |
+| Módulo `identidad/` | **No se escribe.** Nace cuando el gestor exista |
+| Autenticación local, tabla de usuarios, contraseñas | **No se construyen.** Ni como algo provisional |
+| Chequeos de salud de identidad | Declarados y desactivados, listos para encenderse |
+| Pantalla propia de 403 | Sí, y se usa en cuanto `PERMISOS_EXIGIR=true` |
 
-El adaptador local lee de una tabla propia de desarrollo, **que nunca sale a producción**.
+Lo que sí es de SIRH+ en esta fase son los permisos, y están en E1.1 a E1.4. La regla completa está en `CLAUDE.md`, «SIRH+ no gestiona usuarios».
 
 ## 3.3 Fuera de alcance de la fase 1
 
@@ -505,9 +531,9 @@ Pruebas obligatorias: cadena de tres niveles · cargo raíz · cargo huérfano �
 
 | Artboard | Qué resuelve |
 |---|---|
-| `AreasCargos.dc.html` | Catálogo de áreas y cargos |
-| `Estructura.dc.html` | Editor de dependencias, con impacto visible |
-| `Organigrama.dc.html` | Navegable, público |
+| `v-cargos` | Catálogo de áreas y cargos |
+| `v-estructura` | Editor de dependencias, con impacto visible |
+| `v-organigrama` | Navegable, público |
 
 ### E2.4 · Puntos de marcación
 
@@ -709,17 +735,49 @@ firmas/
 
 La vista más importante del módulo. Nace aquí con lo que existe —cargos, firma, datos— y **se llena sola** a medida que llegan eventualidades, formación, competencias y dotación.
 
-Artboard: `PersonalHojaVida.dc.html`.
+Artboard: `v-hoja`.
 
 ### E3.8 · Disparadores
 
 | Destino | Cuándo | Estado en esta fase |
 |---|---|---|
 | GLPI | Al guardar el paso 1 | **Activo.** La lógica existente se conserva |
-| Gestor de identidad | Al guardar el paso 1 | **Listo y apagado**, detrás del adaptador |
+| Gestor de identidad | Al guardar el paso 1 | **Listo y apagado.** La intención se escribe en la outbox; nadie la consume hasta que el gestor exista |
 | Formación | Al asignar el cargo | Se registra la matriz; el uso llega en la fase 14 |
 
 Los disparadores van por **outbox**: se escribe la intención en una tabla y un proceso aparte la ejecuta. Así una caída de GLPI no impide registrar a una persona.
+
+### E3.9 · `parametros/` mínimo
+
+La fase 3 necesita dos parámetros y el plan pone `parametros/` en la fase 5. Se parte en dos: **aquí nace el modelo, en la fase 5 nace la administración.**
+
+```
+parametros/
+├── models.py          Parametro, Vigencia
+└── consultas.py
+```
+
+```python
+# dominio/parametros.py  — puro
+
+def vigente_en(clave, vigencias, fecha):
+    """El valor que regía en `fecha`.
+
+    Un parámetro no se sobrescribe: se cierra su vigencia y se abre otra.
+    El cálculo busca el valor que regía en la fecha del hecho, no el de hoy.
+    """
+```
+
+Los dos parámetros que esta fase necesita:
+
+| Clave | Para qué |
+|---|---|
+| `personal.plazo_incompleto` | Las 24 horas que vale un registro bajo el 40 % — ver E3.3 |
+| `personal.codigo_nomina.sufijos` | Qué dígito corresponde a qué tipo de vínculo — ver E3.2 |
+
+**Fuera de alcance aquí:** la pantalla de administración, el catálogo por módulo, el historial de vigencias y el calendario de festivos. Todo eso es de la fase 5.
+
+Pruebas: fecha anterior a toda vigencia · fecha entre dos vigencias · fecha dentro de la vigente · clave inexistente.
 
 ## 5.2 Fuera de alcance
 
@@ -754,7 +812,7 @@ Lo que sí está fijo desde ahora:
 | Fase | Hito |
 |---|---|
 | 4 | Migración del maestro: 1.094 personas y 8.214 firmas |
-| 5 | Parámetros con vigencia y motor de vencimientos |
+| 5 | Administración de parámetros y motor de vencimientos. **El modelo `Parametro` ya existe desde la fase 3** (E3.9): aquí llegan la pantalla, el catálogo por módulo, el historial de vigencias y el calendario de festivos |
 | 6–9 | Marcaciones: captura, turnos, cálculo, cierre |
 | 10 | **Archivo plano de nómina. BioTime se integra** |
 | 11 | Eventualidades |
@@ -896,7 +954,7 @@ Errores reales de este proyecto, antes de escribir código.
 
 | # | Qué | Quién |
 |---|---|---|
-| 1 | Escribir `03-sistema-de-diseno.md` desde el mockup aprobado | TI |
+| 1 | ~~Escribir el sistema de diseño desde el mockup aprobado~~ · **Hecho el 5 de noviembre de 2026**, en `.claude/rules/03-sistema-de-diseno.md` | TI |
 | 2 | Rotar los tokens de GLPI y las credenciales que están en la base | TI |
 | 3 | Poner el código del SIRH viejo y el de COPEC bajo control de versiones | TI |
 | 4 | Construir con RH la estructura de dependencias de los 198 cargos | RH |
@@ -904,4 +962,4 @@ Errores reales de este proyecto, antes de escribir código.
 | 6 | Definir el tratamiento de Granservicios en el archivo de nómina | RH |
 | 7 | Conseguir los formatos en blanco R-RH-009, R-RH-053 y paz y salvo | RH |
 
-**Los puntos 1, 2 y 3 bloquean la fase 0.** Los demás se pueden resolver en paralelo.
+**Los puntos 2 y 3 bloquean la fase 0** — son B1 y B2 de `docs/pendientes.md`. El punto 1 ya está resuelto. Los demás se pueden resolver en paralelo.

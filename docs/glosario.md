@@ -161,7 +161,7 @@ Un sistema donde el mismo concepto se llama de tres maneras es un sistema que na
 
 ## 11 · Cómo se escribe
 
-Reglas de redacción para la interfaz. El detalle está en `claude/03-sistema-de-diseno.md` §7.
+Reglas de redacción para la interfaz. El detalle está en `.claude/rules/03-sistema-de-diseno.md` §7.
 
 | Regla | Mal | Bien |
 |---|---|---|

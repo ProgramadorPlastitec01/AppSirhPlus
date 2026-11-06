@@ -37,7 +37,7 @@ La diferencia no es estética. Alguien que entra dos minutos al mes necesita res
 | Recursos auto-hospedados, sin CDN | Se conserva |
 | Los cuatro estados en cada pantalla | Se conserva y se amplía |
 | Una sola hoja de estilos | Se conserva |
-| **Sidebar de 220 px para toda pantalla con sesión** | **Desviación D1** — ver §0.2 |
+| **Sidebar de 220 px para toda pantalla con sesión** | **Desviación D1** — justificada en `docs/diseno.md` §8 |
 
 ---
 
@@ -322,7 +322,13 @@ A la derecha: nombre del colaborador, temporizador de sesión visible y botón d
 
 El mismo de portal, sin datos de usuario y con un botón de acceso. Lo que se ve aquí es solo: noticias, organigrama, convocatorias y el espacio del Fondo de Empleados.
 
-## 2.4 Ancho y rejilla
+## 2.4 Shell de ingreso — `base_auth.html`
+
+**Hereda de `base_publico.html`**, con el contenido centrado y sin navegación. El ingreso no tiene shell propio: es la puerta de entrada de las tres caras, no una cuarta cara.
+
+Su referencia visual es `mockups/mockup-portal/Login.dc.html`.
+
+## 2.5 Ancho y rejilla
 
 | Contexto | Ancho máximo |
 |---|---|
@@ -333,7 +339,7 @@ El mismo de portal, sin datos de usuario y con un botón de acceso. Lo que se ve
 
 La rejilla es flexbox o grid, en fracciones. **Nunca anchos fijos en píxeles para el contenido.**
 
-## 2.5 Adaptación
+## 2.6 Adaptación
 
 Tres puntos de quiebre, y solo tres:
 

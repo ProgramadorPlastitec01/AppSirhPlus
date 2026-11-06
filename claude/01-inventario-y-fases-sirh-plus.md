@@ -54,17 +54,21 @@ Paquete Python puro, sin Django, sin entrada ni salida. Todas las reglas de nego
 | 11 | `codigos.py` | Construcción y validación del código de nómina |
 | 12 | `parametros.py` | Resolución del valor vigente en una fecha |
 
-## A.2 · Identidad y acceso — `cuentas/`
+## A.2 · Identidad y acceso — `identidad/`
+
+**Se escribe cuando el gestor de identidad exista.** SIRH+ no gestiona usuarios: no crea cuentas, no guarda contraseñas y no administra credenciales. Mientras tanto la pantalla de ingreso no valida nada, y **no se construye autenticación local de ninguna clase**. Ver `CLAUDE.md`, «SIRH+ no gestiona usuarios».
 
 | # | Opción |
 |---|---|
 | 1 | Inicio de sesión contra el gestor de identidad central |
-| 2 | Adaptador local transitorio, reemplazable por configuración |
-| 3 | Verificación del acceso a SIRH+ por aplicación |
-| 4 | Gestión de la sesión: expiración, renovación, cierre |
-| 5 | Cambio de contraseña y cambio forzado al primer ingreso |
+| 2 | Aviso al gestor del alta de una persona, por la outbox |
+| 3 | Aviso al gestor de la baja por retiro, por la outbox |
+| 4 | Verificación del acceso a SIRH+ por aplicación |
+| 5 | Gestión de la sesión: expiración, renovación, cierre |
 | 6 | Pantalla propia de acceso denegado |
 | 7 | Chequeo de salud de la conexión de identidad |
+
+**El cambio de contraseña no está en la lista.** Es del gestor, no de SIRH+.
 
 ## A.3 · Permisos — `permisos/`
 
@@ -656,23 +660,25 @@ No es un módulo aparte: es la capa de visibilidad sobre los mismos módulos.
 
 | # | Compuerta |
 |---|---|
-| 1 | Pruebas del núcleo en verde |
-| 2 | Chequeo de salud en verde |
-| 3 | Revisión de seguridad sin hallazgos |
-| 4 | Revisión visual contra el mockup |
-| 5 | Los cuatro estados resueltos en cada pantalla |
+| 1 | Formato y lint en verde |
+| 2 | Pruebas del núcleo en verde |
+| 3 | Chequeo de salud en verde |
+| 4 | Revisión de seguridad sin hallazgos |
+| 5 | Revisión visual y los cuatro estados en cada pantalla |
 | 6 | Validación humana contra un caso real, más revisión del QA |
+
+La versión normativa está en `claude/02-plan-de-ejecucion-sirh-plus.md` §0.3. Si las dos se separan, gana el plan de ejecución.
 
 ## Resumen de las fases
 
 | # | Fase | Módulos que toca | Qué se puede hacer al terminar |
 |---|---|---|---|
 | **0** | Cimientos | — | La aplicación arranca, se despliega y se ve como SIRH+ |
-| **1** | Identidad, permisos y auditoría | cuentas, permisos, auditoría | Entrar, con rol y alcance; todo cambio queda registrado |
+| **1** | Identidad, permisos y auditoría | permisos, auditoría | Entrar, con rol y alcance; todo cambio queda registrado |
 | **2** | Empresa | maestros | Áreas, cargos, estructura y organigrama funcionando |
 | **3** | Personal y firmas | personal, firmas | Registrar personal de punta a punta, con hoja de vida |
 | **4** | Migración del maestro | sirh_legacy_db | Las 1.094 personas y sus 8.200 firmas, dentro |
-| **5** | Parámetros y vencimientos | parámetros, vencimientos | Configuración con vigencia y alertas funcionando |
+| **5** | Parámetros y vencimientos | parámetros, vencimientos | Configuración con vigencia administrable y alertas funcionando |
 | **6** | Marcaciones · captura | marcaciones, biométricos | Las marcaciones entran solas y los dispositivos se vigilan |
 | **7** | Marcaciones · turnos y programación | marcaciones | Los jefes programan turnos sin BioTime |
 | **8** | Marcaciones · motor de cálculo | dominio/jornada | El cálculo reproduce exactamente el ciclo de referencia |
@@ -723,7 +729,7 @@ No es un módulo aparte: es la capa de visibilidad sobre los mismos módulos.
 | Contenido |
 |---|
 | Pantalla de acceso, sin lógica de validación todavía |
-| Adaptador de identidad detrás de una interfaz |
+| **Ninguna autenticación.** `identidad/` se escribe cuando el gestor exista |
 | **Catálogo de permisos completo, declarado** |
 | Administración de roles y matriz de permisos |
 | Alcance del dato como eje aparte |
@@ -798,13 +804,15 @@ No es un módulo aparte: es la capa de visibilidad sobre los mismos módulos.
 
 ### Fase 5 · Parámetros y vencimientos
 
-**Entrega:** la configuración con vigencia y las alertas funcionando.
+**Entrega:** la configuración con vigencia administrable y las alertas funcionando.
+
+**El modelo `Parametro` y `dominio/parametros.vigente_en()` ya existen desde la fase 3** (entregable E3.9 del plan de ejecución), porque el registro de personal necesita dos parámetros: el plazo del registro incompleto y las reglas del sufijo del código de nómina. Esta fase **no** crea el modelo: le pone administración y lo generaliza.
 
 | Contenido |
 |---|
+| Pantalla de administración de parámetros |
 | Catálogo de parámetros por módulo |
 | Las tres clases de parámetro |
-| Resolución del valor vigente en una fecha |
 | Historial de vigencias |
 | Calendario de festivos |
 | Motor de vencimientos |
