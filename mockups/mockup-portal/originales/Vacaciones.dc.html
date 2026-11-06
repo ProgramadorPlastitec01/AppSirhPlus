@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Vacaciones y permisos — Portal del Colaborador</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    a { text-decoration: none; color: inherit; }
+    h1, h2, h3 { font-family: Archivo, Inter, sans-serif; margin: 0; letter-spacing: -0.025em; }
+    .top { display: flex; align-items: center; padding: 15px 16px 13px; color: #A5A7D4; font-size: 15px; font-weight: 500; border-bottom: 3px solid transparent; }
+    .top:hover { color: #FFFFFF; }
+    .top.on { color: #FFFFFF; font-weight: 700; border-bottom-color: #D9B06A; }
+    th { text-align: left; font-size: 11px; font-weight: 700; color: #5B6070; text-transform: uppercase; letter-spacing: 0.06em; padding: 14px 22px; background: #FAFAFC; border-bottom: 1px solid #EDEDF2; }
+    td { padding: 16px 22px; font-size: 14px; border-bottom: 1px solid #F2F2F6; }
+    .pill { padding: 4px 11px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+    .num { font-variant-numeric: tabular-nums; }
+  </style>
+</helmet>
+
+<div style="min-height: 1000px; font-family: Inter, system-ui, sans-serif; background: #F5F5F8; color: #14141F">
+
+  <header style="background: #16163A">
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 14px 36px">
+      <a href="Main.dc.html" style="display: flex; align-items: center; gap: 12px; margin-right: 14px">
+        <div style="width: 40px; height: 40px; border-radius: 11px; background: #4F46E5; display: flex; align-items: center; justify-content: center; font-family: Archivo, sans-serif; font-weight: 800; color: #FFFFFF; font-size: 19px">P</div>
+        <div>
+          <div style="font-family: Archivo, sans-serif; color: #FFFFFF; font-weight: 700; font-size: 16px; letter-spacing: -0.02em; line-height: 1.1">Plastitec</div>
+          <div style="color: #8A8CBE; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase">Colaboradores</div>
+        </div>
+      </a>
+      <nav style="order: 3; flex: 1 0 100%; display: flex; flex-wrap: wrap; gap: 2px; margin: 0 -36px -14px; padding: 0 36px; border-top: 1px solid #262650">
+        <a class="top" href="Main.dc.html">Inicio</a>
+        <a class="top" href="MiTiempo.dc.html">Tiempo</a>
+        <a class="top on" href="Vacaciones.dc.html">Vacaciones</a>
+        <a class="top" href="Nomina.dc.html">Nómina</a>
+        <a class="top" href="Tramites.dc.html">Trámites</a>
+        <a class="top" href="Formacion.dc.html">Aprendizaje</a>
+        <a class="top" href="Encuestas.dc.html">Encuestas</a>
+        <a class="top" href="Noticias.dc.html">Empresa</a>
+      </nav>
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 12px">
+        <div class="num" style="display: flex; align-items: center; gap: 7px; padding: 8px 13px; background: #262650; border-radius: 999px; color: #D9B06A; font-size: 13px; font-weight: 600">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 3:47
+        </div>
+        <a href="MiInformacion.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 6px 14px 6px 6px; background: #262650; border-radius: 999px">
+          <span style="width: 32px; height: 32px; border-radius: 999px; background: #4F46E5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">CR</span>
+          <span style="color: #FFFFFF; font-size: 14px; font-weight: 600">Carlos R.</span>
+        </a>
+        <a href="Login.dc.html" style="padding: 10px 18px; background: #FFFFFF; color: #16163A; border-radius: 999px; font-size: 14px; font-weight: 700">Salir</a>
+      </div>
+    </div>
+  </header>
+
+  <div style="background: #16163A; padding: 8px 36px 44px">
+    <h1 style="color: #FFFFFF; font-size: 40px; font-weight: 800">Vacaciones y permisos</h1>
+    <p style="margin: 10px 0 0; color: #A5A7D4; font-size: 16px">Tu saldo viene de SINERGY. Las solicitudes las aprueba Recursos Humanos.</p>
+  </div>
+
+  <main style="padding: 0 36px 48px; display: flex; flex-direction: column; gap: 24px">
+
+    <!-- Saldo -->
+    <section style="margin-top: -24px; display: flex; flex-wrap: wrap; gap: 18px; align-items: stretch">
+      <div style="flex: 1 1 280px; min-width: 0; padding: 28px; background: #4F46E5; border-radius: 18px; color: #FFFFFF; position: relative; overflow: hidden; box-shadow: 0 14px 36px rgba(79,70,229,.22)">
+        <svg width="260" height="260" viewBox="0 0 260 260" style="position: absolute; top: -70px; right: -60px; opacity: 0.35" aria-hidden="true"><circle cx="130" cy="130" r="130" fill="#6A62EC"/><circle cx="130" cy="130" r="72" fill="#4F46E5"/></svg>
+        <div style="position: relative">
+          <div style="font-size: 14px; color: #D6D4FB; font-weight: 600">Días disponibles hoy</div>
+          <div style="display: flex; align-items: baseline; gap: 10px; margin-top: 10px">
+            <span class="num" style="font-family: Archivo, sans-serif; font-size: 64px; font-weight: 800; letter-spacing: -0.04em; line-height: 1">11</span>
+            <span style="font-size: 16px; color: #D6D4FB">días hábiles</span>
+          </div>
+          <a href="#solicitar" style="display: inline-flex; align-items: center; gap: 10px; margin-top: 22px; padding: 14px 22px; background: #FFFFFF; color: #3A32BE; border-radius: 999px; font-family: Archivo, sans-serif; font-size: 15px; font-weight: 700">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg> Solicitar vacaciones
+          </a>
+        </div>
+      </div>
+      <div style="flex: 1 1 150px; min-width: 0; padding: 24px; background: #FFFFFF; border: 1px solid #E7E7EE; border-radius: 18px">
+        <div style="font-size: 13px; color: #5B6070; font-weight: 600">Causados</div>
+        <div class="num" style="font-family: Archivo, sans-serif; font-size: 38px; font-weight: 800; margin-top: 8px; line-height: 1">26</div>
+        <div style="font-size: 13px; color: #5B6070; margin-top: 8px">desde el ingreso</div>
+      </div>
+      <div style="flex: 1 1 150px; min-width: 0; padding: 24px; background: #FFFFFF; border: 1px solid #E7E7EE; border-radius: 18px">
+        <div style="font-size: 13px; color: #5B6070; font-weight: 600">Disfrutados</div>
+        <div class="num" style="font-family: Archivo, sans-serif; font-size: 38px; font-weight: 800; margin-top: 8px; line-height: 1">15</div>
+        <div style="font-size: 13px; color: #5B6070; margin-top: 8px">en 2 periodos</div>
+      </div>
+      <div style="flex: 1 1 150px; min-width: 0; padding: 24px; background: #FFFFFF; border: 1px solid #E7E7EE; border-radius: 18px">
+        <div style="font-size: 13px; color: #5B6070; font-weight: 600">Próximo corte</div>
+        <div style="font-family: Archivo, sans-serif; font-size: 22px; font-weight: 800; margin-top: 12px">15 ago 2027</div>
+        <div style="font-size: 13px; color: #5B6070; margin-top: 8px">aniversario</div>
+      </div>
+    </section>
+
+    <!-- Solicitud en curso -->
+    <section style="background: #FFFFFF; border: 1px solid #E7E7EE; border-radius: 18px; overflow: hidden">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 22px">
+        <h2 style="font-size: 20px; font-weight: 700">Solicitud en curso</h2>
+        <a href="#permiso" style="margin-left: auto; padding: 11px 19px; border: 1.5px solid #D8D9E2; border-radius: 999px; font-size: 14px; font-weight: 700; color: #4F46E5">Solicitar permiso</a>
+      </div>
+
+      <div style="padding: 0 22px 22px">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 24px">
+          <span style="font-size: 17px; font-weight: 700">Permiso no remunerado · 2 días</span>
+          <span style="padding: 5px 12px; background: #F0F0F5; border-radius: 999px; font-size: 13px; font-weight: 600; color: #5B6070">12 y 13 de noviembre</span>
+          <span class="num" style="margin-left: auto; font-size: 13px; color: #5B6070">Radicado 2026-0412</span>
+        </div>
+
+        <div style="display: flex; align-items: center">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 9px; flex: 0 0 auto; width: 130px">
+            <div style="width: 34px; height: 34px; border-radius: 999px; background: #0E9F6E; display: flex; align-items: center; justify-content: center">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <div style="font-size: 13px; font-weight: 700; text-align: center">Radicada</div>
+            <div style="font-size: 12px; color: #5B6070">24 oct</div>
+          </div>
+          <div style="flex: 1 1 auto; height: 4px; background: #0E9F6E; margin-bottom: 40px; border-radius: 999px"></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 9px; flex: 0 0 auto; width: 130px">
+            <div style="width: 34px; height: 34px; border-radius: 999px; background: #4F46E5; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 5px #EEF0FE">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </div>
+            <div style="font-size: 13px; font-weight: 700; text-align: center; color: #3A32BE">En revisión</div>
+            <div style="font-size: 12px; color: #5B6070; text-align: center">Jefe de Producción</div>
+          </div>
+          <div style="flex: 1 1 auto; height: 4px; background: #E7E7EE; margin-bottom: 40px; border-radius: 999px"></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 9px; flex: 0 0 auto; width: 130px">
+            <div style="width: 34px; height: 34px; border-radius: 999px; border: 2px solid #D8D9E2; background: #FFFFFF"></div>
+            <div style="font-size: 13px; font-weight: 600; text-align: center; color: #5B6070">Aprobación RRHH</div>
+          </div>
+          <div style="flex: 1 1 auto; height: 4px; background: #E7E7EE; margin-bottom: 40px; border-radius: 999px"></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 9px; flex: 0 0 auto; width: 130px">
+            <div style="width: 34px; height: 34px; border-radius: 999px; border: 2px solid #D8D9E2; background: #FFFFFF"></div>
+            <div style="font-size: 13px; font-weight: 600; text-align: center; color: #5B6070">Resuelta</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 16px 22px; background: #FAFAFC; border-top: 1px solid #EDEDF2; font-size: 13px; color: #5B6070">
+        Una vez aprobada, Recursos Humanos la registra en SINERGY. El portal no modifica tu nómina directamente.
+      </div>
+    </section>
+
+    <!-- Historial -->
+    <section style="background: #FFFFFF; border: 1px solid #E7E7EE; border-radius: 18px; overflow: hidden">
+      <div style="padding: 22px"><h2 style="font-size: 20px; font-weight: 700">Periodos disfrutados</h2></div>
+      <div style="overflow-x: auto">
+        <table style="width: 100%; border-collapse: collapse; min-width: 580px">
+          <thead><tr><th>Periodo</th><th>Desde</th><th>Hasta</th><th style="text-align: right">Días</th><th>Estado</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight: 600">2024 — 2025</td><td>8 ene 2025</td><td>22 ene 2025</td><td class="num" style="text-align: right">10</td><td><span class="pill" style="background: #E8F3EF; color: #0A5A43">Disfrutado</span></td></tr>
+            <tr><td style="font-weight: 600">2023 — 2024</td><td>3 jul 2024</td><td>9 jul 2024</td><td class="num" style="text-align: right">5</td><td><span class="pill" style="background: #E8F3EF; color: #0A5A43">Disfrutado</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer style="background: #16163A; padding: 26px 36px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px">
+    <span style="color: #8A8CBE; font-size: 13px">Portal del Colaborador · Plastitec S.A.S. · Red interna</span>
+    <span style="margin-left: auto; display: flex; flex-wrap: wrap; gap: 22px">
+      <a href="Noticias.dc.html" style="color: #B9BAD8; font-size: 13px; font-weight: 500">Reglamento interno</a>
+      <a href="Tramites.dc.html" style="color: #B9BAD8; font-size: 13px; font-weight: 500">Petición o queja</a>
+      <a href="Tramites.dc.html" style="color: #B9BAD8; font-size: 13px; font-weight: 500">Ayuda · ext. 142</a>
+    </span>
+  </footer>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

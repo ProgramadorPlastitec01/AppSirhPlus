@@ -1,0 +1,119 @@
+# ─────────────────────────────────────────────
+# SIRH+ · Plastitec S.A.S.
+# ─────────────────────────────────────────────
+
+# ══ SECRETOS ══
+# Nunca, por ningún motivo, ni "temporalmente".
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+secrets.json
+credenciales*
+
+# ══ DATOS PERSONALES ══
+# referencia/ tiene los dumps del SIRH viejo: datos de 9.058 personas
+# y 8.214 firmas. Ley 1581 de 2012. No entra al repositorio, ni una vez.
+referencia/
+*.sql
+*.sql.gz
+*.dump
+sirh.json
+
+# Exportaciones y respaldos con datos reales
+*.xlsx
+*.xls
+*.csv
+FINAL_SINER_*.txt
+respaldos/
+backups/
+
+# Fotografías del personal
+media/
+static/fotos/
+static/firmas/
+
+# ══ PYTHON ══
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+eggs/
+.eggs/
+sdist/
+wheels/
+*.egg-info/
+*.egg
+MANIFEST
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# Herramientas
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.tox/
+.nox/
+
+# ══ DJANGO ══
+*.log
+logs/
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Estáticos recolectados. Los de static/ SÍ se versionan,
+# incluidas las tipografías auto-hospedadas de static/vendor/.
+/staticfiles/
+/static_root/
+
+# ══ EDITOR Y SISTEMA ══
+.vscode/
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ══ TEMPORALES ══
+*.tmp
+*.bak
+*.orig
+*.rej
+tmp/
+temp/
+scratch/
+
+# ─────────────────────────────────────────────
+# Lo que SÍ se versiona, por si alguien duda:
+#   .claude/          reglas y agentes
+#   claude/           los documentos de diseño
+#   docs/             documentos vivos
+#   mockups/          referencia visual
+#   static/vendor/    tipografías e iconos auto-hospedados
+#   .env.example      plantilla de configuración
+# ─────────────────────────────────────────────

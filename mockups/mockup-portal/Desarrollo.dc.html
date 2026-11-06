@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Desarrollo y SST — Portal del Colaborador</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    a { text-decoration: none; color: inherit; }
+    h1, h2, h3 { font-family: Archivo, Inter, sans-serif; margin: 0; letter-spacing: -0.025em; }
+    .top { display: flex; align-items: center; padding: 15px 16px 13px; color: #A5A7D4; font-size: 15px; font-weight: 500; border-bottom: 3px solid transparent; }
+    .top:hover { color: #FFFFFF; }
+    .top.on { color: #FFFFFF; font-weight: 700; border-bottom-color: #D9B06A; }
+    .tab { padding: 11px 18px; border-radius: 999px; font-size: 14px; font-weight: 600; color: #5B6070; }
+    .tab.on { background: #16163A; color: #FFFFFF; }
+    th { text-align: left; font-size: 11px; font-weight: 700; color: #5B6070; text-transform: uppercase; letter-spacing: 0.06em; padding: 14px 22px; background: #FAFAFC; border-bottom: 1px solid #EDEDF2; }
+    td { padding: 16px 22px; font-size: 14px; border-bottom: 1px solid #F2F2F6; }
+    .pill { padding: 4px 11px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+    .num { font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body>
+
+<div style="min-height: 1000px; font-family: Inter, system-ui, sans-serif; background: #F5F5F8; color: #14141F">
+
+  <header style="background: #16163A">
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 14px 36px">
+      <a href="Main.dc.html" style="display: flex; align-items: center; gap: 12px; margin-right: 14px">
+        <div style="width: 40px; height: 40px; border-radius: 11px; background: #4F46E5; display: flex; align-items: center; justify-content: center; font-family: Archivo, sans-serif; font-weight: 800; color: #FFFFFF; font-size: 19px">P</div>
+        <div>
+          <div style="font-family: Archivo, sans-serif; color: #FFFFFF; font-weight: 700; font-size: 16px; letter-spacing: -0.02em; line-height: 1.1">Plastitec</div>
+          <div style="color: #8A8CBE; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase">Colaboradores</div>
+        </div>
+      </a>
+      <nav style="order: 3; flex: 1 0 100%; display: flex; flex-wrap: wrap; gap: 2px; margin: 0 -36px -14px; padding: 0 36px; border-top: 1px solid #262650">
+        <a class="top" href="Main.dc.html">Inicio</a>
+        <a class="top" href="MiTiempo.dc.html">Tiempo</a>
+        <a class="top" href="Vacaciones.dc.html">Vacaciones</a>
+        <a class="top" href="Nomina.dc.html">Nómina</a>
+        <a class="top" href="Tramites.dc.html">Trámites</a>
+        <a class="top on" href="Formacion.dc.html">Aprendizaje</a>
+        <a class="top" href="Encuestas.dc.html">Encuestas</a>
+        <a class="top" href="Noticias.dc.html">Empresa</a>
+      </nav>
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 12px">
+        <div class="num" style="display: flex; align-items: center; gap: 7px; padding: 8px 13px; background: #262650; border-radius: 999px; color: #D9B06A; font-size: 13px; font-weight: 600">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 4:15
+        </div>
+        <a href="MiInformacion.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 6px 14px 6px 6px; background: #262650; border-radius: 999px">
+          <span style="width: 32px; height: 32px; border-radius: 999px; background: #4F46E5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">CR</span>
+          <span style="color: #FFFFFF; font-size: 14px; font-weight: 600">Carlos R.</span>
+        </a>
+        <a href="Login.dc.html" style="padding: 10px 18px; background: #FFFFFF; color: #16163A; border-radius: 999px; font-size: 14px; font-weight: 700">Salir</a>
+      </div>
+    </div>
+  </header>
+
+  <div style="background: #16163A; padding: 8px 36px 44px">
+    <h1 style="color: #FFFFFF; font-size: 40px; font-weight: 800">Mi desarrollo y mi seguridad</h1>
+    <p style="margin: 10px 0 0; color: #A5A7D4; font-size: 16px">Tu formación, tus exámenes y lo que se te ha entregado.</p>
+  </div>
+
+  <main style="padding: 0 36px 48px; display: flex; flex-direction: column; gap: 24px">
+
+    <!-- Aviso -->
+    <section style="margin-top: -24px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding: 22px 26px; background: #FFFFFF; border-left: 5px solid #D9B06A; border-radius: 16px; box-shadow: 0 8px 26px rgba(22,22,58,.07)">
+      <span style="width: 44px; height: 44px; flex: 0 0 auto; border-radius: 12px; background: #FAF0DC; display: flex; align-items: center; justify-content: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7A4F00" stroke-width="2.5" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L14.7 3.9a2 2 0 00-3.4 0z"/></svg>
+      </span>
+      <div style="flex: 999 1 320px; min-width: 0">
+        <div style="font-family: Archivo, sans-serif; font-weight: 700; font-size: 18px">Examen médico periódico — vence el 8 de noviembre</div>
+        <div style="font-size: 14px; color: #5B6070; margin-top: 3px">Recursos Humanos coordinará la cita. No necesitas hacer nada por ahora.</div>
+      </div>
+      <span class="num" style="padding: 10px 18px; background: #FAF0DC; color: #7A4F00; border-radius: 999px; font-size: 15px; font-weight: 700">12 días</span>
+    </section>
+
+    <nav style="display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; background: #FFFFFF; border: 1px solid #E7E7EE; border-radius: 999px; width: fit-content">
+      <a class="tab on" href="#formacion">Formación</a>
+      <a class="tab" href="#competencias">Competencias</a>
+      <a class="tab" href="#salud">Exámenes médicos</a>
+      <a class="tab" href="#dotacion">Dotación y EPP</a>
+    </nav>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start">
+
+      <!-- Formación -->
+      <section style="flex: 999 1 440px; min-width: 0; background: #FFFFFF; border: 1px solid #E7E7EE; border-radius: 18px; overflow: hidden">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 22px">
+          <h2 style="font-size: 20px; font-weight: 700">Mis capacitaciones</h2>
+          <span style="padding: 5px 12px; background: #E8F3EF; border-radius: 999px; font-size: 13px; font-weight: 700; color: #0A5A43">9 completadas</span>
+        </div>
+        <div style="overflow-x: auto">
+          <table style="width: 100%; border-collapse: collapse; min-width: 540px">
+            <thead><tr><th>Capacitación</th><th>Fecha</th><th>Vigencia</th><th style="text-align: right">Certificado</th></tr></thead>
+            <tbody>
+              <tr><td style="font-weight: 600">Trabajo en alturas — reentrenamiento</td><td>2 jun 2026</td><td><span class="pill" style="background: #E8F3EF; color: #0A5A43">Vigente</span></td><td style="text-align: right"><a href="#c1" aria-label="Descargar certificado de trabajo en alturas"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B3351F" stroke-width="2" aria-hidden="true"><path d="M12 3v12M7 11l5 5 5-5M4 20h16"/></svg></a></td></tr>
+              <tr><td style="font-weight: 600">Manejo seguro de extrusoras</td><td>14 mar 2026</td><td><span class="pill" style="background: #E8F3EF; color: #0A5A43">Vigente</span></td><td style="text-align: right"><a href="#c2" aria-label="Descargar certificado de manejo de extrusoras"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B3351F" stroke-width="2" aria-hidden="true"><path d="M12 3v12M7 11l5 5 5-5M4 20h16"/></svg></a></td></tr>
+              <tr><td style="font-weight: 600">Primeros auxilios básicos</td><td>8 nov 2024</td><td><span class="pill" style="background: #FAF0DC; color: #7A4F00">Vence pronto</span></td><td style="text-align: right"><a href="#c3" aria-label="Descargar certificado de primeros auxilios"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B3351F" stroke-width="2" aria-hidden="true"><path d="M12 3v12M7 11l5 5 5-5M4 20h16"/></svg></a></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding: 20px 22px; background: #EEF0FE; border-top: 1px solid #DFE1FA">
+          <div style="font-size: 11px; font-weight: 700; color: #3A32BE; letter-spacing: 0.08em; text-transform: uppercase">Próxima capacitación</div>
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 8px">
+            <span style="font-size: 16px; font-weight: 700">Inducción en el nuevo protocolo de EPP</span>
+            <span style="font-size: 14px; color: #3A32BE; font-weight: 600">12 de noviembre · 7:00 a. m. · Aula 2</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dotación -->
+      <section style="flex: 1 1 300px; min-width: 0; background: #FFFFFF; border: 1px solid #E7E7EE; border-radius: 18px; overflow: hidden">
+        <div style="padding: 22px"><h2 style="font-size: 20px; font-weight: 700">Dotación y EPP</h2></div>
+        <ul style="margin: 0; padding: 0 22px 20px; list-style: none">
+          <li style="display: flex; align-items: center; gap: 12px; padding: 13px 0; border-bottom: 1px solid #F2F2F6">
+            <div style="flex: 1"><div style="font-size: 15px; font-weight: 600">Uniforme · 3 mudas</div><div style="font-size: 13px; color: #5B6070; margin-top: 2px">Entregado el 1 sep 2026</div></div>
+            <span class="pill" style="background: #E8F3EF; color: #0A5A43">Al día</span>
+          </li>
+          <li style="display: flex; align-items: center; gap: 12px; padding: 13px 0; border-bottom: 1px solid #F2F2F6">
+            <div style="flex: 1"><div style="font-size: 15px; font-weight: 600">Botas de seguridad</div><div style="font-size: 13px; color: #5B6070; margin-top: 2px">Entregadas el 1 sep 2026</div></div>
+            <span class="pill" style="background: #E8F3EF; color: #0A5A43">Al día</span>
+          </li>
+          <li style="display: flex; align-items: center; gap: 12px; padding: 13px 0; border-bottom: 1px solid #F2F2F6">
+            <div style="flex: 1"><div style="font-size: 15px; font-weight: 600">Protección auditiva</div><div style="font-size: 13px; color: #5B6070; margin-top: 2px">Próxima entrega: diciembre</div></div>
+            <span class="pill" style="background: #FAF0DC; color: #7A4F00">Por entregar</span>
+          </li>
+          <li style="display: flex; align-items: center; gap: 12px; padding: 13px 0">
+            <div style="flex: 1"><div style="font-size: 15px; font-weight: 600">Guantes térmicos</div><div style="font-size: 13px; color: #5B6070; margin-top: 2px">Entregados el 10 oct 2026</div></div>
+            <span class="pill" style="background: #E8F3EF; color: #0A5A43">Al día</span>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- Competencias -->
+    <section style="background: #FFFFFF; border: 1px solid #E7E7EE; border-radius: 18px; padding: 26px">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 22px">
+        <h2 style="font-size: 20px; font-weight: 700">Evaluación de competencias</h2>
+        <span style="padding: 5px 12px; background: #F0F0F5; border-radius: 999px; font-size: 13px; font-weight: 600; color: #5B6070">Último ciclo: junio de 2026</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 9px"><span style="font-size: 14px; font-weight: 600">Manejo de máquina</span><span class="num" style="font-family: Archivo, sans-serif; font-size: 19px; font-weight: 800">4,5</span></div>
+          <div style="height: 10px; background: #EDEDF2; border-radius: 999px"><div style="width: 90%; height: 10px; background: #4F46E5; border-radius: 999px"></div></div>
+        </div>
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 9px"><span style="font-size: 14px; font-weight: 600">Seguridad</span><span class="num" style="font-family: Archivo, sans-serif; font-size: 19px; font-weight: 800">4,8</span></div>
+          <div style="height: 10px; background: #EDEDF2; border-radius: 999px"><div style="width: 96%; height: 10px; background: #4F46E5; border-radius: 999px"></div></div>
+        </div>
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 9px"><span style="font-size: 14px; font-weight: 600">Trabajo en equipo</span><span class="num" style="font-family: Archivo, sans-serif; font-size: 19px; font-weight: 800">4,2</span></div>
+          <div style="height: 10px; background: #EDEDF2; border-radius: 999px"><div style="width: 84%; height: 10px; background: #4F46E5; border-radius: 999px"></div></div>
+        </div>
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 9px"><span style="font-size: 14px; font-weight: 600">Calidad del producto</span><span class="num" style="font-family: Archivo, sans-serif; font-size: 19px; font-weight: 800; color: #7A4F00">3,9</span></div>
+          <div style="height: 10px; background: #EDEDF2; border-radius: 999px"><div style="width: 78%; height: 10px; background: #D9B06A; border-radius: 999px"></div></div>
+          <div style="font-size: 12px; color: #7A4F00; font-weight: 600; margin-top: 7px">Bajo el perfil del cargo</div>
+        </div>
+      </div>
+      <p style="margin: 22px 0 0; font-size: 14px; color: #5B6070; line-height: 1.55">La competencia marcada está por debajo de lo que exige tu cargo. Tu plan de desarrollo incluye la capacitación programada para noviembre.</p>
+    </section>
+  </main>
+
+  <footer style="background: #16163A; padding: 26px 36px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px">
+    <span style="color: #8A8CBE; font-size: 13px">Portal del Colaborador · Plastitec S.A.S. · Red interna</span>
+    <span style="margin-left: auto; display: flex; flex-wrap: wrap; gap: 22px">
+      <a href="Noticias.dc.html" style="color: #B9BAD8; font-size: 13px; font-weight: 500">Reglamento interno</a>
+      <a href="Tramites.dc.html" style="color: #B9BAD8; font-size: 13px; font-weight: 500">Petición o queja</a>
+      <a href="Tramites.dc.html" style="color: #B9BAD8; font-size: 13px; font-weight: 500">Ayuda · ext. 142</a>
+    </span>
+  </footer>
+</div>
+
+</body>
+</html>

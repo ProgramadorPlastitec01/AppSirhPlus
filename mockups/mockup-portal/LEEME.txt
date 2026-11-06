@@ -1,0 +1,31 @@
+PORTAL DEL COLABORADOR — MOCKUP EN HTML
+Plastitec S.A.S. · Tecnologia de Informacion
+
+COMO SE ABRE
+  Doble clic en index.html. No necesita servidor ni instalacion.
+  Desde el indice se llega a las 14 pantallas, y los enlaces entre
+  ellas funcionan: se puede recorrer el portal como lo haria un
+  colaborador, entrando desde Login.
+
+QUE HAY AQUI
+  index.html          Indice de las 14 pantallas
+  *.dc.html           Las pantallas, listas para abrir en el navegador
+  originales/         Los archivos tal como estan publicados en el
+                      lienzo de diseno, sin modificar, mas canvas.json
+
+QUE SE CAMBIO RESPECTO AL LIENZO
+  El markup, los estilos y el contenido estan intactos. Solo se
+  retiro el andamiaje del lienzo de diseno -- el script support.js
+  y las etiquetas <x-dc> y <helmet> -- y los estilos y la fuente
+  pasaron al <head>, que es donde van en un HTML normal. Sin eso
+  los archivos no abren solos fuera del lienzo.
+
+NOTAS
+  - Las tipografias Archivo e Inter se cargan desde Google Fonts.
+    Sin internet el navegador usa una alternativa del sistema: el
+    diseno se ve algo distinto pero la estructura se mantiene.
+  - Ancho de referencia 1280px. En pantallas muy angostas (menos de
+    420px) dos pantallas se desbordan unos 22px en horizontal; es
+    del diseno original y se corrige al construir el portal real.
+  - Es un mockup, no el aplicativo: los formularios no guardan nada
+    y los datos que aparecen son de ejemplo.

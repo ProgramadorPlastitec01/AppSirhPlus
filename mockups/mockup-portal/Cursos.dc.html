@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cursos — Portal del Colaborador</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    a { text-decoration: none; color: inherit; }
+    h1, h2, h3 { font-family: Archivo, Inter, sans-serif; margin: 0; letter-spacing: -0.025em; }
+    .top { display: flex; align-items: center; padding: 15px 16px 13px; color: #A5A7D4; font-size: 15px; font-weight: 500; border-bottom: 3px solid transparent; }
+    .top:hover { color: #FFFFFF; }
+    .top.on { color: #FFFFFF; font-weight: 700; border-bottom-color: #D9B06A; }
+    .tab { padding: 11px 18px; border-radius: 999px; font-size: 14px; font-weight: 600; color: #5B6070; }
+    .tab.on { background: #16163A; color: #FFFFFF; }
+    .ftab { padding: 10px 2px; font-size: 14px; font-weight: 600; color: #5B6070; border-bottom: 3px solid transparent; }
+    .ftab.on { color: #3A32BE; border-bottom-color: #4F46E5; }
+    .cat { display: block; padding: 11px 14px; border-radius: 10px; font-size: 14px; font-weight: 500; color: #14141F; }
+    .cat:hover { background: #EFEFF4; }
+    .cat.on { background: #16163A; color: #FFFFFF; font-weight: 600; }
+    .crd { background: #FFFFFF; border: 1px solid #E7E7EE; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+    .crd:hover { border-color: #4F46E5; box-shadow: 0 8px 24px rgba(22,22,58,.09); }
+    .et { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+    .num { font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body>
+
+<div style="min-height: 1200px; font-family: Inter, system-ui, sans-serif; background: #F5F5F8; color: #14141F">
+
+  <header style="background: #16163A">
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 14px 36px">
+      <a href="Main.dc.html" style="display: flex; align-items: center; gap: 12px; margin-right: 12px">
+        <div style="width: 40px; height: 40px; border-radius: 11px; background: #4F46E5; display: flex; align-items: center; justify-content: center; font-family: Archivo, sans-serif; font-weight: 800; color: #FFFFFF; font-size: 19px">P</div>
+        <div>
+          <div style="font-family: Archivo, sans-serif; color: #FFFFFF; font-weight: 700; font-size: 16px; letter-spacing: -0.02em; line-height: 1.1">Plastitec</div>
+          <div style="color: #8A8CBE; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase">Colaboradores</div>
+        </div>
+      </a>
+      <nav style="order: 3; flex: 1 0 100%; display: flex; flex-wrap: wrap; gap: 2px; margin: 0 -36px -14px; padding: 0 36px; border-top: 1px solid #262650">
+        <a class="top" href="Main.dc.html">Inicio</a>
+        <a class="top" href="MiTiempo.dc.html">Tiempo</a>
+        <a class="top" href="Vacaciones.dc.html">Vacaciones</a>
+        <a class="top" href="Nomina.dc.html">Nómina</a>
+        <a class="top" href="Tramites.dc.html">Trámites</a>
+        <a class="top on" href="Formacion.dc.html">Aprendizaje</a>
+        <a class="top" href="Encuestas.dc.html">Encuestas</a>
+        <a class="top" href="Noticias.dc.html">Empresa</a>
+      </nav>
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 10px">
+        <div class="num" style="display: flex; align-items: center; gap: 6px; padding: 8px 12px; background: #262650; border-radius: 999px; color: #D9B06A; font-size: 13px; font-weight: 600">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 4:30
+        </div>
+        <a href="MiInformacion.dc.html" style="width: 34px; height: 34px; border-radius: 999px; background: #4F46E5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700" aria-label="Mi información">CR</a>
+        <a href="Login.dc.html" style="padding: 10px 17px; background: #FFFFFF; color: #16163A; border-radius: 999px; font-size: 14px; font-weight: 700">Salir</a>
+      </div>
+    </div>
+  </header>
+
+  <div style="background: #16163A; padding: 8px 36px 48px; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 28px">
+    <div style="flex: 999 1 380px; min-width: 0">
+      <h1 style="color: #FFFFFF; font-size: 40px; font-weight: 800">Aprendizaje</h1>
+      <p style="margin: 10px 0 0; color: #A5A7D4; font-size: 16px">Las capacitaciones de tu puesto y los cursos que puedes tomar.</p>
+    </div>
+    <div style="flex: 1 1 260px; min-width: 0; padding: 18px 22px; background: #262650; border-radius: 16px">
+      <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px">
+        <span style="color: #A5A7D4; font-size: 14px; font-weight: 600">Cursos finalizados</span>
+        <span class="num" style="font-family: Archivo, sans-serif; color: #FFFFFF; font-size: 22px; font-weight: 800">2 / 6</span>
+      </div>
+      <div style="height: 9px; background: #3A3A70; border-radius: 999px; margin-top: 11px"><div style="width: 33%; height: 9px; background: #D9B06A; border-radius: 999px"></div></div>
+    </div>
+  </div>
+
+  <main style="padding: 0 36px 48px">
+
+    <nav style="margin-top: -24px; margin-bottom: 26px; display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; background: #FFFFFF; border: 1px solid #E7E7EE; border-radius: 999px; width: fit-content; box-shadow: 0 8px 26px rgba(22,22,58,.07)">
+      <a class="tab" href="Formacion.dc.html">Capacitaciones</a>
+      <a class="tab on" href="Cursos.dc.html">Cursos</a>
+      <a class="tab" href="#certificados">Mis certificados</a>
+    </nav>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start">
+
+      <!-- Categorías -->
+      <aside style="flex: 0 0 228px; width: 228px">
+        <h2 style="font-size: 17px; font-weight: 700; margin-bottom: 14px">Categorías</h2>
+        <nav style="display: flex; flex-direction: column; gap: 3px">
+          <a class="cat on" href="#todas">Todas</a>
+          <a class="cat" href="#sst">Seguridad y salud</a>
+          <a class="cat" href="#blandas">Habilidades blandas</a>
+          <a class="cat" href="#operacion">Operación</a>
+          <a class="cat" href="#cumplimiento">Cumplimiento</a>
+          <a class="cat" href="#institucional">Institucional</a>
+        </nav>
+        <div style="margin-top: 22px; padding: 18px; background: #EEF0FE; border-radius: 14px">
+          <div style="font-size: 13px; font-weight: 700; color: #3A32BE">Sugerido para ti</div>
+          <p style="margin: 8px 0 12px; font-size: 13px; color: #3A32BE; line-height: 1.55">Tu evaluación de competencias señaló una brecha en <strong>Calidad del producto</strong>.</p>
+          <a href="CursoDetalle.dc.html" style="font-size: 13px; font-weight: 700; color: #3A32BE; text-decoration: underline">Ver curso recomendado</a>
+        </div>
+      </aside>
+
+      <!-- Catálogo -->
+      <section style="flex: 999 1 560px; min-width: 0">
+
+        <nav style="display: flex; flex-wrap: wrap; gap: 22px; border-bottom: 1px solid #E3E3EA; margin-bottom: 20px">
+          <a class="ftab on" href="#todos">Todos</a>
+          <a class="ftab" href="#pendientes">Pendientes</a>
+          <a class="ftab" href="#progreso">En progreso</a>
+          <a class="ftab" href="#finalizados">Finalizados</a>
+        </nav>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 22px">
+          <div style="flex: 999 1 300px; min-width: 0; display: flex; align-items: center; gap: 11px; padding: 13px 18px; background: #FFFFFF; border: 1px solid #E0E1E9; border-radius: 12px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6070" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <label for="buscar" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Buscar cursos</label>
+            <input id="buscar" type="search" placeholder="Buscar cursos" style="flex: 1; border: none; outline: none; font-family: inherit; font-size: 15px; background: transparent; color: #14141F">
+          </div>
+          <a href="#filtros" style="display: flex; align-items: center; gap: 9px; padding: 13px 18px; background: #FFFFFF; border: 1px solid #E0E1E9; border-radius: 12px; font-size: 14px; font-weight: 600">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#14141F" stroke-width="2" aria-hidden="true"><path d="M3 5h18M7 12h10M10 19h4"/></svg> Filtros
+          </a>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px">
+
+          <!-- 1 -->
+          <a class="crd" href="CursoDetalle.dc.html">
+            <div style="position: relative; height: 128px; background: #0B5A48; overflow: hidden">
+              <svg width="100%" height="128" viewBox="0 0 300 128" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="252" cy="20" r="80" fill="#146B57"/><circle cx="46" cy="118" r="62" fill="#0A4C3D"/></svg>
+              <span class="et" style="position: absolute; top: 12px; right: 12px; background: #FFFFFF; color: #B3351F">Obligatorio</span>
+            </div>
+            <div style="padding: 18px; display: flex; flex-direction: column; flex: 1">
+              <div style="font-size: 12px; color: #5B6070; font-weight: 600">Seguridad y salud</div>
+              <h3 style="font-size: 16px; font-weight: 700; margin-top: 6px; line-height: 1.3">Seguridad laboral y prevención de riesgos</h3>
+              <div style="margin-top: auto; padding-top: 16px">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px"><span style="font-size: 12px; color: #0A5A43; font-weight: 700">Finalizado</span><span class="num" style="font-size: 12px; font-weight: 700; color: #0A5A43">100%</span></div>
+                <div style="height: 6px; background: #EDEDF2; border-radius: 999px"><div style="width: 100%; height: 6px; background: #0E9F6E; border-radius: 999px"></div></div>
+                <div style="display: flex; align-items: center; gap: 7px; margin-top: 12px; font-size: 12px; color: #0A5A43; font-weight: 600">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Certificado disponible
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <!-- 2 -->
+          <a class="crd" href="CursoDetalle.dc.html" style="border-color: #4F46E5; border-width: 2px">
+            <div style="position: relative; height: 128px; background: #4F46E5; overflow: hidden">
+              <svg width="100%" height="128" viewBox="0 0 300 128" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="248" cy="104" r="86" fill="#6A62EC"/><circle cx="58" cy="14" r="58" fill="#3F37C9"/></svg>
+              <span class="et" style="position: absolute; top: 12px; right: 12px; background: #FFFFFF; color: #3A32BE">Voluntario</span>
+            </div>
+            <div style="padding: 18px; display: flex; flex-direction: column; flex: 1">
+              <div style="font-size: 12px; color: #5B6070; font-weight: 600">Habilidades blandas</div>
+              <h3 style="font-size: 16px; font-weight: 700; margin-top: 6px; line-height: 1.3">Manejo del estrés laboral</h3>
+              <div style="margin-top: auto; padding-top: 16px">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px"><span style="font-size: 12px; color: #3A32BE; font-weight: 700">Sección 3 de 5</span><span class="num" style="font-size: 12px; font-weight: 700; color: #3A32BE">45%</span></div>
+                <div style="height: 6px; background: #EDEDF2; border-radius: 999px"><div style="width: 45%; height: 6px; background: #4F46E5; border-radius: 999px"></div></div>
+                <div style="font-size: 12px; color: #5B6070; margin-top: 12px">Sin vencimiento</div>
+              </div>
+            </div>
+          </a>
+
+          <!-- 3 -->
+          <a class="crd" href="CursoDetalle.dc.html">
+            <div style="position: relative; height: 128px; background: #8A5A00; overflow: hidden">
+              <svg width="100%" height="128" viewBox="0 0 300 128" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="236" cy="54" r="78" fill="#A86E00"/><circle cx="62" cy="112" r="52" fill="#734B00"/></svg>
+              <span class="et" style="position: absolute; top: 12px; right: 12px; background: #FFFFFF; color: #B3351F">Obligatorio</span>
+            </div>
+            <div style="padding: 18px; display: flex; flex-direction: column; flex: 1">
+              <div style="font-size: 12px; color: #5B6070; font-weight: 600">Operación</div>
+              <h3 style="font-size: 16px; font-weight: 700; margin-top: 6px; line-height: 1.3">Manipulación segura de materiales</h3>
+              <div style="margin-top: auto; padding-top: 16px">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px"><span style="font-size: 12px; color: #B3351F; font-weight: 700">Sin empezar</span><span class="num" style="font-size: 12px; font-weight: 700; color: #5B6070">0%</span></div>
+                <div style="height: 6px; background: #EDEDF2; border-radius: 999px"></div>
+                <div style="font-size: 12px; color: #B3351F; font-weight: 700; margin-top: 12px">Vence el 30/11/2026</div>
+              </div>
+            </div>
+          </a>
+
+          <!-- 4 -->
+          <a class="crd" href="CursoDetalle.dc.html">
+            <div style="position: relative; height: 128px; background: #16163A; overflow: hidden">
+              <svg width="100%" height="128" viewBox="0 0 300 128" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect x="26" y="16" width="72" height="72" rx="12" fill="#262657"/><rect x="118" y="38" width="72" height="72" rx="12" fill="#302F66"/><rect x="210" y="8" width="72" height="72" rx="12" fill="#3C3B7A"/></svg>
+              <span class="et" style="position: absolute; top: 12px; right: 12px; background: #FFFFFF; color: #B3351F">Obligatorio</span>
+            </div>
+            <div style="padding: 18px; display: flex; flex-direction: column; flex: 1">
+              <div style="font-size: 12px; color: #5B6070; font-weight: 600">Institucional</div>
+              <h3 style="font-size: 16px; font-weight: 700; margin-top: 6px; line-height: 1.3">Inducción corporativa Plastitec</h3>
+              <div style="margin-top: auto; padding-top: 16px">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px"><span style="font-size: 12px; color: #0A5A43; font-weight: 700">Finalizado</span><span class="num" style="font-size: 12px; font-weight: 700; color: #0A5A43">100%</span></div>
+                <div style="height: 6px; background: #EDEDF2; border-radius: 999px"><div style="width: 100%; height: 6px; background: #0E9F6E; border-radius: 999px"></div></div>
+                <div style="display: flex; align-items: center; gap: 7px; margin-top: 12px; font-size: 12px; color: #0A5A43; font-weight: 600">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Certificado disponible
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <!-- 5 -->
+          <a class="crd" href="CursoDetalle.dc.html">
+            <div style="position: relative; height: 128px; background: #3F37C9; overflow: hidden">
+              <svg width="100%" height="128" viewBox="0 0 300 128" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="60" cy="64" r="72" fill="#4F46E5"/><circle cx="246" cy="30" r="58" fill="#6A62EC"/></svg>
+              <span class="et" style="position: absolute; top: 12px; right: 12px; background: #FFFFFF; color: #B3351F">Obligatorio</span>
+            </div>
+            <div style="padding: 18px; display: flex; flex-direction: column; flex: 1">
+              <div style="font-size: 12px; color: #5B6070; font-weight: 600">Cumplimiento</div>
+              <h3 style="font-size: 16px; font-weight: 700; margin-top: 6px; line-height: 1.3">Protección de datos personales</h3>
+              <div style="margin-top: auto; padding-top: 16px">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px"><span style="font-size: 12px; color: #3A32BE; font-weight: 700">Sección 1 de 4</span><span class="num" style="font-size: 12px; font-weight: 700; color: #3A32BE">20%</span></div>
+                <div style="height: 6px; background: #EDEDF2; border-radius: 999px"><div style="width: 20%; height: 6px; background: #4F46E5; border-radius: 999px"></div></div>
+                <div style="font-size: 12px; color: #5B6070; margin-top: 12px">Vence el 15/12/2026</div>
+              </div>
+            </div>
+          </a>
+
+          <!-- 6 -->
+          <a class="crd" href="CursoDetalle.dc.html">
+            <div style="position: relative; height: 128px; background: #146B57; overflow: hidden">
+              <svg width="100%" height="128" viewBox="0 0 300 128" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="210" cy="112" r="76" fill="#0B5A48"/><circle cx="70" cy="22" r="54" fill="#1C8169"/></svg>
+              <span class="et" style="position: absolute; top: 12px; right: 12px; background: #FFFFFF; color: #3A32BE">Voluntario</span>
+            </div>
+            <div style="padding: 18px; display: flex; flex-direction: column; flex: 1">
+              <div style="font-size: 12px; color: #5B6070; font-weight: 600">Habilidades blandas</div>
+              <h3 style="font-size: 16px; font-weight: 700; margin-top: 6px; line-height: 1.3">Comunicación asertiva y trabajo en equipo</h3>
+              <div style="margin-top: auto; padding-top: 16px">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px"><span style="font-size: 12px; color: #5B6070; font-weight: 700">Sin empezar</span><span class="num" style="font-size: 12px; font-weight: 700; color: #5B6070">0%</span></div>
+                <div style="height: 6px; background: #EDEDF2; border-radius: 999px"></div>
+                <div style="font-size: 12px; color: #5B6070; margin-top: 12px">Sin vencimiento</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer style="background: #16163A; padding: 26px 36px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px">
+    <span style="color: #8A8CBE; font-size: 13px">Portal del Colaborador · Plastitec S.A.S. · Red interna</span>
+    <span style="margin-left: auto; display: flex; flex-wrap: wrap; gap: 22px">
+      <a href="Noticias.dc.html" style="color: #B9BAD8; font-size: 13px; font-weight: 500">Reglamento interno</a>
+      <a href="Tramites.dc.html" style="color: #B9BAD8; font-size: 13px; font-weight: 500">Petición o queja</a>
+      <a href="Tramites.dc.html" style="color: #B9BAD8; font-size: 13px; font-weight: 500">Ayuda · ext. 142</a>
+    </span>
+  </footer>
+</div>
+
+</body>
+</html>

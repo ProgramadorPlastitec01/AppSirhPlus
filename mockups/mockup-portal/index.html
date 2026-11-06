@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup — Portal del Colaborador</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  body { margin: 0; background: #16163A; color: #14141F; font-family: Inter, system-ui, sans-serif; }
+  * { box-sizing: border-box; }
+  a { text-decoration: none; color: inherit; }
+  h1, h2, h3 { font-family: Archivo, Inter, sans-serif; margin: 0; letter-spacing: -0.025em; }
+  .envoltura { max-width: 1180px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 44px); }
+  .grupo { margin-top: 40px; }
+  .grupo h2 { color: #FFFFFF; font-size: 15px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #D9B06A; }
+  .grupo p { margin: 8px 0 0; color: #A5A7D4; font-size: 14px; line-height: 1.55; max-width: 72ch; }
+  .rejilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; margin-top: 18px; }
+  .ficha { display: block; background: #262650; border: 1px solid #302F66; border-radius: 14px; padding: 18px; transition: background .15s, border-color .15s; }
+  .ficha:hover { background: #302F66; border-color: #4F46E5; }
+  .ficha:focus-visible { outline: 3px solid #D9B06A; outline-offset: 2px; }
+  .ficha .n { display: block; font-family: Archivo, sans-serif; color: #FFFFFF; font-size: 17px; font-weight: 700; }
+  .ficha .d { display: block; margin-top: 6px; color: #A5A7D4; font-size: 13px; line-height: 1.5; }
+  .ficha .f { display: block; margin-top: 12px; color: #8A8CBE; font-size: 11px; font-variant-numeric: tabular-nums; }
+  .nota { margin-top: 44px; background: #1E1E4A; border-left: 4px solid #D9B06A; border-radius: 12px; padding: 20px 24px; }
+  .nota h3 { color: #D9B06A; font-size: 15px; font-weight: 700; }
+  .nota p { margin: 8px 0 0; color: #B9BAD8; font-size: 14px; line-height: 1.6; }
+  .nota code { background: #262650; padding: 2px 6px; border-radius: 5px; font-size: 13px; color: #E4E5F5; }
+</style>
+</head>
+<body>
+
+<div class="envoltura" style="padding-top: 56px; padding-bottom: 64px">
+
+  <div style="display: flex; align-items: center; gap: 14px">
+    <div style="width: 48px; height: 48px; border-radius: 13px; background: #4F46E5; display: flex; align-items: center; justify-content: center; font-family: Archivo, sans-serif; font-weight: 800; color: #FFFFFF; font-size: 22px">P</div>
+    <div>
+      <div style="font-family: Archivo, sans-serif; color: #FFFFFF; font-weight: 700; font-size: 19px; line-height: 1.1">Plastitec</div>
+      <div style="color: #8A8CBE; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px">Colaboradores</div>
+    </div>
+  </div>
+
+  <h1 style="color: #FFFFFF; font-size: clamp(32px, 6vw, 52px); font-weight: 800; line-height: 1.04; margin-top: 28px">Mockup del Portal<br>del Colaborador</h1>
+  <p style="margin: 18px 0 0; color: #A5A7D4; font-size: 17px; line-height: 1.6; max-width: 62ch">
+    Catorce pantallas navegables. Los enlaces entre ellas funcionan: se puede recorrer el portal
+    entrando desde el ingreso, igual que lo haría un colaborador.
+  </p>
+
+  <div class="grupo">
+    <h2>Entrada al portal</h2>
+    <p>Equipo compartido: temporizador visible, sin «recordar sesión» y botón Salir siempre a la vista.</p>
+    <div class="rejilla">
+      <a class="ficha" href="Login.dc.html"><span class="n">Ingreso</span><span class="d">Documento y clave, con el aviso de equipo compartido</span><span class="f">Login.dc.html</span></a>
+      <a class="ficha" href="Main.dc.html"><span class="n">Inicio del portal</span><span class="d">Noticias, Fondo de Empleados, accesos y «La empresa»</span><span class="f">Main.dc.html</span></a>
+    </div>
+  </div>
+
+  <div class="grupo">
+    <h2>Mi información y mi tiempo</h2>
+    <div class="rejilla">
+      <a class="ficha" href="MiInformacion.dc.html"><span class="n">Mi información</span><span class="d">Ficha, grupo familiar, documentos y contacto de emergencia</span><span class="f">MiInformacion.dc.html</span></a>
+      <a class="ficha" href="MiTiempo.dc.html"><span class="n">Mi tiempo</span><span class="d">Marcaciones y horas desde BITIOME</span><span class="f">MiTiempo.dc.html</span></a>
+      <a class="ficha" href="Vacaciones.dc.html"><span class="n">Vacaciones y permisos</span><span class="d">Saldo, solicitud y seguimiento del estado</span><span class="f">Vacaciones.dc.html</span></a>
+    </div>
+  </div>
+
+  <div class="grupo">
+    <h2>Nómina, trámites y desarrollo</h2>
+    <p>El certificado laboral tiene marco propio: si la demostración pasa por una sola pantalla, que sea Trámites.</p>
+    <div class="rejilla">
+      <a class="ficha" href="Nomina.dc.html"><span class="n">Mi nómina</span><span class="d">Desprendible y certificado de ingresos, desde SINERGY</span><span class="f">Nomina.dc.html</span></a>
+      <a class="ficha" href="Tramites.dc.html"><span class="n">Trámites</span><span class="d">Certificado laboral al instante y solicitudes con radicado</span><span class="f">Tramites.dc.html</span></a>
+      <a class="ficha" href="Desarrollo.dc.html"><span class="n">Competencias y EPP</span><span class="d">Competencias evaluadas, exámenes y dotación</span><span class="f">Desarrollo.dc.html</span></a>
+    </div>
+  </div>
+
+  <div class="grupo">
+    <h2>Aprendizaje, cartelera y Fondo</h2>
+    <div class="rejilla">
+      <a class="ficha" href="Formacion.dc.html"><span class="n">Capacitaciones</span><span class="d">Documentos del cargo con comprensión evaluada</span><span class="f">Formacion.dc.html</span></a>
+      <a class="ficha" href="Noticias.dc.html"><span class="n">Empresa</span><span class="d">Noticias, convocatorias internas y espacio del Fondo</span><span class="f">Noticias.dc.html</span></a>
+      <a class="ficha" href="Cursos.dc.html"><span class="n">Catálogo de cursos</span><span class="d">Categorías, filtros de estado y progreso por curso</span><span class="f">Cursos.dc.html</span></a>
+      <a class="ficha" href="CursoDetalle.dc.html"><span class="n">Curso paso a paso</span><span class="d">Secciones en orden, video de apoyo y cuestionario final</span><span class="f">CursoDetalle.dc.html</span></a>
+    </div>
+  </div>
+
+  <div class="grupo">
+    <h2>Organigrama y encuestas</h2>
+    <p>Anónima de verdad: una tabla registra que participaste, otra guarda las respuestas, y no hay llave entre las dos.</p>
+    <div class="rejilla">
+      <a class="ficha" href="Organigrama.dc.html"><span class="n">Organigrama</span><span class="d">Árbol por cargo, con las vacantes visibles</span><span class="f">Organigrama.dc.html</span></a>
+      <a class="ficha" href="Encuestas.dc.html"><span class="n">Encuestas</span><span class="d">Encuestas asignadas, incluidas las anónimas</span><span class="f">Encuestas.dc.html</span></a>
+    </div>
+  </div>
+
+  <div class="nota">
+    <h3>Sobre estos archivos</h3>
+    <p>
+      Son las mismas pantallas del lienzo de diseño, con el markup y los estilos intactos. Lo único que se quitó
+      fue el andamiaje del lienzo —<code>support.js</code>, <code>&lt;x-dc&gt;</code> y <code>&lt;helmet&gt;</code>—
+      para que cada archivo abra solo en cualquier navegador, con doble clic y sin servidor.
+      Los originales tal como están publicados quedaron en la carpeta <code>originales/</code>.
+    </p>
+    <p>
+      Las tipografías Archivo e Inter se cargan desde Google Fonts. Sin conexión a internet, el navegador usa una
+      alternativa del sistema y el diseño se ve algo distinto, pero la estructura se mantiene.
+      Ancho de referencia: 1280px.
+    </p>
+    <p>
+      <strong style="color:#FFFFFF">Es un mockup, no el aplicativo.</strong> Los formularios no guardan nada
+      y los datos que se ven son de ejemplo.
+    </p>
+  </div>
+
+</div>
+</body>
+</html>

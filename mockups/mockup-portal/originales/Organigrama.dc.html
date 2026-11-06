@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Organigrama — Portal del Colaborador</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    a { text-decoration: none; color: inherit; }
+    h1, h2, h3 { font-family: Archivo, Inter, sans-serif; margin: 0; letter-spacing: -0.025em; }
+    .top { display: flex; align-items: center; padding: 15px 16px 13px; color: #A5A7D4; font-size: 15px; font-weight: 500; border-bottom: 3px solid transparent; }
+    .top:hover { color: #FFFFFF; }
+    .top.on { color: #FFFFFF; font-weight: 700; border-bottom-color: #D9B06A; }
+    .nd { display: flex; align-items: center; gap: 11px; padding: 13px 15px; background: #FFFFFF; border: 1px solid #DEDEE8; border-radius: 13px; min-width: 0; }
+    .nd:hover { border-color: #4F46E5; box-shadow: 0 5px 16px rgba(22,22,58,.09); }
+    .av { width: 36px; height: 36px; flex: 0 0 auto; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+    .vl { width: 2px; background: #D3D4DE; margin: 0 auto; }
+    .hl { height: 2px; background: #D3D4DE; }
+    .num { font-variant-numeric: tabular-nums; }
+  </style>
+</helmet>
+
+<div style="min-height: 1080px; font-family: Inter, system-ui, sans-serif; background: #F5F5F8; color: #14141F">
+
+  <header style="background: #16163A">
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 14px 36px">
+      <a href="Main.dc.html" style="display: flex; align-items: center; gap: 12px; margin-right: 12px">
+        <div style="width: 40px; height: 40px; border-radius: 11px; background: #4F46E5; display: flex; align-items: center; justify-content: center; font-family: Archivo, sans-serif; font-weight: 800; color: #FFFFFF; font-size: 19px">P</div>
+        <div>
+          <div style="font-family: Archivo, sans-serif; color: #FFFFFF; font-weight: 700; font-size: 16px; letter-spacing: -0.02em; line-height: 1.1">Plastitec</div>
+          <div style="color: #8A8CBE; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase">Colaboradores</div>
+        </div>
+      </a>
+      <nav style="order: 3; flex: 1 0 100%; display: flex; flex-wrap: wrap; gap: 2px; margin: 0 -36px -14px; padding: 0 36px; border-top: 1px solid #262650">
+        <a class="top" href="Main.dc.html">Inicio</a>
+        <a class="top" href="MiTiempo.dc.html">Tiempo</a>
+        <a class="top" href="Vacaciones.dc.html">Vacaciones</a>
+        <a class="top" href="Nomina.dc.html">Nómina</a>
+        <a class="top" href="Tramites.dc.html">Trámites</a>
+        <a class="top" href="Formacion.dc.html">Aprendizaje</a>
+        <a class="top" href="Encuestas.dc.html">Encuestas</a>
+        <a class="top on" href="Noticias.dc.html">Empresa</a>
+      </nav>
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 10px">
+        <div class="num" style="display: flex; align-items: center; gap: 6px; padding: 8px 12px; background: #262650; border-radius: 999px; color: #D9B06A; font-size: 13px; font-weight: 600">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 4:11
+        </div>
+        <a href="MiInformacion.dc.html" style="width: 34px; height: 34px; border-radius: 999px; background: #4F46E5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700" aria-label="Mi información">CR</a>
+        <a href="Login.dc.html" style="padding: 10px 17px; background: #FFFFFF; color: #16163A; border-radius: 999px; font-size: 14px; font-weight: 700">Salir</a>
+      </div>
+    </div>
+  </header>
+
+  <div style="background: #16163A; padding: 8px 36px 48px; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 20px">
+    <div>
+      <h1 style="color: #FFFFFF; font-size: 40px; font-weight: 800">Organigrama</h1>
+      <p style="margin: 10px 0 0; color: #A5A7D4; font-size: 16px">Cómo está estructurada la empresa. Toca cualquier recuadro para abrir su equipo.</p>
+    </div>
+    <div style="margin-left: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+      <div style="display: flex; align-items: center; gap: 10px; padding: 11px 16px; background: #262650; border-radius: 999px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A8CBE" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <label for="b" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Buscar persona o cargo</label>
+        <input id="b" type="search" placeholder="Buscar persona o cargo" style="border: none; outline: none; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 14px; width: 180px">
+      </div>
+      <div style="display: flex; gap: 4px; padding: 4px; background: #262650; border-radius: 999px">
+        <span style="padding: 8px 15px; background: #FFFFFF; color: #16163A; border-radius: 999px; font-size: 13px; font-weight: 700">Por cargo</span>
+        <a href="#persona" style="padding: 8px 15px; color: #B9BAD8; font-size: 13px; font-weight: 600">Por persona</a>
+      </div>
+    </div>
+  </div>
+
+  <main style="padding: 0 36px 48px; display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+
+    <!-- Árbol -->
+    <section style="flex: 999 1 620px; min-width: 0; margin-top: -24px; padding: 28px; background: #FFFFFF; border: 1px solid #E7E7EE; border-radius: 18px; box-shadow: 0 8px 26px rgba(22,22,58,.07)">
+
+      <!-- Nivel 1 -->
+      <div style="display: flex; justify-content: center">
+        <a class="nd" href="#n1" style="width: 300px">
+          <span class="av" style="background: #16163A; color: #FFFFFF">AG</span>
+          <span style="flex: 1; min-width: 0"><span style="display: block; font-size: 15px; font-weight: 700">Gerencia General</span><span style="display: block; font-size: 13px; color: #5B6070">Alberto Gutiérrez S.</span></span>
+        </a>
+      </div>
+      <div class="vl" style="height: 22px"></div>
+
+      <!-- Bus nivel 2 -->
+      <div style="display: flex">
+        <div style="flex: 1"></div><div class="hl" style="flex: 6"></div><div style="flex: 1"></div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px">
+        <div style="display: flex; flex-direction: column; align-items: center"><div class="vl" style="height: 18px"></div></div>
+        <div style="display: flex; flex-direction: column; align-items: center"><div class="vl" style="height: 18px"></div></div>
+        <div style="display: flex; flex-direction: column; align-items: center"><div class="vl" style="height: 18px"></div></div>
+        <div style="display: flex; flex-direction: column; align-items: center"><div class="vl" style="height: 18px"></div></div>
+      </div>
+
+      <!-- Nivel 2 -->
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px">
+        <a class="nd" href="#d1" style="border-color: #4F46E5; border-width: 2px; background: #F7F7FE">
+          <span class="av" style="background: #EEF0FE; color: #3A32BE">MP</span>
+          <span style="flex: 1; min-width: 0"><span style="display: block; font-size: 14px; font-weight: 700">Producción</span><span style="display: block; font-size: 12px; color: #5B6070">Mónica Peña R.</span></span>
+        </a>
+        <a class="nd" href="#d2">
+          <span class="av" style="background: #EFEFF4; color: #5B6070">RC</span>
+          <span style="flex: 1; min-width: 0"><span style="display: block; font-size: 14px; font-weight: 700">Administrativa</span><span style="display: block; font-size: 12px; color: #5B6070">Ricardo Castro M.</span></span>
+        </a>
+        <a class="nd" href="#d3">
+          <span class="av" style="background: #EFEFF4; color: #5B6070">LV</span>
+          <span style="flex: 1; min-width: 0"><span style="display: block; font-size: 14px; font-weight: 700">Comercial</span><span style="display: block; font-size: 12px; color: #5B6070">Liliana Vargas O.</span></span>
+        </a>
+        <a class="nd" href="#d4" style="border-style: dashed; background: #FAFAFC">
+          <span class="av" style="background: #FAF0DC; color: #7A4F00">—</span>
+          <span style="flex: 1; min-width: 0"><span style="display: block; font-size: 14px; font-weight: 700">Calidad y SST</span><span style="display: block; font-size: 12px; color: #7A4F00; font-weight: 600">Cargo vacante</span></span>
+        </a>
+      </div>
+
+      <!-- Hacia nivel 3, desde Producción -->
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px">
+        <div style="display: flex; flex-direction: column; align-items: center"><div class="vl" style="height: 24px; background: #4F46E5"></div></div>
+      </div>
+      <div style="display: flex; gap: 14px">
+        <div style="flex: 1; padding-left: 50%"><div class="hl" style="background: #4F46E5; width: 100%"></div></div>
+        <div style="flex: 2"><div class="hl" style="background: #4F46E5"></div></div>
+        <div style="flex: 1; padding-right: 50%"><div class="hl" style="background: #4F46E5; width: 100%"></div></div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+        <div style="display: flex; justify-content: center"><div class="vl" style="height: 18px; background: #4F46E5"></div></div>
+        <div style="display: flex; justify-content: center"><div class="vl" style="height: 18px; background: #4F46E5"></div></div>
+        <div style="display: flex; justify-content: center"><div class="vl" style="height: 18px; background: #4F46E5"></div></div>
+      </div>
+
+      <!-- Nivel 3 -->
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+        <a class="nd" href="#j1">
+          <span class="av" style="background: #EFEFF4; color: #5B6070">HD</span>
+          <span style="flex: 1; min-width: 0"><span style="display: block; font-size: 14px; font-weight: 700">Jefatura Planta 1</span><span style="display: block; font-size: 12px; color: #5B6070">Hernán Díaz · 42 personas</span></span>
+        </a>
+        <a class="nd" href="#j2" style="border-color: #4F46E5; border-width: 2px; background: #F7F7FE">
+          <span class="av" style="background: #EEF0FE; color: #3A32BE">SQ</span>
+          <span style="flex: 1; min-width: 0"><span style="display: block; font-size: 14px; font-weight: 700">Jefatura Planta 2</span><span style="display: block; font-size: 12px; color: #5B6070">Sandra Quintero · 38</span></span>
+        </a>
+        <a class="nd" href="#j3">
+          <span class="av" style="background: #EFEFF4; color: #5B6070">JT</span>
+          <span style="flex: 1; min-width: 0"><span style="display: block; font-size: 14px; font-weight: 700">Mantenimiento</span><span style="display: block; font-size: 12px; color: #5B6070">Jorge Trujillo · 14</span></span>
+        </a>
+      </div>
+
+      <!-- Hacia nivel 4 -->
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+        <div></div>
+        <div style="display: flex; justify-content: center"><div class="vl" style="height: 24px; background: #4F46E5"></div></div>
+        <div></div>
+      </div>
+
+      <!-- Nivel 4 -->
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+        <div></div>
+        <a class="nd" href="#s1" style="border-color: #D9B06A; border-width: 2px; background: #FEFBF4">
+          <span class="av" style="background: #4F46E5; color: #FFFFFF">CR</span>
+          <span style="flex: 1; min-width: 0">
+            <span style="display: block; font-size: 14px; font-weight: 700">Operario de Extrusión</span>
+            <span style="display: block; font-size: 12px; color: #7A4F00; font-weight: 700">Carlos A. Ramírez · tú</span>
+          </span>
+        </a>
+        <div></div>
+      </div>
+
+      <div style="display: flex; justify-content: center; margin-top: 22px">
+        <a href="#expandir" style="display: flex; align-items: center; gap: 9px; padding: 11px 20px; border: 1.5px solid #D8D9E2; border-radius: 999px; font-size: 14px; font-weight: 600; color: #5B6070">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          Ver los 38 cargos de Planta 2
+        </a>
+      </div>
+    </section>
+
+    <!-- Panel de detalle -->
+    <aside style="flex: 1 1 300px; min-width: 0; margin-top: -24px; display: flex; flex-direction: column; gap: 16px">
+      <div style="background: #FFFFFF; border: 1px solid #E7E7EE; border-radius: 18px; padding: 24px; box-shadow: 0 8px 26px rgba(22,22,58,.07)">
+        <div style="display: flex; align-items: center; gap: 14px">
+          <span style="width: 54px; height: 54px; border-radius: 999px; background: #EEF0FE; color: #3A32BE; display: flex; align-items: center; justify-content: center; font-family: Archivo, sans-serif; font-size: 18px; font-weight: 800">SQ</span>
+          <span><span style="display: block; font-size: 17px; font-weight: 700">Sandra Quintero L.</span><span style="display: block; font-size: 13px; color: #5B6070; margin-top: 2px">Jefatura de Planta 2</span></span>
+        </div>
+
+        <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 0">
+          <div style="padding: 13px 0; border-bottom: 1px solid #F2F2F6"><div style="font-size: 11px; color: #5B6070; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em">Reporta a</div><div style="font-size: 14px; font-weight: 600; margin-top: 4px">Dirección de Producción</div></div>
+          <div style="padding: 13px 0; border-bottom: 1px solid #F2F2F6"><div style="font-size: 11px; color: #5B6070; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em">Equipo a cargo</div><div class="num" style="font-size: 14px; font-weight: 600; margin-top: 4px">38 personas · 9 cargos</div></div>
+          <div style="padding: 13px 0; border-bottom: 1px solid #F2F2F6"><div style="font-size: 11px; color: #5B6070; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em">Extensión</div><div class="num" style="font-size: 14px; font-weight: 600; margin-top: 4px">218</div></div>
+          <div style="padding: 13px 0"><div style="font-size: 11px; color: #5B6070; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em">Correo</div><div style="font-size: 14px; font-weight: 600; margin-top: 4px">s.quintero@plastitec-sa.com</div></div>
+        </div>
+
+        <a href="#equipo" style="display: block; text-align: center; margin-top: 8px; padding: 13px; background: #4F46E5; color: #FFFFFF; border-radius: 12px; font-size: 15px; font-weight: 700">Ver su equipo</a>
+      </div>
+
+      <div style="background: #EEF0FE; border-radius: 18px; padding: 20px">
+        <div style="font-size: 12px; font-weight: 700; color: #3A32BE; letter-spacing: 0.07em; text-transform: uppercase">Tu línea</div>
+        <p style="margin: 10px 0 0; font-size: 14px; color: #3A32BE; line-height: 1.6">Gerencia General → Producción → Planta 2 → <strong>tu cargo</strong>. Tu jefe inmediato es quien aprueba tus permisos y recibe tus alertas.</p>
+      </div>
+
+      <div style="background: #FFFFFF; border: 1px solid #E7E7EE; border-radius: 18px; padding: 20px">
+        <div style="font-size: 12px; font-weight: 700; color: #5B6070; letter-spacing: 0.07em; text-transform: uppercase">La empresa</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 14px">
+          <div><div class="num" style="font-family: Archivo, sans-serif; font-size: 26px; font-weight: 800">4</div><div style="font-size: 12px; color: #5B6070">direcciones</div></div>
+          <div><div class="num" style="font-family: Archivo, sans-serif; font-size: 26px; font-weight: 800">11</div><div style="font-size: 12px; color: #5B6070">jefaturas</div></div>
+          <div><div class="num" style="font-family: Archivo, sans-serif; font-size: 26px; font-weight: 800">1</div><div style="font-size: 12px; color: #7A4F00">vacante</div></div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <footer style="background: #16163A; padding: 26px 36px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px">
+    <span style="color: #8A8CBE; font-size: 13px">Portal del Colaborador · Plastitec S.A.S. · Red interna</span>
+    <span style="margin-left: auto; display: flex; flex-wrap: wrap; gap: 22px">
+      <a href="Noticias.dc.html" style="color: #B9BAD8; font-size: 13px; font-weight: 500">Reglamento interno</a>
+      <a href="Tramites.dc.html" style="color: #B9BAD8; font-size: 13px; font-weight: 500">Petición o queja</a>
+      <a href="Tramites.dc.html" style="color: #B9BAD8; font-size: 13px; font-weight: 500">Ayuda · ext. 142</a>
+    </span>
+  </footer>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

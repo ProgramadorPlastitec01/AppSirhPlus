@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./**/.env)",
+      "Read(./**/*.key)",
+      "Read(./**/*.pem)",
+      "Bash(git push:*)",
+      "Bash(rm -rf:*)",
+      "Bash(pip install:*)"
+    ],
+    "ask": [
+      "Bash(python manage.py migrate:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}

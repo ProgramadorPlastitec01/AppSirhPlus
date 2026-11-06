@@ -1,0 +1,52 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-10-27T17:00:00Z" },
+  "title": "Portal del Colaborador — Plastitec",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "designSystems": [],
+  "boards": {
+    "Login.dc.html":        { "x": 0,    "y": 0,    "w": 1280, "h": 1000, "title": "Ingreso",              "expand": "fill", "is_interactive": true },
+    "Main.dc.html":         { "x": 1360, "y": 0,    "w": 1280, "h": 1820, "title": "Inicio del portal",    "expand": "fill", "is_interactive": true },
+    "MiInformacion.dc.html":{ "x": 0,    "y": 2100, "w": 1280, "h": 1000, "title": "Mi información",       "expand": "fill", "is_interactive": true },
+    "MiTiempo.dc.html":     { "x": 1360, "y": 2100, "w": 1280, "h": 1000, "title": "Mi tiempo · BITIOME",  "expand": "fill", "is_interactive": true },
+    "Vacaciones.dc.html":   { "x": 2720, "y": 2100, "w": 1280, "h": 1000, "title": "Vacaciones · SINERGY", "expand": "fill", "is_interactive": true },
+    "Nomina.dc.html":       { "x": 0,    "y": 3500, "w": 1280, "h": 1000, "title": "Mi nómina · SINERGY",  "expand": "fill", "is_interactive": true },
+    "Tramites.dc.html":     { "x": 1360, "y": 3500, "w": 1280, "h": 1000, "title": "Trámites",             "expand": "fill", "is_interactive": true },
+    "Desarrollo.dc.html":   { "x": 2720, "y": 3500, "w": 1280, "h": 1000, "title": "Competencias y EPP",   "expand": "fill", "is_interactive": true },
+    "Formacion.dc.html":    { "x": 0,    "y": 5000, "w": 1280, "h": 1150, "title": "Aprendizaje · capacitaciones", "expand": "fill", "is_interactive": true },
+    "Noticias.dc.html":     { "x": 1360, "y": 5000, "w": 1280, "h": 1620, "title": "Empresa · noticias, convocatorias y Fondo", "expand": "fill", "is_interactive": true },
+    "Cursos.dc.html":       { "x": 0,    "y": 7000, "w": 1280, "h": 1200, "title": "Aprendizaje · catálogo de cursos", "expand": "fill", "is_interactive": true },
+    "CursoDetalle.dc.html": { "x": 1360, "y": 7000, "w": 1280, "h": 1250, "title": "Curso paso a paso",    "expand": "fill", "is_interactive": true },
+    "Organigrama.dc.html":  { "x": 0,    "y": 8650, "w": 1280, "h": 1080, "title": "Organigrama",          "expand": "fill", "is_interactive": true },
+    "Encuestas.dc.html":    { "x": 1360, "y": 8650, "w": 1280, "h": 1080, "title": "Encuestas",            "expand": "fill", "is_interactive": true }
+  },
+  "order": [
+    "Login.dc.html",
+    "Main.dc.html",
+    "MiInformacion.dc.html",
+    "MiTiempo.dc.html",
+    "Vacaciones.dc.html",
+    "Nomina.dc.html",
+    "Tramites.dc.html",
+    "Desarrollo.dc.html",
+    "Formacion.dc.html",
+    "Noticias.dc.html",
+    "Cursos.dc.html",
+    "CursoDetalle.dc.html",
+    "Organigrama.dc.html",
+    "Encuestas.dc.html"
+  ],
+  "notes": {
+    "t1": { "x": 0, "y": -300, "text": "Entrada al portal", "kind": "title1", "maxW": 2640 },
+    "t2": { "x": 0, "y": 1880, "text": "Mi información y mi tiempo", "kind": "title1", "maxW": 4000 },
+    "t3": { "x": 0, "y": 3180, "text": "Nómina, trámites y desarrollo", "kind": "title1", "maxW": 4000 },
+    "t4": { "x": 0, "y": 4700, "text": "Aprendizaje, cartelera, convocatorias y Fondo", "kind": "title1", "maxW": 2640 },
+    "t5": { "x": 0, "y": 6700, "text": "Cursos: catálogo y curso paso a paso", "kind": "title1", "maxW": 2640 },
+    "t6": { "x": 0, "y": 8350, "text": "Organigrama y encuestas", "kind": "title1", "maxW": 2640 },
+    "n1": { "x": 0, "y": 1060, "text": "Equipo compartido: temporizador visible, sin «recordar sesión» y botón Salir siempre a la vista.", "w": 420, "fill": "orange" },
+    "n2": { "x": 2720, "y": 4620, "text": "El certificado laboral tiene marco propio: si la demo pasa por una sola pantalla, que sea esa.", "w": 480, "fill": "teal" },
+    "n3": { "x": 2720, "y": 6700, "text": "El motor de preguntas es el mismo en los tres sitios: comprensión de un documento, cuestionario de un curso y encuestas. Se construye una vez.", "w": 520, "fill": "purple" },
+    "n4": { "x": 2720, "y": 8350, "text": "Anónima de verdad: una tabla registra que participaste, otra guarda las respuestas, y no hay llave entre las dos.", "w": 520, "fill": "orange" }
+  }
+}

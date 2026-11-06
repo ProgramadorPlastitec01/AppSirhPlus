@@ -1,0 +1,1854 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SIRH+ · Mockup de gestión</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --marca:#16163A; --marca-2:#1E1E4A; --marca-3:#2E2E5E; --marca-linea:#3A3A72;
+  --marca-txt:#FFFFFF; --marca-txt-2:#C3C5E8; --marca-txt-3:#8A8CBE;
+  --accion:#4F46E5; --accion-2:#3730A3; --accion-suave:#EEF0FE; --accion-borde:#B9BCF5;
+  --acento:#D9B06A; --acento-txt:#7A4F00; --acento-suave:#FAF0DC;
+  --fondo:#F5F5F8; --sup:#FFFFFF; --sup-2:#FBFBFD; --sup-3:#F0F0F5;
+  --linea:#E7E7EE; --linea-2:#D7D8E2;
+  --txt:#14141F; --txt-2:#4A4F5E; --txt-3:#6B7080; --txt-4:#8A8FA3;
+  --ok:#0B5A48; --ok-s:#E8F3EF; --ok-b:#A9D4C4;
+  --aviso:#7A4F00; --aviso-s:#FAF0DC; --aviso-b:#E6CD96;
+  --error:#A62E1A; --error-s:#FBE9E5; --error-b:#F0C4BA;
+  --info:#3730A3; --info-s:#EEF0FE; --info-b:#B9BCF5;
+  --e1:4px; --e2:8px; --e3:12px; --e4:16px; --e5:20px; --e6:24px; --e8:32px;
+  --r-xs:5px; --r-sm:8px; --r:9px; --r-md:11px; --r-lg:14px; --r-xl:16px; --r-full:999px;
+  --s-1:0 1px 2px rgba(20,21,25,.04), 0 2px 6px rgba(20,21,25,.05);
+  --s-2:0 2px 4px rgba(20,21,25,.05), 0 6px 16px rgba(20,21,25,.07);
+  --s-3:0 8px 24px rgba(20,21,25,.10), 0 24px 56px rgba(20,21,25,.14);
+  --disp:'Archivo',system-ui,sans-serif; --sans:'Inter',system-ui,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{height:100%}
+body{margin:0;min-height:100%;background:var(--fondo);color:var(--txt);font-family:var(--sans);
+  font-size:13.5px;-webkit-font-smoothing:antialiased;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+h1,h2,h3{font-family:var(--disp);margin:0;letter-spacing:-.025em;line-height:1.12}
+p{margin:0;line-height:1.55}
+ul,ol{margin:0}
+.num{font-variant-numeric:tabular-nums}
+a{color:var(--accion);text-decoration:none}
+a:hover{color:var(--accion-2)}
+:where(a,button,input,select,textarea,[tabindex]):focus-visible{outline:2px solid var(--accion);outline-offset:2px;border-radius:var(--r-sm)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ── shell ── */
+.app{display:flex;flex-wrap:wrap;min-height:100vh}
+.rail{width:248px;flex:0 0 248px;background:var(--marca);padding:var(--e5) 14px;display:flex;flex-direction:column;gap:20px;position:sticky;top:0;height:100vh;overflow-y:auto}
+@media(max-width:900px){.rail{position:static;height:auto;width:100%;flex:1 1 100%}}
+.brand{display:flex;align-items:center;gap:11px;padding:0 4px}
+.logo{width:38px;height:38px;border-radius:11px;background:var(--accion);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-weight:800;font-size:18px;flex:0 0 38px}
+.gl{color:#6E71A8;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px 5px}
+.nv{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--r-sm);color:var(--marca-txt-2);font-size:13px;font-weight:500;border:0;background:transparent;width:100%;text-align:left;font-family:inherit;cursor:pointer;position:relative}
+.nv:hover{background:#262650;color:#fff}
+.nv.on{background:var(--marca-3);color:#fff;font-weight:600}
+.nv.on::before{content:"";position:absolute;left:0;width:3px;height:19px;border-radius:0 3px 3px 0;background:var(--acento)}
+.nv .ct{margin-left:auto;background:var(--acento);color:#3A2A00;font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:var(--r-full)}
+.nv svg{flex:0 0 16px}
+main{flex:999 1 620px;min-width:0;display:flex;flex-direction:column}
+.hdr{background:var(--sup);border-bottom:1px solid var(--linea);padding:var(--e4) var(--e8);display:flex;flex-wrap:wrap;gap:var(--e4);align-items:center}
+.migas{color:var(--txt-3);font-size:12px;font-weight:500}
+.ttl{font-size:20px;font-weight:700;margin-top:3px}
+.body{padding:var(--e6) var(--e8) var(--e8)}
+.wrap{max-width:1180px}
+.fila{display:flex;flex-wrap:wrap;gap:var(--e5);align-items:flex-start}
+
+/* ── piezas ── */
+.card{background:var(--sup);border:1px solid var(--linea);border-radius:var(--r-lg);box-shadow:var(--s-1)}
+.card.pad{padding:var(--e5)}
+.card.dest{border-color:var(--accion);border-width:2px}
+.card.osc{background:var(--marca);border-color:var(--marca-3);color:#fff}
+.card.osc h2,.card.osc h3{color:#fff}
+.card.osc p{color:var(--marca-txt-2)}
+.card.plano{box-shadow:none;background:var(--sup-2)}
+.grid{display:grid;gap:var(--e4)}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:980px){.g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.g2,.g3,.g4{grid-template-columns:minmax(0,1fr)}}
+
+.lb{display:block;color:var(--txt-2);font-size:12.5px;font-weight:600;margin-bottom:var(--e2)}
+.in{width:100%;border:1px solid var(--linea-2);border-radius:var(--r);padding:10px 12px;font:inherit;font-size:13.5px;min-height:44px;background:var(--sup);color:var(--txt)}
+.in:focus{border-color:var(--accion)}
+.in[readonly]{background:var(--sup-3);color:var(--txt-3)}
+.in.ko{border-color:var(--error-b);background:#FFFBFA}
+.in.ok{border-color:var(--ok-b)}
+.hp{margin:6px 0 0;font-size:11.5px;line-height:1.45;color:var(--txt-3)}
+.hp.ko{color:var(--error);font-weight:600}
+.hp.ok{color:var(--ok);font-weight:600}
+.hp.av{color:var(--aviso);font-weight:600}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:0 var(--e4);
+  border-radius:var(--r);border:1px solid var(--linea-2);background:var(--sup);color:var(--txt);
+  font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--accion);color:var(--accion-2)}
+.btn.pri{background:var(--accion);border-color:var(--accion);color:#fff}
+.btn.pri:hover{background:var(--accion-2);border-color:var(--accion-2);color:#fff}
+.btn.osc{background:var(--marca);border-color:var(--marca);color:#fff}
+.btn.osc:hover{background:var(--marca-2);color:#fff}
+.btn.pel{background:var(--error-s);border-color:var(--error-b);color:var(--error)}
+.btn.sut{background:transparent;border-color:transparent;color:var(--accion)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.sm{min-height:36px;font-size:12.5px;padding:0 var(--e3)}
+.btn.ico{min-width:44px;padding:0 10px}
+
+.bdg{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:3px 9px;border-radius:var(--r-full);white-space:nowrap}
+.b-ok{background:var(--ok-s);color:var(--ok)}
+.b-av{background:var(--aviso-s);color:var(--aviso)}
+.b-ko{background:var(--error-s);color:var(--error)}
+.b-in{background:var(--info-s);color:var(--info)}
+.b-nt{background:var(--sup-3);color:var(--txt-2)}
+.b-mk{background:var(--marca);color:#fff}
+
+code{font-family:var(--mono);font-size:12px;background:var(--sup-3);color:var(--txt-2);padding:2px 6px;border-radius:var(--r-xs)}
+.kpi .n{font-family:var(--disp);font-size:31px;font-weight:700;letter-spacing:-.035em;font-variant-numeric:tabular-nums}
+.kpi .l{color:var(--txt-2);font-size:13px;margin-top:5px;line-height:1.45}
+.kpi .s{color:var(--txt-4);font-size:10.5px;margin-top:9px;letter-spacing:.05em;text-transform:uppercase;font-weight:700}
+
+.pb{height:8px;border-radius:var(--r-full);background:var(--sup-3);overflow:hidden;display:flex}
+.pb i{display:block;height:100%}
+.pb-mini{height:5px;min-width:60px}
+
+.av{border-radius:var(--r-md);padding:13px 15px;display:flex;gap:11px;align-items:flex-start}
+.av>svg{flex:0 0 17px;margin-top:1px}
+.av p{font-size:12.5px;line-height:1.55}
+.av-in{background:var(--accion-suave)} .av-in p{color:var(--info)}
+.av-av{background:var(--aviso-s)} .av-av p{color:var(--aviso)}
+.av-ko{background:var(--error-s)} .av-ko p{color:var(--error)}
+.av-ok{background:var(--ok-s)} .av-ok p{color:var(--ok)}
+
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--txt-3);padding:10px var(--e4);border-bottom:1px solid var(--linea-2);white-space:nowrap}
+td{padding:var(--e3) var(--e4);border-bottom:1px solid var(--linea);font-size:13.5px;vertical-align:middle}
+tbody tr:hover{background:var(--sup-2)}
+.scroll{overflow-x:auto}
+
+.row{display:flex;gap:var(--e3);align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--linea)}
+.row:last-child{border-bottom:0}
+.row .ic{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex:0 0 30px;font-size:11px;font-weight:800}
+.row .tx{flex:1;min-width:0}
+.row .tx b{display:block;font-size:13.5px;font-weight:600}
+.row .tx span{display:block;color:var(--txt-2);font-size:12.5px;margin-top:2px;line-height:1.5}
+
+.av32{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;flex:0 0 32px}
+.av48{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-size:17px;font-weight:700;flex:0 0 48px}
+.av68{width:68px;height:68px;border-radius:17px;display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-size:23px;font-weight:700;flex:0 0 68px}
+
+.tabs{display:flex;flex-wrap:wrap;gap:20px;overflow-x:auto}
+.tb{padding:11px 2px;font-size:13.5px;font-weight:500;color:var(--txt-3);border-bottom:3px solid transparent;background:0;border-top:0;border-left:0;border-right:0;font-family:inherit;cursor:pointer;white-space:nowrap}
+.tb:hover{color:var(--txt)}
+.tb.on{color:var(--txt);font-weight:700;border-bottom-color:var(--acento)}
+
+.chip{display:inline-flex;align-items:center;gap:7px;background:var(--sup);border:1px solid var(--linea-2);border-radius:var(--r-full);padding:6px 12px;font-size:12.5px;font-weight:500;color:var(--txt-2);cursor:pointer;font-family:inherit}
+.chip.on{background:var(--accion-suave);border-color:var(--accion-borde);color:var(--accion-2);font-weight:600}
+
+.dd{display:flex;justify-content:space-between;gap:var(--e4);padding:9px 0;border-bottom:1px solid var(--linea);font-size:13.5px}
+.dd:last-child{border-bottom:0}
+.dd dt{color:var(--txt-3)} .dd dd{margin:0;font-weight:500;text-align:right}
+
+.hito{display:flex;gap:var(--e3);align-items:flex-start;padding:var(--e3) 0;border-bottom:1px solid var(--linea)}
+.hito:last-child{border-bottom:0}
+.hito .dot{width:26px;height:26px;border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex:0 0 26px}
+.hito .pc{font-family:var(--disp);font-size:14px;font-weight:700;color:var(--txt-3);min-width:38px;text-align:right;font-variant-numeric:tabular-nums}
+
+.sw{position:relative;width:38px;height:22px;border-radius:var(--r-full);border:0;cursor:pointer;flex:0 0 38px;padding:0}
+.sw i{position:absolute;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .12s}
+
+.nd{display:flex;align-items:center;gap:var(--e3);background:var(--sup);border:1px solid var(--linea);border-radius:var(--r-md);padding:11px 14px}
+.nd:hover{border-color:var(--accion)}
+.rama{padding-left:26px;border-left:2px solid var(--linea);margin-left:15px;display:flex;flex-direction:column;gap:10px}
+
+.cx{background:var(--sup);border:1px solid var(--linea);border-radius:var(--r-md);padding:14px;text-align:center;min-width:168px;box-shadow:var(--s-1);display:block;color:inherit}
+.cx:hover{border-color:var(--accion);color:inherit}
+
+.view{display:none}
+.view.on{display:block}
+.sub{display:none}
+.sub.on{display:block}
+.foco{position:fixed;inset:0;background:rgba(22,22,58,.5);display:flex;align-items:flex-start;justify-content:center;padding:44px 20px;z-index:50;overflow-y:auto}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <nav class="rail" aria-label="Navegación principal">
+    <div class="brand">
+      <div class="logo">P</div>
+      <div>
+        <div style="font-family:var(--disp);color:#fff;font-weight:700;font-size:16px;line-height:1.1">SIRH+</div>
+        <div style="color:var(--marca-txt-3);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-top:3px">Gestión</div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <div class="gl">Operación</div>
+      <button class="nv on" type="button" data-ir="tablero"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>Tablero</button>
+      <button class="nv" type="button" data-ir="captura"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M13 3v5h5"/><path d="M19 8v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h7z"/><path d="M12 11v6M9 14h6"/></svg>Captura rápida</button>
+      <button class="nv" type="button" data-ir="fotos"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="6.5" width="18" height="13" rx="2.5"/><circle cx="12" cy="13" r="3.4"/><path d="M8.5 6.5l1.2-2h4.6l1.2 2"/></svg>Cola de fotos<span class="ct" id="ctFotos">0</span></button>
+      <button class="nv" type="button" data-ir="listado"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="8" r="3.4"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><path d="M17 11.5a3 3 0 1 0-1.6-5.5M18 20c0-2.3-.9-3.9-2.3-4.9"/></svg>Personal</button>
+      <button class="nv" type="button" data-ir="hoja"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 3h8l5 5v13H6z"/><path d="M9 12h7M9 16h5"/></svg>Hoja de vida</button>
+      <button class="nv" type="button" data-ir="completitud"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 8.5 8.5"/></svg>Completitud</button>
+      <button class="nv" type="button" data-ir="pendientes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h6"/></svg>Pendientes<span class="ct">7</span></button>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <div class="gl">Empresa</div>
+      <button class="nv" type="button" data-ir="cargos"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="9" y="3" width="6" height="4.5" rx="1"/><rect x="3" y="16.5" width="6" height="4.5" rx="1"/><rect x="15" y="16.5" width="6" height="4.5" rx="1"/><path d="M12 7.5v4.5M6 16.5V12h12v4.5"/></svg>Áreas y cargos</button>
+      <button class="nv" type="button" data-ir="estructura"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 6h14M8 12h11M11 18h8M5 6v12"/></svg>Estructura</button>
+      <button class="nv" type="button" data-ir="organigrama"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><circle cx="5.5" cy="19" r="2.5"/><circle cx="18.5" cy="19" r="2.5"/><path d="M12 7.5v4M5.5 16.5V12h13v4.5"/></svg>Organigrama</button>
+      <button class="nv" type="button" data-ir="puntos"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2.5"/><circle cx="12" cy="10" r="3"/><path d="M8 17h8"/></svg>Puntos de marcación</button>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <div class="gl">Firmas</div>
+      <button class="nv" type="button" data-ir="firmacap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 18c3 0 3.5-11 6.5-11S12 17 15 17s3-5 6-5"/></svg>Captura de firma</button>
+      <button class="nv" type="button" data-ir="firmaconf"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>Firmar documento</button>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <div class="gl">Administración</div>
+      <button class="nv" type="button" data-ir="permisos"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3l7.5 3.2v5c0 4.6-3.1 8.4-7.5 9.8-4.4-1.4-7.5-5.2-7.5-9.8v-5z"/><path d="M9.3 12l2 2 3.6-3.8"/></svg>Roles y permisos</button>
+      <button class="nv" type="button" data-ir="usuarios"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c0-3.4 2.9-5.6 6.5-5.6s6.5 2.2 6.5 5.6"/></svg>Usuarios</button>
+      <button class="nv" type="button" data-ir="parametros"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v2.5M12 18.5V21M21 12h-2.5M5.5 12H3M18.4 5.6l-1.8 1.8M7.4 16.6l-1.8 1.8M18.4 18.4l-1.8-1.8M7.4 7.4L5.6 5.6"/></svg>Parámetros</button>
+      <button class="nv" type="button" data-ir="auditoria"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M15.8 15.8L21 21"/></svg>Auditoría</button>
+    </div>
+
+    <div style="margin-top:auto;border-top:1px solid var(--marca-linea);padding-top:13px;display:flex;align-items:center;gap:10px">
+      <div style="width:34px;height:34px;border-radius:10px;background:var(--marca-3);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700;flex:0 0 34px">LM</div>
+      <div style="min-width:0;flex:1">
+        <div style="color:#fff;font-size:13px;font-weight:600">Laura Mejía</div>
+        <div style="color:var(--marca-txt-3);font-size:11px">Analista de RRHH</div>
+      </div>
+      <button class="btn ico sm" type="button" aria-label="Cerrar sesión" style="background:transparent;border-color:var(--marca-linea);color:var(--marca-txt-2);min-height:32px;min-width:32px;padding:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"/><path d="M9 16l-4-4 4-4M5 12h10"/></svg></button>
+    </div>
+  </nav>
+
+  <main id="main">
+
+<!-- ══════════ TABLERO ══════════ -->
+<section class="view on" id="v-tablero">
+  <header class="hdr">
+    <div style="flex:1;min-width:200px">
+      <nav class="migas" aria-label="Ruta">Recursos Humanos</nav>
+      <h1 class="ttl">Tablero</h1>
+    </div>
+    <div style="display:flex;align-items:center;gap:9px;background:var(--fondo);border:1px solid var(--linea);border-radius:var(--r);padding:9px 12px;min-width:230px">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--txt-4)" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M15.8 15.8L21 21"/></svg>
+      <label for="q0" class="sr">Buscar persona</label>
+      <input id="q0" type="search" placeholder="Buscar por documento o nombre" style="border:0;background:transparent;font:inherit;font-size:13px;width:100%;outline:none">
+    </div>
+    <button class="btn pri" type="button" data-ir="captura"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Registrar persona</button>
+  </header>
+
+  <div class="body"><div class="wrap" style="display:flex;flex-direction:column;gap:var(--e5)">
+
+    <div class="grid g4" style="margin:0">
+      <div class="card pad kpi"><div class="l" style="margin:0;font-weight:600;color:var(--txt-3);font-size:12px">Personal activo</div><div class="n">1.094</div><div style="display:flex;gap:10px;margin-top:9px;color:var(--txt-2);font-size:11.5px" class="num"><span>601 directos</span><span>·</span><span>493 temporales</span></div><div class="s">Fuente: SIRH+</div></div>
+      <div class="card pad kpi"><div class="l" style="margin:0;font-weight:600;color:var(--txt-3);font-size:12px">Ingresos del mes</div><div class="n">17</div><div style="margin-top:9px"><span class="bdg b-av">4 bajo el 70 %</span></div><div class="s">Fuente: SIRH+</div></div>
+      <div class="card pad kpi"><div class="l" style="margin:0;font-weight:600;color:var(--txt-3);font-size:12px">Retiros del mes</div><div class="n">9</div><div style="margin-top:9px"><span class="bdg b-ko">2 sin paz y salvo</span></div><div class="s">Fuente: SIRH+</div></div>
+      <div class="card pad kpi"><div class="l" style="margin:0;font-weight:600;color:var(--txt-3);font-size:12px">Sin código de nómina</div><div class="n" style="color:var(--error)">31</div><div class="l" style="font-size:11.5px">No entran al archivo de nómina</div><div class="s">Fuente: SIRH+</div></div>
+    </div>
+
+    <div class="fila">
+      <section class="card" style="flex:999 1 520px;min-width:0">
+        <div style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center;padding:var(--e4) var(--e5);border-bottom:1px solid var(--linea)">
+          <h2 style="font-size:15.5px;font-weight:700">Mi bandeja</h2>
+          <span style="color:var(--txt-3);font-size:12.5px" class="num">7 pendientes</span>
+          <button class="btn sut sm" type="button" data-ir="pendientes" style="margin-left:auto">Ver todos</button>
+        </div>
+        <div style="padding:0 var(--e5)" id="bandeja"></div>
+      </section>
+
+      <aside style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:var(--e5)">
+        <section class="card pad">
+          <h2 style="font-size:15.5px;font-weight:700">Vencimientos</h2>
+          <p style="color:var(--txt-3);font-size:12.5px;margin-top:3px">Próximos 30 días</p>
+          <div style="margin-top:var(--e3)">
+            <div class="row"><span class="num" style="font-family:var(--disp);font-size:21px;font-weight:700;color:var(--error);min-width:36px">23</span><span class="tx"><b>Exámenes periódicos</b><span>Más de 12 meses sin registro</span></span></div>
+            <div class="row"><span class="num" style="font-family:var(--disp);font-size:21px;font-weight:700;color:var(--aviso);min-width:36px">48</span><span class="tx"><b>Evaluaciones de competencias</b><span>Entre 10 y 12 meses</span></span></div>
+            <div class="row"><span class="num" style="font-family:var(--disp);font-size:21px;font-weight:700;color:var(--aviso);min-width:36px">6</span><span class="tx"><b>Contratos a término fijo</b><span>Vencen este mes</span></span></div>
+          </div>
+        </section>
+
+        <section class="card pad osc">
+          <div style="color:var(--acento);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase">Estado del sistema</div>
+          <div style="margin-top:var(--e3);display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;gap:10px"><span style="width:8px;height:8px;border-radius:50%;background:#3FBF8F;flex:0 0 8px"></span><span style="color:#fff;font-size:13px;flex:1">Biométricos</span><span class="num" style="color:var(--marca-txt-2);font-size:12px">10 de 10</span></div>
+            <div style="display:flex;align-items:center;gap:10px"><span style="width:8px;height:8px;border-radius:50%;background:#3FBF8F;flex:0 0 8px"></span><span style="color:#fff;font-size:13px;flex:1">Gestor de identidad</span><span style="color:var(--marca-txt-2);font-size:12px">en línea</span></div>
+            <div style="display:flex;align-items:center;gap:10px"><span style="width:8px;height:8px;border-radius:50%;background:#E8B53F;flex:0 0 8px"></span><span style="color:#fff;font-size:13px;flex:1">Daruma</span><span style="color:var(--marca-txt-2);font-size:12px">lento</span></div>
+            <div style="display:flex;align-items:center;gap:10px"><span style="width:8px;height:8px;border-radius:50%;background:#6E71A8;flex:0 0 8px"></span><span style="color:#fff;font-size:13px;flex:1">SINERGY</span><span style="color:var(--marca-txt-2);font-size:12px">sin conexión</span></div>
+          </div>
+          <p style="margin-top:var(--e4);padding-top:var(--e3);border-top:1px solid var(--marca-linea);color:var(--marca-txt-3);font-size:11.5px">Último corte de datos contractuales: 31 de octubre de 2026</p>
+        </section>
+      </aside>
+    </div>
+
+  </div></div>
+</section>
+
+<!-- ══════════ CAPTURA RÁPIDA ══════════ -->
+<section class="view" id="v-captura">
+  <header class="hdr">
+    <div style="flex:1;min-width:200px">
+      <nav class="migas" aria-label="Ruta">Recursos Humanos › Personal › Captura rápida</nav>
+      <h1 class="ttl">Captura rápida</h1>
+    </div>
+    <div style="display:flex;align-items:center;gap:var(--e4)">
+      <div style="text-align:right">
+        <div class="num" style="font-family:var(--disp);font-size:22px;font-weight:700;line-height:1" id="sesCount">0</div>
+        <div style="color:var(--txt-3);font-size:10.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-top:2px">En esta sesión</div>
+      </div>
+      <button class="btn ico" type="button" aria-label="Ayuda del módulo" data-ayuda="captura"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.3 2.4c-.6.2-.9.7-.9 1.3v.4M12 16.8v.3"/></svg></button>
+    </div>
+  </header>
+
+  <div class="body"><div class="wrap fila">
+
+    <div style="flex:999 1 520px;min-width:0;display:flex;flex-direction:column;gap:var(--e4)">
+      <div class="av av-in">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#3730A3" stroke-width="2" width="17" height="17" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.8v.4"/></svg>
+        <p>Cinco campos. El área, el nivel, la matriz y <strong>el punto de marcación</strong> los trae el cargo. La foto puede esperar: queda en la cola.</p>
+      </div>
+
+      <form class="card pad" id="frm" autocomplete="off">
+        <h2 style="font-size:16px;font-weight:700;margin-bottom:var(--e5)">Nueva persona</h2>
+        <div style="display:flex;flex-direction:column;gap:var(--e4)">
+
+          <div>
+            <label class="lb" for="ced">Número de documento</label>
+            <input class="in num" id="ced" type="text" inputmode="numeric" placeholder="Escribe o escanea" style="font-size:17px;font-weight:600">
+            <p class="hp" id="hCed">Se valida contra todo el histórico, no solo contra los activos.</p>
+          </div>
+
+          <div class="grid g2" style="margin:0">
+            <div><label class="lb" for="nom">Nombres</label><input class="in" id="nom" type="text" placeholder="Andrés Felipe"></div>
+            <div><label class="lb" for="ape">Apellidos</label><input class="in" id="ape" type="text" placeholder="Mora Quintero"></div>
+          </div>
+
+          <div class="grid g2" style="margin:0">
+            <div>
+              <label class="lb" for="cod">Código interno</label>
+              <input class="in num" id="cod" type="text" inputmode="numeric" value="9204">
+              <p class="hp" id="hCod">El sistema propone el siguiente. Se puede cambiar.</p>
+            </div>
+            <div>
+              <label class="lb" for="car">Cargo</label>
+              <select class="in" id="car"><option value="">Seleccionar…</option></select>
+              <p class="hp" id="hCar">Define jefe, área, matriz y punto de marcación.</p>
+            </div>
+          </div>
+
+          <div class="card plano" style="padding:var(--e4)">
+            <div style="color:var(--txt-3);font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:var(--e3)">Lo que trae el cargo</div>
+            <div class="grid g3" style="gap:var(--e3);margin:0">
+              <div><div style="color:var(--txt-4);font-size:11px;font-weight:600">Área</div><div style="font-weight:600;margin-top:2px" id="dArea">—</div></div>
+              <div><div style="color:var(--txt-4);font-size:11px;font-weight:600">Nivel</div><div style="font-weight:600;margin-top:2px" id="dNivel">—</div></div>
+              <div><div style="color:var(--txt-4);font-size:11px;font-weight:600">Reporta a</div><div style="font-weight:600;margin-top:2px" id="dJefe">—</div></div>
+              <div><div style="color:var(--txt-4);font-size:11px;font-weight:600">Matriz</div><div style="font-weight:600;margin-top:2px" id="dMatriz">—</div></div>
+              <div><div style="color:var(--txt-4);font-size:11px;font-weight:600">Turno habitual</div><div style="font-weight:600;margin-top:2px" id="dTurno">—</div></div>
+              <div><div style="color:var(--txt-4);font-size:11px;font-weight:600">Formato R-RH-053</div><div style="font-weight:600;margin-top:2px" id="dForm">—</div></div>
+            </div>
+          </div>
+
+          <div class="card plano" style="padding:var(--e4);border-color:var(--accion-borde);background:var(--accion-suave)">
+            <div style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center;margin-bottom:var(--e3)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accion-2)" stroke-width="1.9" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2.5"/><circle cx="12" cy="10" r="3"/><path d="M8 17h8"/></svg>
+              <div style="color:var(--accion-2);font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;flex:1">Punto de marcación</div>
+              <button class="btn sm" type="button" id="btnCambiarPM" style="background:var(--sup)">Cambiar para esta persona</button>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center">
+              <div style="flex:1 1 200px;min-width:0">
+                <div style="font-size:15px;font-weight:700" id="dPunto">—</div>
+                <div style="color:var(--txt-2);font-size:12px;margin-top:3px" id="dPuntoDisp">—</div>
+              </div>
+              <span class="bdg b-nt" id="dPuntoOrigen">Por definición del cargo</span>
+            </div>
+            <div id="pmCambio" style="display:none;margin-top:var(--e4);padding-top:var(--e3);border-top:1px solid var(--accion-borde)">
+              <div class="grid g2" style="margin:0;gap:var(--e3)">
+                <div>
+                  <label class="lb" for="pmSel">Punto distinto</label>
+                  <select class="in" id="pmSel" style="background:var(--sup)"></select>
+                </div>
+                <div>
+                  <label class="lb" for="pmMot">Motivo</label>
+                  <select class="in" id="pmMot" style="background:var(--sup)">
+                    <option>Reubicación temporal</option>
+                    <option>Restricción médica</option>
+                    <option>Apoyo a otra área</option>
+                    <option>Otro — se detalla aparte</option>
+                  </select>
+                </div>
+              </div>
+              <p class="hp">La excepción queda en la bitácora con su motivo. Se puede cerrar en cualquier momento y la persona vuelve al punto de su cargo.</p>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center;padding-top:var(--e1)">
+            <label style="display:flex;align-items:center;gap:9px;font-size:13px;color:var(--txt-2);cursor:pointer">
+              <input type="checkbox" id="chkFoto" checked style="width:17px;height:17px;accent-color:var(--accion)">
+              Dejar la foto para después
+            </label>
+            <button class="btn pri" type="submit" style="margin-left:auto" id="btnGuardar" disabled>Guardar y siguiente<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+          <p class="hp" style="margin:0"><code>Enter</code> guarda y vuelve al documento. <code>Esc</code> limpia el formulario.</p>
+        </div>
+      </form>
+    </div>
+
+    <aside style="flex:1 1 310px;min-width:0;display:flex;flex-direction:column;gap:var(--e4)">
+      <div class="card pad">
+        <div style="display:flex;align-items:center;gap:var(--e2);margin-bottom:var(--e2)">
+          <h2 style="font-size:15px;font-weight:700">Registradas ahora</h2>
+          <span style="margin-left:auto;color:var(--txt-3);font-size:12.5px" class="num" id="lstCount">0</span>
+        </div>
+        <div id="lista"></div>
+        <div id="vacio" style="text-align:center;padding:var(--e6) var(--e3)">
+          <div style="width:46px;height:46px;border-radius:13px;background:var(--sup-3);display:inline-flex;align-items:center;justify-content:center"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--txt-4)" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c0-3.4 2.9-5.6 6.5-5.6s6.5 2.2 6.5 5.6"/></svg></div>
+          <h3 style="font-size:14.5px;font-weight:700;margin-top:var(--e3)">Nadie todavía</h3>
+          <p style="color:var(--txt-3);font-size:12.5px;margin-top:5px">Las personas que registres aquí van apareciendo con su nivel de completitud.</p>
+        </div>
+      </div>
+
+      <div class="card pad osc">
+        <div style="color:var(--acento);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase">Qué pasa al guardar</div>
+        <ol style="margin:var(--e3) 0 0;padding-left:17px;color:var(--marca-txt-2);font-size:12.5px;line-height:1.75">
+          <li>Se genera el código de nómina</li>
+          <li>Se crea el usuario en GLPI</li>
+          <li>Se crea la identidad</li>
+          <li>Se asigna la matriz del cargo</li>
+          <li>Se habilita en su punto de marcación</li>
+          <li>Entra en la cola de fotos y de firma</li>
+        </ol>
+        <p style="margin-top:var(--e3);color:var(--marca-txt-3);font-size:11.5px">Los disparadores salen ya. Lo que falte no los detiene.</p>
+      </div>
+    </aside>
+
+  </div></div>
+</section>
+
+<!-- ══════════ COLA DE FOTOS ══════════ -->
+<section class="view" id="v-fotos">
+  <header class="hdr">
+    <div style="flex:1;min-width:200px">
+      <nav class="migas" aria-label="Ruta">Recursos Humanos › Personal › Cola de fotos</nav>
+      <h1 class="ttl">Cola de fotos</h1>
+    </div>
+    <span class="bdg b-av" id="fotosPend">0 pendientes</span>
+  </header>
+
+  <div class="body"><div class="wrap">
+    <div class="av av-av" style="margin-bottom:var(--e5)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#7A4F00" stroke-width="2" width="17" height="17" aria-hidden="true"><path d="M12 8.5v5M12 17v.5"/><circle cx="12" cy="12" r="9"/></svg>
+      <p>La información suele llegar antes que la persona. Cuando llegue, se dispara y se pasa a la siguiente. <strong>La foto no pesa en la completitud</strong>, porque no depende de quien registra.</p>
+    </div>
+
+    <div class="fila">
+      <div class="card pad dest" style="flex:999 1 470px;min-width:0">
+        <div id="camVacio" style="text-align:center;padding:var(--e8) var(--e4)">
+          <div style="width:56px;height:56px;border-radius:16px;background:var(--ok-s);display:inline-flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" stroke-width="2" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg></div>
+          <h2 style="font-size:17px;font-weight:700;margin-top:var(--e4)">No hay fotos pendientes</h2>
+          <p style="color:var(--txt-3);font-size:13px;margin-top:6px;max-width:44ch;margin-left:auto;margin-right:auto">Registra personas en la captura rápida dejando la foto para después, y aparecerán aquí.</p>
+          <button class="btn" type="button" data-ir="captura" style="margin-top:var(--e4)">Ir a captura rápida</button>
+        </div>
+
+        <div id="camActiva" style="display:none">
+          <div style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center;margin-bottom:var(--e4)">
+            <div class="av48" style="background:var(--accion-suave);color:var(--accion-2)" id="camIni">—</div>
+            <div style="flex:1 1 200px;min-width:0">
+              <div style="font-size:17px;font-weight:700" id="camNom">—</div>
+              <div style="color:var(--txt-3);font-size:12.5px;margin-top:2px" id="camSub">—</div>
+            </div>
+            <span class="bdg b-nt num" id="camPos">1 de 1</span>
+          </div>
+          <div style="position:relative;background:var(--marca);border-radius:var(--r-md);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;overflow:hidden">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.22"><svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1" aria-hidden="true"><circle cx="12" cy="8.5" r="3.6"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/></svg></div>
+            <div style="position:absolute;width:38%;aspect-ratio:3/4;border:2px dashed rgba(255,255,255,.4);border-radius:var(--r-md)"></div>
+            <div style="position:absolute;bottom:12px;left:14px;color:rgba(255,255,255,.65);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;font-weight:600">Vista de la cámara</div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--e3);margin-top:var(--e4);align-items:center">
+            <button class="btn" type="button" id="btnSaltar">Saltar por ahora</button>
+            <button class="btn pri" type="button" id="btnDisparar" style="margin-left:auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="6.5" width="18" height="13" rx="2.5"/><circle cx="12" cy="13" r="3.4"/><path d="M8.5 6.5l1.2-2h4.6l1.2 2"/></svg>Tomar y siguiente</button>
+          </div>
+          <p class="hp" style="margin-top:var(--e3)"><code>Espacio</code> dispara y avanza, sin recargar.</p>
+        </div>
+      </div>
+
+      <aside class="card pad" style="flex:1 1 290px;min-width:0">
+        <h2 style="font-size:15px;font-weight:700;margin-bottom:var(--e2)">En espera</h2>
+        <div id="colaLista"></div>
+      </aside>
+    </div>
+  </div></div>
+</section>
+
+<!-- ══════════ LISTADO ══════════ -->
+<section class="view" id="v-listado">
+  <header class="hdr">
+    <div style="flex:1;min-width:200px">
+      <nav class="migas" aria-label="Ruta">Recursos Humanos › Personal</nav>
+      <h1 class="ttl">Personal</h1>
+    </div>
+    <button class="btn" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1D6F42" stroke-width="1.9" aria-hidden="true"><path d="M5 3h9l5 5v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M9 12l6 6M15 12l-6 6"/></svg>Exportar</button>
+    <button class="btn pri" type="button" data-ir="captura"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Registrar persona</button>
+  </header>
+
+  <div class="body"><div class="wrap" style="display:flex;flex-direction:column;gap:var(--e4)">
+
+    <section class="card pad" aria-label="Filtros" style="display:flex;flex-direction:column;gap:var(--e3)">
+      <div style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:flex-end">
+        <div style="flex:1 1 240px;min-width:0"><label class="lb" for="f1">Buscar</label><input class="in" id="f1" type="search" placeholder="Documento, nombre o código interno"></div>
+        <div style="flex:0 1 170px"><label class="lb" for="f2">Área</label><select class="in" id="f2"><option>Todas las áreas</option><option>Producción Insumos</option><option>Producción Farmacéutica</option><option>Gestión de Calidad</option></select></div>
+        <div style="flex:0 1 160px"><label class="lb" for="f3">Vínculo</label><select class="in" id="f3"><option>Todos</option><option>Directo</option><option>Temporal</option><option>Aprendiz SENA</option></select></div>
+        <div style="flex:0 1 150px"><label class="lb" for="f4">Estado</label><select class="in" id="f4"><option>Activos</option><option>Retirados</option><option>Todos</option></select></div>
+        <button class="btn osc" type="button">Aplicar</button>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:var(--e2);align-items:center;padding-top:var(--e3);border-top:1px solid var(--linea)">
+        <span style="color:var(--txt-3);font-size:11.5px;font-weight:600">Atajos</span>
+        <button class="chip on" type="button">Sin código de nómina <span class="num" style="opacity:.75">31</span></button>
+        <button class="chip" type="button">Bajo el 70 % <span class="num" style="opacity:.75">37</span></button>
+        <button class="chip" type="button">Examen vencido <span class="num" style="opacity:.75">23</span></button>
+        <button class="chip" type="button">Sin firma <span class="num" style="opacity:.75">12</span></button>
+        <button class="chip" type="button">Excepción de marcación <span class="num" style="opacity:.75">8</span></button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center;padding:var(--e4) var(--e5);border-bottom:1px solid var(--linea)">
+        <h2 style="font-size:15px;font-weight:700">Resultados</h2>
+        <span style="color:var(--txt-3);font-size:12.5px" class="num">1.094 personas · 37 con registro incompleto</span>
+        <button class="btn sm" type="button" style="margin-left:auto"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16"/></svg>Columnas</button>
+      </div>
+      <div class="scroll">
+        <table style="min-width:980px">
+          <caption class="sr">Listado de personal</caption>
+          <thead><tr><th scope="col">Persona</th><th scope="col">Documento</th><th scope="col">Cód. interno</th><th scope="col">Cód. nómina</th><th scope="col">Cargo</th><th scope="col">Punto de marcación</th><th scope="col">Completitud</th><th scope="col">Estado</th></tr></thead>
+          <tbody id="tblPers"></tbody>
+        </table>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center;padding:var(--e4) var(--e5)">
+        <span class="num" style="color:var(--txt-3);font-size:12.5px">Mostrando 1–8 de 1.094</span>
+        <div style="margin-left:auto;display:flex;gap:6px">
+          <button class="btn sm ico" type="button" aria-label="Anterior">‹</button>
+          <button class="btn sm pri" type="button" aria-current="page">1</button>
+          <button class="btn sm" type="button">2</button>
+          <button class="btn sm" type="button">3</button>
+          <button class="btn sm ico" type="button" aria-label="Siguiente">›</button>
+        </div>
+      </div>
+    </section>
+
+    <p style="color:var(--txt-4);font-size:11.5px">El salario no aparece en este listado. Solo en la hoja de vida, y solo para quien tiene <code>personal.salario.ver</code>.</p>
+  </div></div>
+</section>
+
+<!-- ══════════ HOJA DE VIDA ══════════ -->
+<section class="view" id="v-hoja">
+  <header class="hdr" style="padding-bottom:0;display:block">
+    <nav class="migas" aria-label="Ruta" style="margin-bottom:var(--e3)">Recursos Humanos › Personal › Jised Johana Acero</nav>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--e4);align-items:flex-start">
+      <div class="av68" style="background:var(--accion-suave);color:var(--accion-2)">JA</div>
+      <div style="flex:1 1 300px;min-width:0">
+        <h1 style="font-size:25px;font-weight:700">Jised Johana Acero Acero</h1>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--e2);margin-top:8px;align-items:center;color:var(--txt-2);font-size:13px">
+          <span style="display:inline-flex;align-items:center;gap:6px;color:var(--ok);font-weight:600;font-size:12.5px"><span style="width:7px;height:7px;border-radius:50%;background:var(--ok)"></span>Activo</span>
+          <span style="color:var(--linea-2)">|</span><span>Auxiliar de Archivo</span>
+          <span style="color:var(--linea-2)">|</span><span>Gestión de Calidad</span>
+          <span style="color:var(--linea-2)">|</span><span>3 años, 5 meses</span>
+          <span style="color:var(--linea-2)">|</span><span class="bdg b-ok">100 %</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:18px;margin-top:var(--e3)">
+          <div><span style="display:block;color:var(--txt-4);font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase">Documento</span><span class="num" style="font-size:13.5px;font-weight:600">1.021.672.433</span></div>
+          <div><span style="display:block;color:var(--txt-4);font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase">Cód. interno</span><span class="num" style="font-size:13.5px;font-weight:600">8639</span></div>
+          <div><span style="display:block;color:var(--txt-4);font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase">Cód. nómina</span><span class="num" style="font-size:13.5px;font-weight:600">10216724331</span></div>
+          <div><span style="display:block;color:var(--txt-4);font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase">Firma</span><span style="font-size:13.5px;font-weight:600;color:var(--ok)">Registrada</span></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:var(--e2)">
+        <button class="btn" type="button">Editar</button>
+        <button class="btn" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8322B" stroke-width="1.9" aria-hidden="true"><path d="M6 3h8l5 5v13H6z"/><path d="M9 14h6M9 17.5h4"/></svg>Certificado</button>
+        <button class="btn osc" type="button">Registrar novedad</button>
+      </div>
+    </div>
+    <nav class="tabs" aria-label="Secciones" style="margin-top:var(--e4)">
+      <button class="tb on" type="button">Hoja de vida</button><button class="tb" type="button">Datos</button><button class="tb" type="button">Contrato</button><button class="tb" type="button">Marcación</button><button class="tb" type="button">Eventualidades</button><button class="tb" type="button">Formación</button><button class="tb" type="button">Competencias</button><button class="tb" type="button">Dotación</button>
+    </nav>
+  </header>
+
+  <div class="body"><div class="wrap fila">
+    <section class="card" style="flex:999 1 520px;min-width:0">
+      <div style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center;padding:var(--e4) var(--e5);border-bottom:1px solid var(--linea)">
+        <h2 style="font-size:15.5px;font-weight:700">Recorrido en la empresa</h2>
+        <div style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn sm osc" type="button">Todo</button><button class="btn sm" type="button">Cargos</button><button class="btn sm" type="button">Eventualidades</button><button class="btn sm" type="button">Formación</button>
+        </div>
+      </div>
+      <div style="padding:var(--e5)" id="timeline"></div>
+    </section>
+
+    <aside style="flex:1 1 330px;min-width:0;display:flex;flex-direction:column;gap:var(--e4)">
+      <section class="card pad">
+        <h2 style="font-size:15px;font-weight:700;margin-bottom:var(--e2)">Datos Plastitec</h2>
+        <dl style="margin:0">
+          <div class="dd"><dt>Vínculo</dt><dd>Directo</dd></div>
+          <div class="dd"><dt>Fecha de ingreso</dt><dd class="num">15/05/2023</dd></div>
+          <div class="dd"><dt>Empresa</dt><dd>Plastitec S.A.</dd></div>
+          <div class="dd"><dt>Brigadista</dt><dd>No</dd></div>
+          <div class="dd"><dt>Turno habitual</dt><dd>T ADMIN 1</dd></div>
+        </dl>
+      </section>
+
+      <section class="card pad" style="border-color:var(--accion-borde)">
+        <div style="display:flex;align-items:center;gap:var(--e2);margin-bottom:var(--e2)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accion-2)" stroke-width="1.9" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2.5"/><circle cx="12" cy="10" r="3"/><path d="M8 17h8"/></svg>
+          <h2 style="font-size:15px;font-weight:700">Punto de marcación</h2>
+        </div>
+        <div style="font-size:14.5px;font-weight:700">Recepción Planta 2</div>
+        <div style="color:var(--txt-2);font-size:12.5px;margin-top:3px">1 dispositivo autorizado</div>
+        <div style="margin-top:var(--e3)"><span class="bdg b-nt">Por definición del cargo</span></div>
+        <p class="hp" style="margin-top:var(--e3)">Una marcación en otro punto no se descarta: se registra y queda señalada como excepción para que el jefe la revise.</p>
+      </section>
+
+      <section class="card pad">
+        <div style="display:flex;align-items:center;gap:var(--e2);margin-bottom:var(--e2)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--aviso)" stroke-width="1.9" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>
+          <h2 style="font-size:15px;font-weight:700">Datos reservados</h2>
+        </div>
+        <dl style="margin:0">
+          <div class="dd"><dt>Salario</dt><dd class="num">$ 2.340.000</dd></div>
+          <div class="dd"><dt>EPS</dt><dd>Sanitas</dd></div>
+          <div class="dd"><dt>Caja</dt><dd>Compensar</dd></div>
+          <div class="dd"><dt>Pensión</dt><dd>Porvenir</dd></div>
+        </dl>
+        <div class="av av-av" style="margin-top:var(--e3)"><svg viewBox="0 0 24 24" fill="none" stroke="#7A4F00" stroke-width="2" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.8v.4"/></svg><p>Ves esta sección porque tu rol incluye <code>personal.salario.ver</code>. Cada consulta queda en la bitácora.</p></div>
+      </section>
+
+      <section class="card pad osc">
+        <div style="color:var(--acento);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase">De dónde viene cada dato</div>
+        <div style="margin-top:var(--e3);display:flex;flex-direction:column;gap:8px;font-size:12.5px">
+          <div style="display:flex;gap:10px"><span style="color:var(--marca-txt-2);flex:1">Identificación y cargo</span><span style="color:#fff;font-weight:600">SIRH+</span></div>
+          <div style="display:flex;gap:10px"><span style="color:var(--marca-txt-2);flex:1">Salario y contrato</span><span style="color:#fff;font-weight:600">SINERGY</span></div>
+          <div style="display:flex;gap:10px"><span style="color:var(--marca-txt-2);flex:1">Horas y marcaciones</span><span style="color:#fff;font-weight:600">SIRH+</span></div>
+          <div style="display:flex;gap:10px"><span style="color:var(--marca-txt-2);flex:1">Documentos de calidad</span><span style="color:#fff;font-weight:600">Daruma</span></div>
+        </div>
+        <p style="margin-top:var(--e3);padding-top:var(--e3);border-top:1px solid var(--marca-linea);color:var(--marca-txt-3);font-size:11.5px">Datos de SINERGY con corte al 31 de octubre de 2026</p>
+      </section>
+    </aside>
+  </div></div>
+</section>
+
+<!-- ══════════ COMPLETITUD ══════════ -->
+<section class="view" id="v-completitud">
+  <header class="hdr">
+    <div style="flex:1;min-width:200px">
+      <nav class="migas" aria-label="Ruta">Recursos Humanos › Personal › Completitud</nav>
+      <h1 class="ttl">Completitud del registro</h1>
+    </div>
+  </header>
+
+  <div class="body"><div class="wrap" style="display:flex;flex-direction:column;gap:var(--e5)">
+    <div class="grid g3" style="margin:0">
+      <div class="card pad kpi"><div class="n" style="color:var(--error)">6</div><div class="l">bajo el 40 %, por más de 24 horas</div><div class="s">No pueden trabajar</div></div>
+      <div class="card pad kpi"><div class="n" style="color:var(--aviso)">31</div><div class="l">bajo el 70 %, sin liquidación</div><div class="s">No entran a nómina</div></div>
+      <div class="card pad kpi"><div class="n">847</div><div class="l">al 100 %</div><div class="s">Sin pendientes</div></div>
+    </div>
+
+    <div class="fila">
+      <div class="card pad" style="flex:1 1 360px;min-width:0">
+        <h2 style="font-size:16px;font-weight:700">La escala</h2>
+        <p style="color:var(--txt-3);font-size:12.5px;margin-top:4px">Siete hitos con nombre, no campos contados. Cada uno dice qué habilita y a quién le toca.</p>
+        <div style="margin-top:var(--e4)" id="escala"></div>
+        <div class="av av-ko" style="margin-top:var(--e4)"><svg viewBox="0 0 24 24" fill="none" stroke="#A62E1A" stroke-width="2" width="17" height="17" aria-hidden="true"><path d="M12 8.5v5M12 17v.5"/><circle cx="12" cy="12" r="9"/></svg><p><strong>Bajo el 40 % el registro vale 24 horas.</strong> Pasado el plazo aparece en rojo: alguien está trabajando sin estar completo en el sistema.</p></div>
+      </div>
+
+      <div class="card pad" style="flex:1 1 370px;min-width:0">
+        <div style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center">
+          <div class="av48" style="background:var(--aviso-s);color:var(--aviso)">AM</div>
+          <div style="flex:1 1 170px;min-width:0">
+            <div style="font-size:16px;font-weight:700">Andrés Felipe Mora</div>
+            <div style="color:var(--txt-3);font-size:12.5px;margin-top:2px">Operario de Extrusión 1 · Temporal</div>
+          </div>
+          <div class="num" style="font-family:var(--disp);font-size:26px;font-weight:700;color:var(--aviso);line-height:1">55 %</div>
+        </div>
+        <div class="pb" style="margin-top:var(--e4)"><i style="width:55%;background:var(--aviso)"></i></div>
+        <div style="margin-top:var(--e4)" id="ejemplo"></div>
+        <div class="av av-av" style="margin-top:var(--e4)"><svg viewBox="0 0 24 24" fill="none" stroke="#7A4F00" stroke-width="2" width="17" height="17" aria-hidden="true"><path d="M12 8.5v5M12 17v.5"/><circle cx="12" cy="12" r="9"/></svg><p>Le falta <strong>liquidación</strong>. No entra al archivo de nómina hasta que alguien con el permiso de datos reservados lo complete.</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="padding:var(--e4) var(--e5);border-bottom:1px solid var(--linea);display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center">
+        <h2 style="font-size:15px;font-weight:700">Registros incompletos</h2>
+        <span class="num" style="color:var(--txt-3);font-size:12.5px">37 de 1.094</span>
+        <div style="margin-left:auto;display:flex;gap:7px;flex-wrap:wrap"><span class="bdg b-ko">Vencidos · 6</span><span class="bdg b-av">Sin liquidar · 31</span></div>
+      </div>
+      <div class="scroll">
+        <table style="min-width:900px">
+          <caption class="sr">Personas con registro incompleto</caption>
+          <thead><tr><th scope="col">Persona</th><th scope="col">Cód. interno</th><th scope="col">Cargo</th><th scope="col">Completitud</th><th scope="col">Qué falta</th><th scope="col">A quién le toca</th><th scope="col">Desde</th></tr></thead>
+          <tbody id="tblInc"></tbody>
+        </table>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ══════════ PENDIENTES ══════════ -->
+<section class="view" id="v-pendientes">
+  <header class="hdr" style="padding-bottom:0;display:block">
+    <nav class="migas" aria-label="Ruta">Recursos Humanos › Pendientes</nav>
+    <h1 class="ttl">Mi bandeja</h1>
+    <nav class="tabs" aria-label="Tipo" style="margin-top:var(--e4)">
+      <button class="tb on" type="button">Actualización de datos · 3</button><button class="tb" type="button">Datos reservados · 4</button><button class="tb" type="button">Excepciones de marcación · 8</button><button class="tb" type="button">Paz y salvo · 2</button><button class="tb" type="button">Resueltos</button>
+    </nav>
+  </header>
+
+  <div class="body"><div class="wrap" style="display:flex;flex-direction:column;gap:var(--e4)">
+    <section class="card">
+      <div style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center;padding:var(--e4) var(--e5);border-bottom:1px solid var(--linea)">
+        <span class="av32" style="background:var(--accion-suave);color:var(--accion-2)">CP</span>
+        <div style="flex:1 1 220px;min-width:0">
+          <div style="font-size:14.5px;font-weight:700">Carolina Páez Restrepo</div>
+          <div style="color:var(--txt-3);font-size:12.5px;margin-top:2px">Auxiliar de Calidad · Radicado 2026-0518</div>
+        </div>
+        <span class="bdg b-in">Por validar</span>
+        <span class="num" style="color:var(--txt-4);font-size:12.5px">Hace 4 horas</span>
+      </div>
+      <div class="scroll">
+        <table style="min-width:720px">
+          <caption class="sr">Cambios solicitados</caption>
+          <thead><tr><th scope="col">Campo</th><th scope="col">Valor actual</th><th scope="col">Valor solicitado</th><th scope="col">Decisión</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600">Dirección</td><td style="color:var(--txt-3);text-decoration:line-through">Cra 68 # 24-15</td><td style="font-weight:600;color:var(--ok)">Calle 80 # 112-30</td><td><div style="display:flex;gap:6px"><button class="btn sm" type="button" style="background:var(--ok-s);border-color:var(--ok-b);color:var(--ok)">Aceptar</button><button class="btn sm" type="button">Rechazar</button></div></td></tr>
+            <tr><td style="font-weight:600">Teléfono móvil</td><td class="num" style="color:var(--txt-3);text-decoration:line-through">310 442 1180</td><td class="num" style="font-weight:600;color:var(--ok)">320 775 4412</td><td><div style="display:flex;gap:6px"><button class="btn sm" type="button" style="background:var(--ok-s);border-color:var(--ok-b);color:var(--ok)">Aceptar</button><button class="btn sm" type="button">Rechazar</button></div></td></tr>
+            <tr><td style="font-weight:600">Contacto de urgencia</td><td style="color:var(--txt-3);text-decoration:line-through">N/A</td><td style="font-weight:600;color:var(--ok)">Hernán Páez · 311 208 6640</td><td><div style="display:flex;gap:6px"><button class="btn sm" type="button" style="background:var(--ok-s);border-color:var(--ok-b);color:var(--ok)">Aceptar</button><button class="btn sm" type="button">Rechazar</button></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="padding:var(--e4) var(--e5);border-top:1px solid var(--linea);display:flex;flex-wrap:wrap;gap:var(--e3);align-items:flex-end">
+        <div style="flex:1 1 300px;min-width:0"><label class="lb" for="obs">Observación para el colaborador</label><input class="in" id="obs" type="text" placeholder="Opcional. Se le muestra en el portal junto con la decisión."></div>
+        <button class="btn" type="button">Rechazar todo</button>
+        <button class="btn pri" type="button">Aplicar los aceptados</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div style="padding:var(--e4) var(--e5);border-bottom:1px solid var(--linea)"><h2 style="font-size:15px;font-weight:700">Siguientes en la cola</h2></div>
+      <div style="padding:0 var(--e5)">
+        <div class="row"><span class="ic" style="background:var(--sup-3);color:var(--txt-2)">GA</span><span class="tx"><b>Gloria Lucía Ardila Parra</b><span>Nivel educativo y número de hijos</span></span><span class="num" style="color:var(--txt-4);font-size:12.5px">Hace 1 día</span></div>
+        <div class="row"><span class="ic" style="background:var(--sup-3);color:var(--txt-2)">JR</span><span class="tx"><b>Jorge Iván Ramírez Soto</b><span>Grupo sanguíneo y restricción médica</span></span><span class="num" style="color:var(--txt-4);font-size:12.5px">Hace 3 días</span></div>
+      </div>
+    </section>
+
+    <section class="card" style="border-style:dashed;box-shadow:none;padding:var(--e8) var(--e5);text-align:center">
+      <div style="width:52px;height:52px;border-radius:15px;background:var(--sup-3);display:inline-flex;align-items:center;justify-content:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--txt-4)" stroke-width="1.8" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg></div>
+      <h3 style="font-size:15.5px;font-weight:700;margin-top:var(--e3)">Así se ve cuando no queda nada</h3>
+      <p style="color:var(--txt-3);font-size:13px;margin-top:5px;max-width:44ch;margin-left:auto;margin-right:auto">Sin pendientes en esta bandeja. Las solicitudes nuevas aparecen aquí y también como aviso en el tablero.</p>
+    </section>
+  </div></div>
+</section>
+
+<!-- ══════════ ÁREAS Y CARGOS ══════════ -->
+<section class="view" id="v-cargos">
+  <header class="hdr" style="padding-bottom:0;display:block">
+    <nav class="migas" aria-label="Ruta">Recursos Humanos › Empresa</nav>
+    <h1 class="ttl">Áreas y cargos</h1>
+    <nav class="tabs" aria-label="Secciones" style="margin-top:var(--e4)">
+      <button class="tb on" type="button">Áreas y cargos</button><button class="tb" type="button" data-ir="estructura">Estructura</button><button class="tb" type="button" data-ir="organigrama">Organigrama</button><button class="tb" type="button" data-ir="puntos">Puntos de marcación</button>
+    </nav>
+  </header>
+
+  <div class="body"><div class="wrap fila">
+    <section class="card" style="flex:1 1 260px;min-width:0">
+      <div style="display:flex;gap:var(--e2);align-items:center;padding:var(--e4);border-bottom:1px solid var(--linea)">
+        <h2 style="font-size:15px;font-weight:700">Áreas</h2><span class="num" style="color:var(--txt-3);font-size:12.5px">32</span>
+        <button class="btn sm ico" type="button" aria-label="Crear área" style="margin-left:auto"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+      </div>
+      <div style="padding:var(--e2)" id="listaAreas"></div>
+    </section>
+
+    <section class="card" style="flex:999 1 540px;min-width:0">
+      <div style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center;padding:var(--e4);border-bottom:1px solid var(--linea)">
+        <div>
+          <h2 style="font-size:15px;font-weight:700">Cargos de Producción Insumos</h2>
+          <p style="color:var(--txt-3);font-size:12.5px;margin-top:2px">14 cargos · 387 personas · jefe: Diego Salcedo</p>
+        </div>
+        <button class="btn pri" type="button" style="margin-left:auto"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Crear cargo</button>
+      </div>
+      <div class="scroll">
+        <table style="min-width:860px">
+          <caption class="sr">Cargos del área</caption>
+          <thead><tr><th scope="col">Cargo</th><th scope="col">Nivel</th><th scope="col">Reporta a</th><th scope="col" style="text-align:right">Personas</th><th scope="col">Punto de marcación</th><th scope="col">Matriz</th></tr></thead>
+          <tbody id="tblCargos"></tbody>
+        </table>
+      </div>
+      <div style="padding:var(--e4);border-top:1px solid var(--linea);display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center">
+        <p style="color:var(--txt-3);font-size:12.5px;flex:1 1 300px">Un cargo sin superior no enruta solicitudes. Un cargo sin punto de marcación deja todas sus marcaciones como excepción.</p>
+        <button class="btn sut sm" type="button" data-ir="estructura">Ir a la estructura</button>
+      </div>
+    </section>
+  </div></div>
+</section>
+
+<!-- ══════════ ESTRUCTURA ══════════ -->
+<section class="view" id="v-estructura">
+  <header class="hdr" style="padding-bottom:0;display:block">
+    <nav class="migas" aria-label="Ruta">Recursos Humanos › Empresa › Estructura</nav>
+    <h1 class="ttl">Estructura y dependencias</h1>
+    <nav class="tabs" aria-label="Secciones" style="margin-top:var(--e4)">
+      <button class="tb" type="button" data-ir="cargos">Áreas y cargos</button><button class="tb on" type="button">Estructura</button><button class="tb" type="button" data-ir="organigrama">Organigrama</button><button class="tb" type="button" data-ir="puntos">Puntos de marcación</button>
+    </nav>
+  </header>
+
+  <div class="body"><div class="wrap" style="display:flex;flex-direction:column;gap:var(--e4)">
+    <div class="av av-in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#3730A3" stroke-width="2" width="17" height="17" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.8v.4"/></svg>
+      <p>Esta estructura no es un dibujo: <strong>es la tabla de enrutamiento del sistema</strong>. De ella salen quién aprueba cada solicitud, qué personal ve cada jefe y quién evalúa a quién. Cada cambio se guarda con su fecha de vigencia.</p>
+    </div>
+
+    <div class="fila">
+      <section class="card" style="flex:999 1 520px;min-width:0">
+        <div style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center;padding:var(--e4) var(--e5);border-bottom:1px solid var(--linea)">
+          <h2 style="font-size:15px;font-weight:700">Cadena de reporte · Producción Insumos</h2>
+          <span style="margin-left:auto;color:var(--txt-3);font-size:12.5px">Arrastra un cargo para cambiar su superior</span>
+        </div>
+        <div style="padding:var(--e5);display:flex;flex-direction:column;gap:10px">
+          <div class="nd"><span class="av32" style="background:var(--marca);color:#fff;font-size:9.5px">DIR</span><span style="flex:1;font-weight:600">Director de Operaciones</span><span class="num" style="color:var(--txt-4);font-size:12px">1 persona</span></div>
+          <div class="rama">
+            <div class="nd"><span class="av32" style="background:var(--marca-3);color:#fff;font-size:9.5px">JEF</span><span style="flex:1;font-weight:600">Jefe de Producción Insumos</span><span class="num" style="color:var(--txt-4);font-size:12px">1 persona</span></div>
+            <div class="rama">
+              <div class="nd"><span class="av32" style="background:var(--accion);color:#fff;font-size:9.5px">COO</span><span style="flex:1;font-weight:600">Coordinador de Turno</span><span class="num" style="color:var(--txt-4);font-size:12px">6 personas</span></div>
+              <div class="rama">
+                <div class="nd"><span class="av32" style="background:var(--sup-3);color:var(--txt-2);font-size:9.5px">OPE</span><span style="flex:1">Operario de Extrusión 1</span><span class="num" style="color:var(--txt-4);font-size:12px">94 personas</span></div>
+                <div class="nd"><span class="av32" style="background:var(--sup-3);color:var(--txt-2);font-size:9.5px">OPI</span><span style="flex:1">Operario de Inyección</span><span class="num" style="color:var(--txt-4);font-size:12px">118 personas</span></div>
+                <div class="nd"><span class="av32" style="background:var(--sup-3);color:var(--txt-2);font-size:9.5px">OPP</span><span style="flex:1">Operario de Peletizado</span><span class="num" style="color:var(--txt-4);font-size:12px">42 personas</span></div>
+                <div class="nd"><span class="av32" style="background:var(--sup-3);color:var(--txt-2);font-size:9.5px">TEC</span><span style="flex:1">Técnico de Mantenimiento</span><span class="num" style="color:var(--txt-4);font-size:12px">15 personas</span></div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:var(--e3);padding-top:var(--e4);border-top:1px dashed var(--linea-2)">
+            <div style="color:var(--error);font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px">Sin superior asignado</div>
+            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:var(--e3);background:var(--error-s);border:1px solid var(--error-b);border-radius:var(--r-md);padding:11px 14px">
+              <span class="av32" style="background:var(--error);color:#fff;font-size:9.5px">AUX</span>
+              <span style="flex:1 1 180px;font-weight:600">Auxiliar de Archivo</span>
+              <span class="num" style="color:var(--error);font-size:12px">3 personas sin a quién escalar</span>
+              <button class="btn sm" type="button" style="background:var(--sup)">Asignar superior</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside style="flex:1 1 330px;min-width:0;display:flex;flex-direction:column;gap:var(--e4)">
+        <section class="card pad">
+          <h2 style="font-size:15px;font-weight:700">Operario de Extrusión 1</h2>
+          <p style="color:var(--txt-3);font-size:12.5px;margin-top:3px;margin-bottom:var(--e4)">Nivel operativo · 94 personas</p>
+          <div style="display:flex;flex-direction:column;gap:var(--e3)">
+            <div><label class="lb" for="sup">Reporta a</label><select class="in" id="sup"><option>Coordinador de Turno</option><option>Jefe de Producción Insumos</option></select></div>
+            <div><label class="lb" for="vig">Rige desde</label><input class="in" id="vig" type="date" value="2026-11-05"><p class="hp">Lo anterior a esta fecha conserva la estructura que regía entonces.</p></div>
+          </div>
+        </section>
+
+        <section class="card pad">
+          <h3 style="font-size:14px;font-weight:700;margin-bottom:var(--e3)">Qué cambia si mueves este cargo</h3>
+          <ul style="padding-left:17px;color:var(--txt-2);font-size:13px;line-height:1.65">
+            <li>94 personas cambian de aprobador de permisos y vacaciones</li>
+            <li>94 personas cambian de evaluador de competencias</li>
+            <li>Las horas extra pasan al nuevo superior</li>
+            <li>El nuevo jefe empieza a verlas en su bandeja</li>
+          </ul>
+          <div class="av av-av" style="margin-top:var(--e3)"><svg viewBox="0 0 24 24" fill="none" stroke="#7A4F00" stroke-width="2" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.8v.4"/></svg><p>Las solicitudes ya radicadas conservan el aprobador que tenían.</p></div>
+        </section>
+
+        <div style="display:flex;gap:var(--e3)">
+          <button class="btn" type="button" style="flex:1">Descartar</button>
+          <button class="btn pri" type="button" style="flex:1">Guardar</button>
+        </div>
+      </aside>
+    </div>
+  </div></div>
+</section>
+
+<!-- ══════════ ORGANIGRAMA ══════════ -->
+<section class="view" id="v-organigrama">
+  <header class="hdr" style="padding-bottom:0;display:block">
+    <nav class="migas" aria-label="Ruta">Recursos Humanos › Empresa › Organigrama</nav>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center;margin-top:3px">
+      <h1 class="ttl" style="margin:0;flex:1 1 220px">Organigrama</h1>
+      <span class="bdg b-ok"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/></svg>Público · visible sin iniciar sesión</span>
+      <button class="btn" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8322B" stroke-width="1.9" aria-hidden="true"><path d="M6 3h8l5 5v13H6z"/><path d="M9 14h6M9 17.5h4"/></svg>Descargar PDF</button>
+    </div>
+    <nav class="tabs" aria-label="Secciones" style="margin-top:var(--e4)">
+      <button class="tb" type="button" data-ir="cargos">Áreas y cargos</button><button class="tb" type="button" data-ir="estructura">Estructura</button><button class="tb on" type="button">Organigrama</button><button class="tb" type="button" data-ir="puntos">Puntos de marcación</button>
+    </nav>
+  </header>
+
+  <div class="body"><div class="wrap" style="display:flex;flex-direction:column;gap:var(--e4)">
+    <section class="card pad" style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center">
+      <div style="flex:1 1 250px;display:flex;align-items:center;gap:9px;background:var(--fondo);border:1px solid var(--linea);border-radius:var(--r);padding:9px 12px">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--txt-4)" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M15.8 15.8L21 21"/></svg>
+        <label for="bo" class="sr">Buscar en el organigrama</label>
+        <input id="bo" type="search" placeholder="Buscar persona, cargo o área" style="border:0;background:transparent;font:inherit;font-size:13.5px;width:100%;outline:none">
+      </div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap">
+        <button class="btn sm osc" type="button">Por cargo</button><button class="btn sm" type="button">Por persona</button><button class="btn sm" type="button">Mostrar vacantes</button>
+      </div>
+    </section>
+
+    <section class="card" style="padding:var(--e8) var(--e5);overflow-x:auto">
+      <div style="min-width:860px;display:flex;flex-direction:column;align-items:center">
+        <div class="cx" style="border-color:var(--marca);border-width:2px">
+          <div style="width:42px;height:42px;border-radius:12px;background:var(--marca);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;margin:0 auto 9px">MV</div>
+          <div style="font-size:13.5px;font-weight:700">Mauricio Villamil</div>
+          <div style="color:var(--txt-3);font-size:12px;margin-top:2px">Gerencia General</div>
+        </div>
+        <div style="width:2px;height:26px;background:var(--linea-2)"></div>
+        <div style="width:70%;height:2px;background:var(--linea-2)"></div>
+        <div style="display:flex;justify-content:space-around;width:100%;align-items:flex-start" id="orgN2"></div>
+        <div style="width:2px;height:26px;background:var(--linea-2)"></div>
+        <div style="width:46%;height:2px;background:var(--linea-2)"></div>
+        <div style="display:flex;justify-content:space-around;width:56%;align-items:flex-start" id="orgN3"></div>
+        <div style="margin-top:var(--e8);padding-top:var(--e5);border-top:1px dashed var(--linea-2);width:100%;display:flex;justify-content:center">
+          <div style="background:var(--aviso-s);border:1px dashed var(--acento);border-radius:var(--r-md);padding:14px 18px;text-align:center;min-width:200px">
+            <div style="width:38px;height:38px;border-radius:11px;background:var(--sup);border:1px dashed var(--acento);display:flex;align-items:center;justify-content:center;margin:0 auto 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--aviso)" stroke-width="1.9" aria-hidden="true"><path d="M12 6v12M6 12h12"/></svg></div>
+            <div style="font-size:13px;font-weight:700;color:var(--aviso)">Vacante</div>
+            <div style="color:var(--aviso);font-size:11.5px;margin-top:2px">Supervisor de Extrusión</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <p style="color:var(--txt-4);font-size:11.5px">El organigrama se arma solo desde la estructura de cargos. No se dibuja a mano, y por eso no puede desincronizarse de quién aprueba qué.</p>
+  </div></div>
+</section>
+
+<!-- ══════════ PUNTOS DE MARCACIÓN ══════════ -->
+<section class="view" id="v-puntos">
+  <header class="hdr" style="padding-bottom:0;display:block">
+    <nav class="migas" aria-label="Ruta">Recursos Humanos › Empresa › Puntos de marcación</nav>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center;margin-top:3px">
+      <h1 class="ttl" style="margin:0;flex:1 1 220px">Puntos de marcación</h1>
+      <button class="btn pri" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Crear punto</button>
+    </div>
+    <nav class="tabs" aria-label="Secciones" style="margin-top:var(--e4)">
+      <button class="tb" type="button" data-ir="cargos">Áreas y cargos</button><button class="tb" type="button" data-ir="estructura">Estructura</button><button class="tb" type="button" data-ir="organigrama">Organigrama</button><button class="tb on" type="button">Puntos de marcación</button>
+    </nav>
+  </header>
+
+  <div class="body"><div class="wrap" style="display:flex;flex-direction:column;gap:var(--e4)">
+
+    <div class="av av-in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#3730A3" stroke-width="2" width="17" height="17" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.8v.4"/></svg>
+      <p>Un punto no es un biométrico: es un <strong>conjunto de dispositivos</strong>. Los cuatro vestieres de mujeres son un solo punto, porque para una operaria son intercambiables. El cargo apunta al punto; la persona puede tener una excepción.</p>
+    </div>
+
+    <div class="grid g3" style="margin:0">
+      <div class="card pad kpi"><div class="n">6</div><div class="l">puntos definidos sobre 10 dispositivos</div><div class="s">Catálogo</div></div>
+      <div class="card pad kpi"><div class="n" style="color:var(--accion)">8</div><div class="l">personas con excepción vigente</div><div class="s">Casos especiales</div></div>
+      <div class="card pad kpi"><div class="n" style="color:var(--aviso)">14</div><div class="l">marcaciones fuera de punto, últimos 7 días</div><div class="s">Excepciones, no rechazos</div></div>
+    </div>
+
+    <div class="fila">
+      <section class="card" style="flex:999 1 540px;min-width:0">
+        <div style="padding:var(--e4) var(--e5);border-bottom:1px solid var(--linea)">
+          <h2 style="font-size:15px;font-weight:700">Catálogo de puntos</h2>
+          <p style="color:var(--txt-3);font-size:12.5px;margin-top:2px">Cada punto agrupa los dispositivos donde su personal puede marcar</p>
+        </div>
+        <div class="scroll">
+          <table style="min-width:800px">
+            <caption class="sr">Puntos de marcación</caption>
+            <thead><tr><th scope="col">Punto</th><th scope="col">Dispositivos</th><th scope="col" style="text-align:right">Cargos</th><th scope="col" style="text-align:right">Personas</th><th scope="col">Estado</th></tr></thead>
+            <tbody id="tblPuntos"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <aside style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:var(--e4)">
+        <section class="card pad dest">
+          <h2 style="font-size:15px;font-weight:700">Vestier Mujeres</h2>
+          <p style="color:var(--txt-3);font-size:12.5px;margin-top:3px">4 dispositivos · 11 cargos · 418 personas</p>
+          <div style="margin-top:var(--e4);display:flex;flex-direction:column;gap:8px" id="dispPunto"></div>
+          <div style="margin-top:var(--e4);padding-top:var(--e3);border-top:1px solid var(--linea)">
+            <label class="lb" for="rolDisp">Rol de los dispositivos</label>
+            <select class="in" id="rolDisp"><option>Descanso — el hueco se perdona hasta el tope de café</option><option>Portería — el hueco pesa como ausencia</option><option>Interior — tránsito, no genera deuda</option></select>
+            <p class="hp">Este rol decide si el tiempo entre dos marcaciones se cobra al empleado o lo asume la empresa. Cambiarlo afecta el cálculo de horas.</p>
+          </div>
+        </section>
+
+        <section class="card pad osc">
+          <div style="color:var(--acento);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase">La regla que no se rompe</div>
+          <p style="margin-top:var(--e3);color:#fff;font-family:var(--disp);font-size:15px;font-weight:600;line-height:1.4">Una marcación en un dispositivo no autorizado nunca se descarta.</p>
+          <p style="margin-top:var(--e2);color:var(--marca-txt-2);font-size:12.5px;line-height:1.55">Se registra y se señala como excepción para que el jefe la revise. Descartarla sería perder una marcación que vale dinero.</p>
+        </section>
+      </aside>
+    </div>
+
+    <section class="card">
+      <div style="padding:var(--e4) var(--e5);border-bottom:1px solid var(--linea);display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center">
+        <h2 style="font-size:15px;font-weight:700">Excepciones por persona</h2>
+        <span class="num" style="color:var(--txt-3);font-size:12.5px">8 vigentes</span>
+        <button class="btn sm" type="button" style="margin-left:auto">Registrar excepción</button>
+      </div>
+      <div class="scroll">
+        <table style="min-width:880px">
+          <caption class="sr">Excepciones de punto de marcación por persona</caption>
+          <thead><tr><th scope="col">Persona</th><th scope="col">Punto del cargo</th><th scope="col">Punto asignado</th><th scope="col">Motivo</th><th scope="col">Vigencia</th><th scope="col">Autorizó</th></tr></thead>
+          <tbody id="tblExc"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </div></div>
+</section>
+
+<!-- ══════════ CAPTURA DE FIRMA ══════════ -->
+<section class="view" id="v-firmacap">
+  <header class="hdr">
+    <div style="flex:1;min-width:200px">
+      <nav class="migas" aria-label="Ruta">Recursos Humanos › Personal › Firma</nav>
+      <h1 class="ttl">Registrar la firma del colaborador</h1>
+    </div>
+  </header>
+
+  <div class="body"><div class="wrap fila">
+    <div style="flex:999 1 520px;min-width:0;display:flex;flex-direction:column;gap:var(--e4)">
+      <section class="card pad" style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center">
+        <div class="av48" style="background:var(--accion-suave);color:var(--accion-2)">AM</div>
+        <div style="flex:1 1 220px;min-width:0">
+          <div style="font-size:16px;font-weight:700">Andrés Felipe Mora Quintero</div>
+          <div class="num" style="color:var(--txt-2);font-size:12.5px;margin-top:3px">Documento 1.098.447.201 · Código interno 9204</div>
+        </div>
+        <span class="bdg b-av">Sin firma registrada</span>
+      </section>
+
+      <section class="card pad">
+        <h2 style="font-size:15.5px;font-weight:700">Firme en el recuadro</h2>
+        <p style="color:var(--txt-3);font-size:12.5px;margin-top:3px;margin-bottom:var(--e4)">Entregue la tableta al colaborador. Use el lápiz, no el dedo.</p>
+        <div style="position:relative;background:var(--sup-2);border:2px dashed var(--linea-2);border-radius:var(--r-md);height:270px;display:flex;align-items:center;justify-content:center">
+          <svg viewBox="0 0 640 220" style="width:86%;height:auto" role="img" aria-label="Firma trazada por el colaborador">
+            <path d="M60 150 C 95 70, 120 70, 134 120 C 146 164, 168 170, 182 128 C 196 86, 214 84, 224 124 C 236 172, 262 158, 276 118 C 290 78, 318 86, 330 130 C 342 174, 372 160, 392 120 C 410 84, 436 92, 452 126 C 470 164, 500 150, 520 112 C 536 82, 560 86, 578 110" fill="none" stroke="#14141F" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M96 176 C 180 190, 400 190, 540 170" fill="none" stroke="#14141F" stroke-width="2.4" stroke-linecap="round"/>
+          </svg>
+          <div style="position:absolute;left:7%;right:7%;bottom:32px;height:1px;background:var(--linea-2)"></div>
+          <div style="position:absolute;left:7%;bottom:12px;color:var(--txt-4);font-size:11.5px">Firma del colaborador</div>
+          <div class="num" style="position:absolute;right:7%;bottom:12px;color:var(--txt-4);font-size:11.5px">Código 9204</div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--e3);margin-top:var(--e4);align-items:center">
+          <button class="btn" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.6-6.4M3 4v5h5"/></svg>Borrar y repetir</button>
+          <span style="color:var(--txt-3);font-size:12.5px">Trazo capturado · 2 secciones · 284 puntos</span>
+          <button class="btn pri" type="button" style="margin-left:auto" data-ir="firmaconf">Guardar firma</button>
+        </div>
+      </section>
+
+      <section class="card pad">
+        <h2 style="font-size:15.5px;font-weight:700">Clave para usar la firma</h2>
+        <p style="color:var(--txt-3);font-size:12.5px;margin-top:3px;margin-bottom:var(--e4)">El colaborador la escribe él mismo. Nadie de RH la ve ni la puede recuperar.</p>
+        <div class="grid g2" style="margin:0">
+          <div><label class="lb" for="c1">Clave</label><input class="in" id="c1" type="password" value="........" style="letter-spacing:.2em"></div>
+          <div><label class="lb" for="c2">Repetir clave</label><input class="in" id="c2" type="password" value="........" style="letter-spacing:.2em"></div>
+        </div>
+        <div class="av av-ko" style="margin-top:var(--e4)"><svg viewBox="0 0 24 24" fill="none" stroke="#A62E1A" stroke-width="2" width="17" height="17" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.8v.4"/></svg><p><strong>Antes se usaban la cédula y el código interno.</strong> Los dos los conocen otras personas, así que cualquiera podía firmar por un compañero. Ahora hace falta una clave que solo él sepa. Si la olvida, TI la restablece.</p></div>
+      </section>
+    </div>
+
+    <aside style="flex:1 1 310px;min-width:0;display:flex;flex-direction:column;gap:var(--e4)">
+      <section class="card pad">
+        <h2 style="font-size:15px;font-weight:700;margin-bottom:var(--e2)">La firma se captura una vez</h2>
+        <p style="color:var(--txt-2);font-size:13px">Se guarda como las coordenadas del trazo, junto con el documento y el código interno. De ahí en adelante se estampa en cada documento, sin volver a dibujarla.</p>
+      </section>
+      <section class="card pad">
+        <h3 style="font-size:14px;font-weight:700;margin-bottom:var(--e3)">Dónde se va a usar</h3>
+        <ul style="padding-left:17px;color:var(--txt-2);font-size:13px;line-height:1.7">
+          <li>Solicitudes de vacaciones y permisos</li><li>Divulgación de documentos</li><li>Registro de capacitación R-RH-009</li><li>Evaluación de competencias R-RH-053</li><li>Entrega de dotación y EPP</li><li>Paz y salvo de retiro</li>
+        </ul>
+      </section>
+      <section class="card pad osc">
+        <div style="color:var(--acento);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase">Migración</div>
+        <p style="margin-top:var(--e3);color:var(--marca-txt-2);font-size:12.5px">Las firmas del sistema anterior se traen por código interno. Quien ya tenga una no vuelve a firmar: solo crea su clave.</p>
+        <div style="margin-top:var(--e3);padding-top:var(--e3);border-top:1px solid var(--marca-linea);display:flex;justify-content:space-between;align-items:baseline">
+          <span style="color:var(--marca-txt-2);font-size:12.5px">Firmas por migrar</span>
+          <span class="num" style="color:#fff;font-family:var(--disp);font-size:18px;font-weight:700">8.214</span>
+        </div>
+      </section>
+    </aside>
+  </div></div>
+</section>
+
+<!-- ══════════ FIRMAR DOCUMENTO ══════════ -->
+<section class="view" id="v-firmaconf">
+  <header class="hdr">
+    <div style="flex:1;min-width:200px">
+      <nav class="migas" aria-label="Ruta">Firmas › Confirmar</nav>
+      <h1 class="ttl">Firmar documento</h1>
+    </div>
+  </header>
+
+  <div style="flex:1;background:var(--marca);padding:var(--e8) var(--e5);display:flex;align-items:flex-start;justify-content:center">
+    <div role="dialog" aria-modal="true" aria-labelledby="ttlf" style="width:100%;max-width:620px;background:var(--sup);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--s-3)">
+      <div style="display:flex;align-items:flex-start;gap:var(--e3);padding:var(--e5) var(--e5) var(--e4);border-bottom:1px solid var(--linea)">
+        <div style="width:40px;height:40px;border-radius:11px;background:var(--accion-suave);display:flex;align-items:center;justify-content:center;flex:0 0 40px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accion-2)" stroke-width="1.9" aria-hidden="true"><path d="M3 18c3 0 3.5-11 6.5-11S12 17 15 17s3-5 6-5"/></svg></div>
+        <div style="flex:1;min-width:0">
+          <h2 id="ttlf" style="font-size:18px;font-weight:700">Confirmar con tu firma</h2>
+          <p style="color:var(--txt-3);font-size:13px;margin-top:4px">Registro de capacitación R-RH-009 · folio 4.187</p>
+        </div>
+        <button class="btn ico sm" type="button" aria-label="Cerrar"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+      <div style="padding:var(--e5);display:flex;flex-direction:column;gap:var(--e4)">
+        <div class="card plano" style="padding:var(--e4);border:0">
+          <div style="color:var(--txt-3);font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px">Lo que estás firmando</div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:13.5px">
+            <div style="display:flex;gap:14px"><span style="color:var(--txt-3);flex:0 0 100px">Capacitación</span><span style="font-weight:600;flex:1">Protocolo de uso de EPP en planta 2</span></div>
+            <div style="display:flex;gap:14px"><span style="color:var(--txt-3);flex:0 0 100px">Instructor</span><span style="flex:1">Marta Rodríguez · Gestión de Calidad</span></div>
+            <div style="display:flex;gap:14px"><span style="color:var(--txt-3);flex:0 0 100px">Duración</span><span class="num" style="flex:1">2 horas · 5 de noviembre de 2026</span></div>
+            <div style="display:flex;gap:14px"><span style="color:var(--txt-3);flex:0 0 100px">Asistentes</span><span class="num" style="flex:1">14 personas · eres el número 9</span></div>
+          </div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--e4);align-items:center">
+          <div style="flex:1 1 210px;min-width:0">
+            <div style="color:var(--txt-3);font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px">Tu firma registrada</div>
+            <div style="background:var(--sup-2);border:1px solid var(--linea);border-radius:var(--r-sm);padding:10px 14px">
+              <svg viewBox="0 0 540 120" style="width:100%;height:auto" role="img" aria-label="Firma registrada">
+                <path d="M40 86 C 70 32, 92 32, 104 70 C 114 102, 134 106, 146 74 C 158 42, 174 40, 182 72 C 192 108, 214 96, 226 66 C 238 36, 262 42, 272 76 C 282 110, 306 98, 322 68 C 336 42, 358 48, 372 74 C 386 102, 410 90, 426 62" fill="none" stroke="#14141F" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p class="hp num">Código 9204 · registrada el 10/11/2026</p>
+          </div>
+          <div style="flex:1 1 210px;min-width:0">
+            <label class="lb" for="cl">Tu clave</label>
+            <input class="in" id="cl" type="password" value="........" style="letter-spacing:.22em;font-size:14px">
+            <p class="hp">Es la misma con la que entras al sistema.</p>
+          </div>
+        </div>
+        <div class="av av-av"><svg viewBox="0 0 24 24" fill="none" stroke="#7A4F00" stroke-width="2" width="17" height="17" aria-hidden="true"><path d="M12 8.5v5M12 17v.5"/><circle cx="12" cy="12" r="9"/></svg><p>Al firmar, el documento se cierra y no se puede modificar. Quedan registrados tu nombre, la fecha, la hora y el equipo.</p></div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:var(--e3);padding:var(--e4) var(--e5);border-top:1px solid var(--linea);background:var(--sup-2)">
+        <button class="btn" type="button">Cancelar</button>
+        <button class="btn pri" type="button" style="margin-left:auto"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg>Firmar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ROLES Y PERMISOS ══════════ -->
+<section class="view" id="v-permisos">
+  <header class="hdr">
+    <div style="flex:1;min-width:200px">
+      <nav class="migas" aria-label="Ruta">Administración › Roles y permisos</nav>
+      <h1 class="ttl">Roles y permisos</h1>
+    </div>
+  </header>
+
+  <div class="body"><div class="wrap fila">
+    <section class="card" style="flex:1 1 250px;min-width:0">
+      <div style="display:flex;gap:var(--e2);align-items:center;padding:var(--e4);border-bottom:1px solid var(--linea)">
+        <h2 style="font-size:15px;font-weight:700">Roles</h2><span class="num" style="color:var(--txt-3);font-size:12.5px">7</span>
+        <button class="btn sm ico" type="button" aria-label="Crear rol" style="margin-left:auto"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+      </div>
+      <div style="padding:var(--e2)" id="listaRoles"></div>
+    </section>
+
+    <section style="flex:999 1 560px;min-width:0;display:flex;flex-direction:column;gap:var(--e4)">
+      <div class="card pad">
+        <div style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:flex-start">
+          <div style="flex:1 1 280px;min-width:0">
+            <h2 style="font-size:17px;font-weight:700" id="rolNom">Analista de RRHH</h2>
+            <p style="color:var(--txt-2);font-size:13px;margin-top:4px" id="rolDes">Opera el día a día: registra personal, atiende solicitudes y cierra trámites. Ve el salario pero no lo edita.</p>
+          </div>
+          <div style="display:flex;gap:18px">
+            <div><span style="display:block;color:var(--txt-4);font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase">Permisos</span><span class="num" style="font-family:var(--disp);font-size:20px;font-weight:700" id="rolPer">74</span></div>
+            <div><span style="display:block;color:var(--txt-4);font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase">Usuarios</span><span class="num" style="font-family:var(--disp);font-size:20px;font-weight:700" id="rolUsu">6</span></div>
+          </div>
+        </div>
+        <div style="margin-top:var(--e4);padding-top:var(--e3);border-top:1px solid var(--linea)">
+          <div style="color:var(--txt-2);font-size:12.5px;font-weight:600;margin-bottom:var(--e2)">Alcance de los datos</div>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--e2)" id="alcances"></div>
+          <p class="hp">El alcance es un eje aparte del permiso. Dos roles pueden tener el mismo <code>personal.ver</code> y ver conjuntos de personas distintos.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center;padding:var(--e4);border-bottom:1px solid var(--linea)">
+          <h3 style="font-size:15px;font-weight:700">Permisos por módulo</h3>
+          <div style="margin-left:auto;display:flex;align-items:center;gap:9px;background:var(--fondo);border:1px solid var(--linea);border-radius:var(--r);padding:8px 11px;min-width:190px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--txt-4)" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M15.8 15.8L21 21"/></svg>
+            <label for="bp" class="sr">Buscar permiso</label>
+            <input id="bp" type="search" placeholder="Buscar permiso" style="border:0;background:transparent;font:inherit;font-size:12.5px;width:100%;outline:none">
+          </div>
+        </div>
+        <div id="permisos"></div>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--e3);padding:var(--e4);border-top:1px solid var(--linea);background:var(--sup-2);align-items:center">
+          <p style="color:var(--txt-3);font-size:12.5px;flex:1 1 280px">Cambiar un permiso afecta de inmediato a <strong id="rolUsu2">6 usuarios</strong> y queda en la bitácora.</p>
+          <button class="btn" type="button">Descartar</button>
+          <button class="btn pri" type="button">Guardar cambios</button>
+        </div>
+      </div>
+    </section>
+  </div></div>
+</section>
+
+<!-- ══════════ USUARIOS ══════════ -->
+<section class="view" id="v-usuarios">
+  <header class="hdr">
+    <div style="flex:1;min-width:200px">
+      <nav class="migas" aria-label="Ruta">Administración › Usuarios</nav>
+      <h1 class="ttl">Usuarios del sistema</h1>
+    </div>
+    <button class="btn pri" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Dar acceso a alguien</button>
+  </header>
+
+  <div class="body"><div class="wrap" style="display:flex;flex-direction:column;gap:var(--e4)">
+    <div class="av av-in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#3730A3" stroke-width="2" width="17" height="17" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.8v.4"/></svg>
+      <p><strong>Aquí no se crean credenciales.</strong> La identidad vive en el gestor central; esta pantalla concede el acceso a SIRH+ y decide con qué rol y sobre qué datos.</p>
+    </div>
+    <section class="card">
+      <div style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center;padding:var(--e4);border-bottom:1px solid var(--linea)">
+        <h2 style="font-size:15px;font-weight:700">Con acceso a SIRH+</h2>
+        <span class="num" style="color:var(--txt-3);font-size:12.5px">65 usuarios</span>
+      </div>
+      <div class="scroll">
+        <table style="min-width:900px">
+          <caption class="sr">Usuarios con acceso</caption>
+          <thead><tr><th scope="col">Persona</th><th scope="col">Usuario</th><th scope="col">Rol</th><th scope="col">Alcance</th><th scope="col">Último ingreso</th><th scope="col">Estado</th></tr></thead>
+          <tbody id="tblUsu"></tbody>
+        </table>
+      </div>
+    </section>
+    <div class="grid g2" style="margin:0">
+      <div class="card pad plano"><div style="font-size:13px;font-weight:700;margin-bottom:5px">Julián Peña · Jefe de área · Su rama</div><p style="color:var(--txt-2);font-size:12.5px">Tiene <code>personal.ver</code>, pero solo sobre las 387 personas que dependen de su cargo. Aprueba sus permisos y sus horas extra. No ve salarios.</p></div>
+      <div class="card pad plano"><div style="font-size:13px;font-weight:700;margin-bottom:5px">Laura Mejía · Analista · Toda la empresa</div><p style="color:var(--txt-2);font-size:12.5px">Tiene el mismo <code>personal.ver</code>, sobre las 1.094. Además ve el salario, pero no lo edita: eso es <code>personal.salario.editar</code>.</p></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ══════════ PARÁMETROS ══════════ -->
+<section class="view" id="v-parametros">
+  <header class="hdr">
+    <div style="flex:1;min-width:200px">
+      <nav class="migas" aria-label="Ruta">Administración › Parámetros</nav>
+      <h1 class="ttl">Parámetros del sistema</h1>
+    </div>
+  </header>
+
+  <div class="body"><div class="wrap fila">
+    <section class="card" style="flex:1 1 230px;min-width:0">
+      <div style="padding:var(--e4);border-bottom:1px solid var(--linea)"><h2 style="font-size:15px;font-weight:700">Por módulo</h2></div>
+      <div style="padding:var(--e2)" id="listaParam"></div>
+    </section>
+
+    <section style="flex:999 1 560px;min-width:0;display:flex;flex-direction:column;gap:var(--e4)">
+      <div class="av av-av">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#7A4F00" stroke-width="2" width="17" height="17" aria-hidden="true"><path d="M12 8.5v5M12 17v.5"/><circle cx="12" cy="12" r="9"/></svg>
+        <p>Un parámetro legal <strong>no se sobrescribe: se le agrega una vigencia nueva</strong>. El cálculo busca el valor que regía en la fecha del hecho, para que recalcular un mes cerrado dé lo mismo que se pagó.</p>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:flex-start;padding:var(--e5);border-bottom:1px solid var(--linea)">
+          <div style="flex:1 1 290px;min-width:0">
+            <div style="display:flex;flex-wrap:wrap;gap:9px;align-items:center">
+              <h2 style="font-size:16px;font-weight:700">Jornada máxima semanal</h2>
+              <span class="bdg b-ko">Legal</span>
+            </div>
+            <p style="color:var(--txt-2);font-size:13px;margin-top:4px">Umbral semanal a partir del cual las horas se reclasifican como suplementarias, para personal rotativo.</p>
+            <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:var(--e2);align-items:center"><code>jornada.umbral_semanal</code><span style="color:var(--txt-4);font-size:11.5px">Ley 2101 de 2021</span></div>
+          </div>
+          <button class="btn pri sm" type="button"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Nueva vigencia</button>
+        </div>
+        <div id="vigencias" style="padding:0 var(--e5)"></div>
+      </div>
+
+      <div class="card">
+        <div style="padding:var(--e4) var(--e5);border-bottom:1px solid var(--linea)"><h2 style="font-size:15px;font-weight:700">Otros parámetros de jornada</h2></div>
+        <div id="otrosParam" style="padding:0 var(--e5)"></div>
+      </div>
+    </section>
+  </div></div>
+</section>
+
+<!-- ══════════ AUDITORÍA ══════════ -->
+<section class="view" id="v-auditoria">
+  <header class="hdr">
+    <div style="flex:1;min-width:200px">
+      <nav class="migas" aria-label="Ruta">Administración › Auditoría</nav>
+      <h1 class="ttl">Bitácora</h1>
+    </div>
+    <button class="btn" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1D6F42" stroke-width="1.9" aria-hidden="true"><path d="M5 3h9l5 5v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M9 12l6 6M15 12l-6 6"/></svg>Exportar</button>
+  </header>
+
+  <div class="body"><div class="wrap" style="display:flex;flex-direction:column;gap:var(--e4)">
+    <section class="card pad" aria-label="Filtros" style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:flex-end">
+      <div style="flex:1 1 210px;min-width:0"><label class="lb" for="ba">Buscar</label><input class="in" id="ba" type="search" placeholder="Usuario, persona afectada o campo"></div>
+      <div style="flex:0 1 170px"><label class="lb" for="mo">Módulo</label><select class="in" id="mo"><option>Todos</option><option>Personal</option><option>Empresa</option><option>Parámetros</option><option>Permisos</option></select></div>
+      <div style="flex:0 1 170px"><label class="lb" for="ac">Acción</label><select class="in" id="ac"><option>Todas</option><option>Consulta sensible</option><option>Modificación</option><option>Creación</option><option>Seguridad</option></select></div>
+      <div style="flex:0 1 150px"><label class="lb" for="d1">Desde</label><input class="in" id="d1" type="date" value="2026-11-01"></div>
+      <div style="flex:0 1 150px"><label class="lb" for="d2">Hasta</label><input class="in" id="d2" type="date" value="2026-11-05"></div>
+      <button class="btn osc" type="button">Aplicar</button>
+    </section>
+
+    <section class="card">
+      <div style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center;padding:var(--e4) var(--e5);border-bottom:1px solid var(--linea)">
+        <h2 style="font-size:15px;font-weight:700">Registros</h2>
+        <span class="num" style="color:var(--txt-3);font-size:12.5px">1.846 en el rango</span>
+        <span style="margin-left:auto;color:var(--txt-4);font-size:11.5px">La bitácora no se puede editar ni borrar desde la aplicación</span>
+      </div>
+      <div id="eventos" style="padding:0 var(--e5)"></div>
+      <div style="padding:var(--e4) var(--e5);display:flex;gap:var(--e3);align-items:center">
+        <span class="num" style="color:var(--txt-3);font-size:12.5px">Mostrando 1–8 de 1.846</span>
+        <button class="btn sm" type="button" style="margin-left:auto">Cargar más</button>
+      </div>
+    </section>
+  </div></div>
+</section>
+
+  </main>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  function $(id){ return document.getElementById(id); }
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+  function dig(s){ return String(s).replace(/\D/g,""); }
+  function miles(s){ return dig(s).replace(/\B(?=(\d{3})+(?!\d))/g,"."); }
+  function tono(p){ return p>=100?"var(--ok)":p>=70?"var(--accion)":p>=40?"var(--aviso)":"var(--error)"; }
+  function html(id,s){ var el=$(id); if(el){ el.innerHTML=s; } }
+
+  /* ─────── datos ─────── */
+  var PUNTOS = [
+    {id:"vm",  n:"Vestier Mujeres",    disp:["Vestier Mujeres 1","Vestier Mujeres 2","Vestier Mujeres 3","Vestier Mujeres 4"], rol:"Descanso", car:11, per:418},
+    {id:"vh",  n:"Vestier Hombres",    disp:["Vestier Hombres 1","Vestier Hombres 2"], rol:"Descanso", car:9, per:286},
+    {id:"pp",  n:"Portería Planta",    disp:["Portería Planta 1","Portería Planta 2"], rol:"Portería", car:14, per:192},
+    {id:"alm", n:"Almacén PP",         disp:["Almacén PP"], rol:"Interior", car:4, per:48},
+    {id:"ext", n:"Extrusión PP",       disp:["Extrusión PP"], rol:"Interior", car:3, per:94},
+    {id:"rec", n:"Recepción Planta 2", disp:["Recepción Planta 2"], rol:"Portería", car:6, per:56}
+  ];
+  function punto(id){ return PUNTOS.filter(function(p){ return p.id===id; })[0]; }
+
+  var CARGOS = [
+    {id:"oe1",n:"Operario de Extrusión 1",area:"Producción Insumos",niv:"Operativo",jefe:"Coordinador de Turno",mat:11,turno:"T NORMAL 1",form:"R-RH-053-OE1",pm:"vm",per:94},
+    {id:"oin",n:"Operario de Inyección",area:"Producción Insumos",niv:"Operativo",jefe:"Coordinador de Turno",mat:11,turno:"T NORMAL 2",form:"R-RH-053-OI",pm:"vm",per:118},
+    {id:"ope",n:"Operario de Peletizado",area:"Producción Insumos",niv:"Operativo",jefe:"Coordinador de Turno",mat:11,turno:"T NORMAL 3",form:"R-RH-053-OP",pm:"vh",per:42},
+    {id:"ofa",n:"Operaria Área Farmacéutica",area:"Producción Farmacéutica",niv:"Operativo",jefe:"Coordinador de Turno",mat:14,turno:"T NORMAL 1",form:"R-RH-053-OF",pm:"vm",per:201},
+    {id:"aux",n:"Auxiliar de Almacén",area:"Almacén",niv:"Auxiliar",jefe:"Jefe de Almacén",mat:9,turno:"T ADMIN 1",form:"R-RH-053-AA",pm:"alm",per:48},
+    {id:"arc",n:"Auxiliar de Archivo",area:"Gestión de Calidad",niv:"Auxiliar",jefe:"— sin superior",mat:9,turno:"T ADMIN 1",form:"sin asignar",pm:"rec",per:3},
+    {id:"tec",n:"Técnico de Mantenimiento",area:"Mantenimiento y Servicios",niv:"Técnico",jefe:"Coordinador de Turno",mat:16,turno:"T NORMAL 2",form:"R-RH-053-TM",pm:"vh",per:15},
+    {id:"cot",n:"Coordinador de Turno",area:"Producción Insumos",niv:"Coordinador",jefe:"Jefe de Producción Insumos",mat:19,turno:"T NORMAL 1",form:"R-RH-053-CT",pm:"pp",per:6}
+  ];
+  function cargo(id){ return CARGOS.filter(function(c){ return c.id===id; })[0]; }
+
+  var CEDS = {"1021672433":"Jised Johana Acero · activa","1043140386":"Gesenia Aguas Acosta · activa","57290379":"Adelaida Álvarez · activa","1000135814":"Ange Álvarez · retirada en 2024"};
+  var CODS = {"8639":1,"8823":1,"8799":1,"8922":1,"8743":1,"9074":1,"9111":1,"9126":1,"8279":1,"9203":1};
+  var sigCod = 9204;
+
+  var HITOS = [
+    {pc:10,n:"Identificada",q:"Documento, nombres y código interno",hab:"Existe en el sistema. Nada más",due:"Quien recibe"},
+    {pc:25,n:"Vinculada",q:"Tipo de vínculo, empresa y fecha de ingreso",hab:"Se genera su código de nómina",due:"Quien recibe"},
+    {pc:40,n:"Ubicada",q:"Cargo asignado y punto de marcación",hab:"Tiene jefe, hereda matriz, puede marcar",due:"Quien recibe"},
+    {pc:55,n:"Habilitada",q:"Firma capturada y clave creada",hab:"Puede firmar y entrar al portal",due:"Quien recibe"},
+    {pc:70,n:"Liquidable",q:"Salario, EPS, caja y pensión",hab:"Entra al archivo de nómina",due:"Permiso reservado"},
+    {pc:85,n:"Completa",q:"Contacto, urgencia y datos de SST",hab:"Cumple el perfil para SST y emergencias",due:"RH"},
+    {pc:100,n:"Al día",q:"Examen de ingreso e inducción",hab:"Sin pendientes de apertura",due:"SST y Formación"}
+  ];
+
+  /* ─────── navegación ─────── */
+  var VISTAS = ["tablero","captura","fotos","listado","hoja","completitud","pendientes","cargos","estructura","organigrama","puntos","firmacap","firmaconf","permisos","usuarios","parametros","auditoria"];
+  function ir(v){
+    VISTAS.forEach(function(k){ var el=$("v-"+k); if(el){ el.classList.toggle("on",k===v); } });
+    document.querySelectorAll(".rail .nv").forEach(function(b){
+      var act=b.getAttribute("data-ir")===v;
+      b.classList.toggle("on",act);
+      if(act){ b.setAttribute("aria-current","page"); } else { b.removeAttribute("aria-current"); }
+    });
+    window.scrollTo(0,0);
+    if(v==="captura"){ var c=$("ced"); if(c){ c.focus(); } }
+  }
+  document.querySelectorAll("[data-ir]").forEach(function(b){
+    b.addEventListener("click",function(){ ir(b.getAttribute("data-ir")); });
+  });
+
+  /* ─────── captura rápida ─────── */
+  var sel=$("car");
+  CARGOS.forEach(function(c){ var o=document.createElement("option"); o.value=c.id; o.textContent=c.n; sel.appendChild(o); });
+  PUNTOS.forEach(function(p){ var o=document.createElement("option"); o.value=p.id; o.textContent=p.n+" ("+p.disp.length+" dispositivo"+(p.disp.length>1?"s":"")+")"; $("pmSel").appendChild(o); });
+
+  var pmManual=false;
+  function derivar(){
+    var c=cargo(sel.value);
+    $("dArea").textContent=c?c.area:"—";
+    $("dNivel").textContent=c?c.niv:"—";
+    $("dJefe").textContent=c?c.jefe:"—";
+    $("dMatriz").textContent=c?(c.mat+" documentos"):"—";
+    $("dTurno").textContent=c?c.turno:"—";
+    $("dForm").textContent=c?c.form:"—";
+    $("dJefe").style.color=(c&&c.jefe.indexOf("sin superior")>-1)?"var(--error)":"";
+    $("dForm").style.color=(c&&c.form==="sin asignar")?"var(--aviso)":"";
+
+    var p=c?punto(pmManual?$("pmSel").value:c.pm):null;
+    $("dPunto").textContent=p?p.n:"—";
+    $("dPuntoDisp").textContent=p?(p.disp.join(" · ")):"—";
+    $("dPuntoOrigen").textContent=pmManual?"Excepción para esta persona":"Por definición del cargo";
+    $("dPuntoOrigen").className=pmManual?"bdg b-in":"bdg b-nt";
+    if(c&&!pmManual){ $("pmSel").value=c.pm; }
+
+    var h=$("hCar");
+    if(c&&c.jefe.indexOf("sin superior")>-1){
+      h.className="hp av";
+      h.textContent="Este cargo no tiene superior: no podrá enrutar solicitudes hasta que se corrija la estructura.";
+    } else {
+      h.className="hp";
+      h.textContent="Define jefe, área, matriz y punto de marcación.";
+    }
+    validar();
+  }
+  sel.addEventListener("change",derivar);
+  $("pmSel").addEventListener("change",derivar);
+  $("btnCambiarPM").addEventListener("click",function(){
+    pmManual=!pmManual;
+    $("pmCambio").style.display=pmManual?"block":"none";
+    this.textContent=pmManual?"Volver al punto del cargo":"Cambiar para esta persona";
+    derivar();
+  });
+
+  var okCed=false, okCod=true;
+  $("ced").addEventListener("input",function(e){
+    var c=dig(e.target.value).slice(0,11);
+    e.target.value=miles(c);
+    var h=$("hCed"); e.target.classList.remove("ok","ko"); okCed=false;
+    if(!c.length){ h.className="hp"; h.textContent="Se valida contra todo el histórico, no solo contra los activos."; }
+    else if(c.length<6){ h.className="hp"; h.textContent="Faltan dígitos."; }
+    else if(CEDS[c]){
+      e.target.classList.add("ko"); h.className="hp ko";
+      h.textContent=CEDS[c].indexOf("retirada")>-1?("Ya existe: "+CEDS[c]+". Es un reingreso, no un registro nuevo."):("Ya existe: "+CEDS[c]+".");
+    } else { e.target.classList.add("ok"); h.className="hp ok"; h.textContent="Sin registros previos. Disponible."; okCed=true; }
+    validar();
+  });
+  $("cod").addEventListener("input",function(e){
+    var c=dig(e.target.value).slice(0,5); e.target.value=c;
+    var h=$("hCod"); e.target.classList.remove("ok","ko"); okCod=false;
+    if(!c.length){ h.className="hp"; h.textContent="El sistema propone el siguiente. Se puede cambiar."; }
+    else if(CODS[c]){ e.target.classList.add("ko"); h.className="hp ko"; h.textContent="Ese código ya está en uso. El siguiente libre es "+sigCod+"."; }
+    else { e.target.classList.add("ok"); h.className="hp ok"; h.textContent="Disponible. Es el mismo que usarán el biométrico y la firma."; okCod=true; }
+    validar();
+  });
+  function validar(){
+    $("btnGuardar").disabled=!(okCed&&okCod&&sel.value&&$("nom").value.trim()&&$("ape").value.trim());
+  }
+  ["nom","ape"].forEach(function(id){ $(id).addEventListener("input",validar); });
+
+  var sesion=[], cola=[], idx=0;
+  $("frm").addEventListener("submit",function(e){
+    e.preventDefault();
+    if($("btnGuardar").disabled){ return; }
+    var c=cargo(sel.value), nom=$("nom").value.trim(), ape=$("ape").value.trim(), sinF=$("chkFoto").checked;
+    var p={ced:$("ced").value,cod:$("cod").value,nom:nom+" "+ape,ini:(nom[0]||"")+(ape[0]||""),car:c.n,
+            pm:punto(pmManual?$("pmSel").value:c.pm).n, exc:pmManual, pc:40, foto:!sinF};
+    CEDS[dig(p.ced)]=p.nom+" · activa"; CODS[p.cod]=1;
+    if(parseInt(p.cod,10)>=sigCod){ sigCod=parseInt(p.cod,10)+1; }
+    sesion.unshift(p); if(sinF){ cola.push(p); }
+    limpiar(); pintarSesion(); pintarCola();
+  });
+  function limpiar(){
+    ["ced","nom","ape"].forEach(function(id){ $(id).value=""; $(id).classList.remove("ok","ko"); });
+    $("cod").value=sigCod; $("cod").classList.remove("ok","ko");
+    okCed=false; okCod=true;
+    $("hCed").className="hp"; $("hCed").textContent="Se valida contra todo el histórico, no solo contra los activos.";
+    $("hCod").className="hp"; $("hCod").textContent="El sistema propone el siguiente. Se puede cambiar.";
+    sel.value=""; pmManual=false; $("pmCambio").style.display="none";
+    $("btnCambiarPM").textContent="Cambiar para esta persona";
+    derivar(); $("ced").focus();
+  }
+  document.addEventListener("keydown",function(e){
+    if(e.key==="Escape"&&$("v-captura").classList.contains("on")){ limpiar(); }
+    if(e.key===" "&&$("v-fotos").classList.contains("on")&&cola.length){
+      var t=e.target;
+      if(!t||(t.tagName!=="INPUT"&&t.tagName!=="BUTTON"&&t.tagName!=="SELECT")){ e.preventDefault(); disparar(); }
+    }
+  });
+  function pintarSesion(){
+    $("sesCount").textContent=sesion.length; $("lstCount").textContent=sesion.length;
+    $("vacio").style.display=sesion.length?"none":"block";
+    html("lista",sesion.map(function(p){
+      return '<div style="display:flex;gap:11px;align-items:center;padding:11px 0;border-bottom:1px solid var(--linea)">'+
+        '<span class="av32" style="background:var(--accion-suave);color:var(--accion-2)">'+esc(p.ini)+'</span>'+
+        '<span style="flex:1;min-width:0">'+
+          '<span style="display:block;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(p.nom)+'</span>'+
+          '<span style="display:block;color:var(--txt-3);font-size:11.5px;margin-top:2px">'+esc(p.pm)+(p.exc?' · excepción':'')+'</span>'+
+          '<span class="pb pb-mini" style="margin-top:6px"><i style="width:'+p.pc+'%;background:'+tono(p.pc)+'"></i></span>'+
+        '</span>'+
+        '<span style="text-align:right;flex:0 0 auto"><span class="num" style="display:block;font-family:var(--disp);font-size:14px;font-weight:700;color:'+tono(p.pc)+'">'+p.pc+'%</span>'+
+        (p.foto?'':'<span class="bdg b-av" style="margin-top:4px;font-size:10px">Sin foto</span>')+'</span></div>';
+    }).join(""));
+  }
+  function pintarCola(){
+    var n=cola.length;
+    $("ctFotos").textContent=n; $("ctFotos").style.display=n?"":"none";
+    $("fotosPend").textContent=n===1?"1 pendiente":n+" pendientes";
+    $("fotosPend").className=n?"bdg b-av":"bdg b-ok";
+    $("camVacio").style.display=n?"none":"block";
+    $("camActiva").style.display=n?"block":"none";
+    if(idx>=cola.length){ idx=0; }
+    if(n){
+      var p=cola[idx];
+      $("camIni").textContent=p.ini; $("camNom").textContent=p.nom;
+      $("camSub").textContent=p.car+" · código "+p.cod;
+      $("camPos").textContent=(idx+1)+" de "+n;
+    }
+    html("colaLista",n?cola.map(function(p,i){
+      return '<div style="display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--linea);'+(i===idx?'background:var(--accion-suave);margin:0 -8px;padding-left:8px;padding-right:8px;border-radius:8px':'')+'">'+
+        '<span class="av32" style="background:var(--sup-3);color:var(--txt-2);width:28px;height:28px;flex:0 0 28px;font-size:11px">'+esc(p.ini)+'</span>'+
+        '<span style="flex:1;min-width:0"><span style="display:block;font-size:12.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(p.nom)+'</span>'+
+        '<span class="num" style="display:block;color:var(--txt-3);font-size:11px;margin-top:1px">Código '+esc(p.cod)+'</span></span>'+
+        (i===idx?'<span class="bdg b-in" style="font-size:10px">Ahora</span>':'')+'</div>';
+    }).join(""):'<p style="color:var(--txt-3);font-size:12.5px">La cola está vacía.</p>');
+  }
+  function disparar(){ if(!cola.length){ return; } cola.splice(idx,1)[0].foto=true; pintarSesion(); pintarCola(); }
+  $("btnDisparar").addEventListener("click",disparar);
+  $("btnSaltar").addEventListener("click",function(){ if(cola.length<2){ return; } idx=(idx+1)%cola.length; pintarCola(); });
+
+  /* ─────── tablero ─────── */
+  html("bandeja",[
+    {t:"Completar datos reservados — Andrés Mora",d:"Registrado hace 2 días · falta salario, EPS y caja",e:"Bloquea nómina",c:"ko",w:"hace 2 d"},
+    {t:"Solicitud de actualización — Carolina Páez",d:"Cambio de dirección y teléfono",e:"Por validar",c:"in",w:"hace 4 h"},
+    {t:"Marcación fuera de punto — 3 personas",d:"Marcaron en Portería Planta 1, su punto es Vestier Mujeres",e:"Excepción",c:"av",w:"hoy"},
+    {t:"Paz y salvo sin cerrar — Jorge Trujillo",d:"Retiro del 28 de octubre · faltan TI y Seguridad",e:"Retiro abierto",c:"av",w:"hace 8 d"},
+    {t:"Cargo sin jefe — Auxiliar de Archivo",d:"Sin superior no se puede enrutar una solicitud",e:"Estructura",c:"ko",w:"hace 1 d"}
+  ].map(function(p){
+    var col={ko:"var(--error)",av:"var(--acento)",in:"var(--accion)"}[p.c];
+    return '<div class="row"><span style="width:4px;height:34px;border-radius:2px;background:'+col+';flex:0 0 4px"></span>'+
+      '<span class="tx"><b>'+esc(p.t)+'</b><span>'+esc(p.d)+'</span></span>'+
+      '<span class="bdg b-'+p.c+'">'+esc(p.e)+'</span>'+
+      '<span class="num" style="color:var(--txt-4);font-size:12px;white-space:nowrap">'+esc(p.w)+'</span></div>';
+  }).join(""));
+
+  /* ─────── listado de personal ─────── */
+  html("tblPers",[
+    {ini:"AA",n:"Jised Johana Acero Acero",doc:"1.021.672.433",cod:"8639",nom:"10216724331",car:"Auxiliar de Archivo",pm:"Recepción Planta 2",exc:false,pc:100,est:"Activo",ec:"var(--ok)"},
+    {ini:"AM",n:"Andrés Felipe Mora",doc:"1.098.447.201",cod:"9204",nom:"",car:"Operario de Extrusión 1",pm:"Vestier Mujeres",exc:false,pc:55,est:"Incompleto",ec:"var(--aviso)"},
+    {ini:"AG",n:"Gesenia Aguas Acosta",doc:"1.043.140.386",cod:"8799",nom:"10431403861",car:"Operaria Área Farmacéutica",pm:"Vestier Mujeres",exc:false,pc:100,est:"Activo",ec:"var(--ok)"},
+    {ini:"AE",n:"María Fernanda Aguiar",doc:"1.000.971.954",cod:"8922",nom:"10009719541",car:"Aprendiz SENA",pm:"Portería Planta",exc:true,pc:85,est:"Activo",ec:"var(--ok)"},
+    {ini:"AC",n:"Paula Andrea Alcantar",doc:"1.000.993.050",cod:"8743",nom:"10009930501",car:"Coordinadora de Turno",pm:"Portería Planta",exc:false,pc:100,est:"Activo",ec:"var(--ok)"},
+    {ini:"AR",n:"Karen Vanessa Alegría",doc:"1.150.937.410",cod:"9074",nom:"11509374101",car:"Operaria Área Farmacéutica",pm:"Vestier Mujeres",exc:false,pc:100,est:"Activo",ec:"var(--ok)"},
+    {ini:"AL",n:"Ange Stefani Álvarez",doc:"1.000.135.814",cod:"9126",nom:"",car:"Operaria de Inyección",pm:"Vestier Mujeres",exc:false,pc:40,est:"Incompleto",ec:"var(--error)"},
+    {ini:"AM",n:"Adelaida Álvarez Mejía",doc:"57.290.379",cod:"8279",nom:"572903791",car:"Jefe de Mantenimiento",pm:"Portería Planta",exc:true,pc:100,est:"Activo",ec:"var(--ok)"}
+  ].map(function(f){
+    return '<tr><td><span style="display:flex;align-items:center;gap:10px"><span class="av32" style="background:var(--accion-suave);color:var(--accion-2)">'+esc(f.ini)+'</span><span style="font-weight:600">'+esc(f.n)+'</span></span></td>'+
+      '<td class="num" style="color:var(--txt-2)">'+esc(f.doc)+'</td><td class="num" style="color:var(--txt-2)">'+esc(f.cod)+'</td>'+
+      '<td class="num">'+(f.nom?'<span style="color:var(--txt-2)">'+esc(f.nom)+'</span>':'<span style="color:var(--error);font-weight:600;font-size:12.5px">Falta</span>')+'</td>'+
+      '<td style="color:var(--txt-2)">'+esc(f.car)+'</td>'+
+      '<td><span style="display:flex;align-items:center;gap:6px"><span style="color:var(--txt-2)">'+esc(f.pm)+'</span>'+(f.exc?'<span class="bdg b-in" style="font-size:9.5px">Excepción</span>':'')+'</span></td>'+
+      '<td><span style="display:flex;align-items:center;gap:8px"><span class="pb pb-mini" style="width:54px"><i style="width:'+f.pc+'%;background:'+tono(f.pc)+'"></i></span><span class="num" style="font-weight:700;color:'+tono(f.pc)+';font-size:12.5px">'+f.pc+'%</span></span></td>'+
+      '<td><span style="display:inline-flex;align-items:center;gap:6px;color:'+f.ec+';font-size:12.5px;font-weight:600"><span style="width:7px;height:7px;border-radius:50%;background:'+f.ec+'"></span>'+esc(f.est)+'</span></td></tr>';
+  }).join(""));
+
+  /* ─────── hoja de vida ─────── */
+  var C={cargo:{f:"var(--accion-suave)",c:"var(--accion-2)",t:"Cargo"},ev:{f:"var(--error-s)",c:"var(--error)",t:"Eventualidad"},
+         fo:{f:"var(--ok-s)",c:"var(--ok)",t:"Formación"},cp:{f:"var(--aviso-s)",c:"var(--aviso)",t:"Competencias"},
+         do:{f:"var(--sup-3)",c:"var(--txt-2)",t:"Dotación"}};
+  html("timeline",[
+    {s:"CMP",k:C.cp,t:"Evaluación de competencias — 88 %",d:"Formato R-RH-053 para Auxiliar de Archivo. Aprobada.",f:"12 sep 2026",q:"Carolina Páez"},
+    {s:"FRM",k:C.fo,t:"Divulgación: PR-GC-014 versión 7",d:"Procedimiento de control de documentos. Leída y firmada.",f:"03 ago 2026",q:"Sistema"},
+    {s:"DOT",k:C.do,t:"Entrega de dotación — jornada 2 de 2026",d:"2 uniformes, 1 par de calzado. Firmada por la colaboradora.",f:"18 jul 2026",q:"Laura Mejía"},
+    {s:"EVT",k:C.ev,t:"Incapacidad — 3 días",d:"Enfermedad general. Del 4 al 6 de mayo. EPS Sanitas.",f:"04 may 2026",q:"Laura Mejía"},
+    {s:"EVT",k:C.ev,t:"Examen médico periódico",d:"Concepto: apta. Próximo vence 22 de febrero de 2027.",f:"22 feb 2026",q:"Carolina Páez"},
+    {s:"CRG",k:C.cargo,t:"Cambio de cargo — Auxiliar de Archivo",d:"Antes: Auxiliar de Calidad. Heredó la matriz del cargo nuevo y cambió de punto de marcación.",f:"01 feb 2025",q:"Laura Mejía"},
+    {s:"FRM",k:C.fo,t:"Inducción de ingreso completada",d:"16 horas. Constancia 2023-0417.",f:"19 may 2023",q:"Sistema"},
+    {s:"CRG",k:C.cargo,t:"Ingreso — Auxiliar de Calidad",d:"Vínculo directo. Código interno 8639. Usuario en GLPI y firma registrada el mismo día.",f:"15 may 2023",q:"Laura Mejía"}
+  ].map(function(h){
+    return '<div style="display:flex;gap:var(--e4)"><div style="display:flex;flex-direction:column;align-items:center;flex:0 0 34px">'+
+      '<span style="width:34px;height:34px;border-radius:10px;background:'+h.k.f+';color:'+h.k.c+';display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800">'+h.s+'</span>'+
+      '<span style="flex:1;width:2px;background:var(--linea);min-height:16px"></span></div>'+
+      '<div style="flex:1;min-width:0;padding-bottom:var(--e5)">'+
+      '<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:baseline"><span style="font-size:14px;font-weight:600">'+esc(h.t)+'</span>'+
+      '<span class="num" style="color:var(--txt-4);font-size:12px;margin-left:auto;white-space:nowrap">'+esc(h.f)+'</span></div>'+
+      '<p style="margin:4px 0 0;color:var(--txt-2);font-size:13px">'+esc(h.d)+'</p>'+
+      '<div style="margin-top:7px;display:flex;flex-wrap:wrap;gap:var(--e2);align-items:center">'+
+      '<span style="display:inline-block;background:'+h.k.f+';color:'+h.k.c+';font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:999px;letter-spacing:.03em;text-transform:uppercase">'+h.k.t+'</span>'+
+      '<span style="color:var(--txt-4);font-size:11.5px">Registró '+esc(h.q)+'</span></div></div></div>';
+  }).join(""));
+
+  /* ─────── completitud ─────── */
+  html("escala",HITOS.map(function(h){
+    return '<div class="hito"><span class="pc">'+h.pc+'%</span>'+
+      '<span class="dot" style="background:'+tono(h.pc)+'22;color:'+tono(h.pc)+'">'+(h.pc===100?'★':'●')+'</span>'+
+      '<span style="flex:1;min-width:0"><span style="display:block;font-size:13.5px;font-weight:700">'+esc(h.n)+'</span>'+
+      '<span style="display:block;color:var(--txt-2);font-size:12.5px;margin-top:2px">'+esc(h.q)+'</span>'+
+      '<span style="display:block;color:var(--txt-3);font-size:11.5px;margin-top:4px">Habilita: '+esc(h.hab)+'</span></span>'+
+      '<span class="bdg b-nt" style="font-size:10px">'+esc(h.due)+'</span></div>';
+  }).join(""));
+
+  html("ejemplo",HITOS.map(function(h){
+    var ok=h.pc<=55;
+    return '<div style="display:flex;gap:11px;align-items:center;padding:9px 0;border-bottom:1px solid var(--linea)">'+
+      '<span style="width:22px;height:22px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex:0 0 22px;'+
+      (ok?'background:var(--ok-s);color:var(--ok)':'background:var(--sup-3);color:var(--txt-4)')+'">'+(ok?'✓':'·')+'</span>'+
+      '<span style="flex:1;font-size:13px;'+(ok?'font-weight:600':'color:var(--txt-3)')+'">'+esc(h.n)+'</span>'+
+      '<span class="num" style="font-size:12px;color:var(--txt-3)">'+h.pc+'%</span></div>';
+  }).join(""));
+
+  html("tblInc",[
+    {ini:"AM",n:"Andrés Felipe Mora",cod:"9204",car:"Operario de Extrusión 1",pc:55,f:"Liquidación",d:"Carolina Páez",w:"hace 2 d",t:"av"},
+    {ini:"AL",n:"Ange Stefani Álvarez",cod:"9126",car:"Operaria de Inyección",pc:40,f:"Firma y liquidación",d:"Laura Mejía",w:"hace 3 d",t:"av"},
+    {ini:"RS",n:"Ricardo Sánchez Ruiz",cod:"9198",car:"— sin cargo",pc:25,f:"Cargo y punto",d:"Laura Mejía",w:"hace 2 d",t:"ko"},
+    {ini:"MC",n:"Mónica Castro León",cod:"9201",car:"— sin cargo",pc:10,f:"Vínculo y cargo",d:"Laura Mejía",w:"hace 31 h",t:"ko"},
+    {ini:"JV",n:"Julián Vargas Ortiz",cod:"9199",car:"Auxiliar de Almacén",pc:70,f:"Contacto y SST",d:"RH",w:"hace 6 d",t:"av"},
+    {ini:"PT",n:"Paola Trujillo Mesa",cod:"9202",car:"Técnico de Mantenimiento",pc:85,f:"Examen de ingreso",d:"SST",w:"hace 9 d",t:"av"}
+  ].map(function(p){
+    return '<tr><td><span style="display:flex;align-items:center;gap:10px"><span class="av32" style="background:var(--sup-3);color:var(--txt-2)">'+esc(p.ini)+'</span><span style="font-weight:600">'+esc(p.n)+'</span></span></td>'+
+      '<td class="num" style="color:var(--txt-2)">'+esc(p.cod)+'</td>'+
+      '<td style="color:'+(p.car.indexOf("sin cargo")>-1?'var(--error);font-weight:600':'var(--txt-2)')+'">'+esc(p.car)+'</td>'+
+      '<td><span style="display:flex;align-items:center;gap:9px"><span class="pb pb-mini" style="width:62px"><i style="width:'+p.pc+'%;background:'+tono(p.pc)+'"></i></span><span class="num" style="font-weight:700;color:'+tono(p.pc)+'">'+p.pc+'%</span></span></td>'+
+      '<td><span class="bdg b-'+p.t+'">'+esc(p.f)+'</span></td><td style="color:var(--txt-2)">'+esc(p.d)+'</td>'+
+      '<td class="num" style="color:'+(p.t==="ko"?'var(--error);font-weight:600':'var(--txt-3)')+'">'+esc(p.w)+'</td></tr>';
+  }).join(""));
+
+  /* ─────── áreas y cargos ─────── */
+  html("listaAreas",[
+    {s:"PI",n:"Producción Insumos",c:387,on:true},{s:"PF",n:"Producción Farmacéutica",c:294},
+    {s:"GC",n:"Gestión de Calidad",c:63},{s:"AL",n:"Almacén",c:48},
+    {s:"DMSG",n:"Mantenimiento y Servicios",c:41},{s:"DMA",n:"Maquinaria y Automatización",c:22},
+    {s:"TI",n:"Tecnología de Información",c:9},{s:"RH",n:"Recursos Humanos",c:11}
+  ].map(function(a){
+    return '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;font-size:13.5px;'+(a.on?'background:var(--accion-suave);color:var(--accion-2);font-weight:600':'color:var(--txt-2)')+'">'+
+      '<code style="font-size:10.5px;font-weight:700">'+esc(a.s)+'</code>'+
+      '<span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(a.n)+'</span>'+
+      '<span class="num" style="color:var(--txt-4);font-size:12px">'+a.c+'</span></div>';
+  }).join(""));
+
+  html("tblCargos",CARGOS.filter(function(c){ return c.area==="Producción Insumos"; }).concat([cargo("arc")]).map(function(c){
+    var p=punto(c.pm);
+    return '<tr><td style="font-weight:600">'+esc(c.n)+'</td>'+
+      '<td><span class="bdg b-nt">'+esc(c.niv)+'</span></td>'+
+      '<td style="color:'+(c.jefe.indexOf("sin superior")>-1?'var(--error);font-weight:600':'var(--txt-2)')+'">'+esc(c.jefe)+'</td>'+
+      '<td class="num" style="text-align:right;color:var(--txt-2)">'+c.per+'</td>'+
+      '<td><span style="display:flex;align-items:center;gap:7px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--txt-4)" stroke-width="1.9" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2.5"/><circle cx="12" cy="10" r="3"/></svg><span style="color:var(--txt-2)">'+esc(p.n)+'</span></span></td>'+
+      '<td class="num" style="color:var(--txt-3)">'+c.mat+' doc.</td></tr>';
+  }).join(""));
+
+  /* ─────── organigrama ─────── */
+  html("orgN2",[
+    {i:"DS",n:"Diego Salcedo",c:"Dirección de Operaciones",p:729,f:"var(--accion-suave)",t:"var(--accion-2)"},
+    {i:"MR",n:"Marta Rodríguez",c:"Dirección de Calidad",p:63,f:"var(--ok-s)",t:"var(--ok)"},
+    {i:"AC",n:"Ana Castaño",c:"Dirección Administrativa",p:94,f:"var(--aviso-s)",t:"var(--aviso)"}
+  ].map(function(d){
+    return '<div style="display:flex;flex-direction:column;align-items:center"><div style="width:2px;height:26px;background:var(--linea-2)"></div>'+
+      '<div class="cx"><div style="width:38px;height:38px;border-radius:11px;background:'+d.f+';color:'+d.t+';display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin:0 auto 8px">'+d.i+'</div>'+
+      '<div style="font-size:13px;font-weight:600">'+esc(d.n)+'</div><div style="color:var(--txt-3);font-size:11.5px;margin-top:2px">'+esc(d.c)+'</div>'+
+      '<div class="num" style="margin-top:8px;color:var(--txt-4);font-size:11px">'+d.p+' personas</div></div></div>';
+  }).join(""));
+  html("orgN3",[{i:"JP",n:"Julián Peña",c:"Jefe de Producción Insumos"},{i:"LC",n:"Liliana Cruz",c:"Jefe de Producción Farmacéutica"}].map(function(j){
+    return '<div style="display:flex;flex-direction:column;align-items:center"><div style="width:2px;height:26px;background:var(--linea-2)"></div>'+
+      '<div class="cx"><div style="width:34px;height:34px;border-radius:10px;background:var(--sup-3);color:var(--txt-2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;margin:0 auto 8px">'+j.i+'</div>'+
+      '<div style="font-size:12.5px;font-weight:600">'+esc(j.n)+'</div><div style="color:var(--txt-3);font-size:11.5px;margin-top:2px">'+esc(j.c)+'</div></div></div>';
+  }).join(""));
+
+  /* ─────── puntos de marcación ─────── */
+  var rolB={"Descanso":"b-ok","Portería":"b-av","Interior":"b-in"};
+  html("tblPuntos",PUNTOS.map(function(p){
+    return '<tr><td><span style="display:flex;align-items:center;gap:9px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accion)" stroke-width="1.9" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2.5"/><circle cx="12" cy="10" r="3"/><path d="M8 17h8"/></svg><span style="font-weight:600">'+esc(p.n)+'</span></span></td>'+
+      '<td style="color:var(--txt-2)"><span class="num">'+p.disp.length+'</span> · '+esc(p.disp.join(", "))+'</td>'+
+      '<td class="num" style="text-align:right;color:var(--txt-2)">'+p.car+'</td>'+
+      '<td class="num" style="text-align:right;color:var(--txt-2)">'+p.per+'</td>'+
+      '<td><span class="bdg '+rolB[p.rol]+'">'+esc(p.rol)+'</span></td></tr>';
+  }).join(""));
+
+  html("dispPunto",punto("vm").disp.map(function(d,i){
+    return '<div style="display:flex;align-items:center;gap:10px;padding:9px 11px;background:var(--sup-2);border:1px solid var(--linea);border-radius:var(--r-sm)">'+
+      '<span style="width:7px;height:7px;border-radius:50%;background:var(--ok);flex:0 0 7px"></span>'+
+      '<span style="flex:1;font-size:13px;font-weight:500">'+esc(d)+'</span>'+
+      '<span class="num" style="color:var(--txt-4);font-size:11.5px">172.16.9.'+(21+i)+'</span></div>';
+  }).join(""));
+
+  html("tblExc",[
+    {ini:"AE",n:"María Fernanda Aguiar",o:"Portería Planta",a:"Recepción Planta 2",m:"Apoyo a otra área",v:"Hasta 31/12/2026",q:"Laura Mejía"},
+    {ini:"AM",n:"Adelaida Álvarez Mejía",o:"Vestier Hombres",a:"Portería Planta",m:"Restricción médica",v:"Indefinida",q:"Carolina Páez"},
+    {ini:"HG",n:"Hernán Gómez Ruiz",o:"Vestier Hombres",a:"Almacén PP",m:"Reubicación temporal",v:"Hasta 30/11/2026",q:"Julián Peña"},
+    {ini:"SD",n:"Sandra Delgado Pinto",o:"Vestier Mujeres",a:"Recepción Planta 2",m:"Restricción médica",v:"Hasta 15/01/2027",q:"Carolina Páez"}
+  ].map(function(e){
+    return '<tr><td><span style="display:flex;align-items:center;gap:10px"><span class="av32" style="background:var(--sup-3);color:var(--txt-2)">'+esc(e.ini)+'</span><span style="font-weight:600">'+esc(e.n)+'</span></span></td>'+
+      '<td style="color:var(--txt-3);text-decoration:line-through">'+esc(e.o)+'</td>'+
+      '<td style="font-weight:600;color:var(--accion-2)">'+esc(e.a)+'</td>'+
+      '<td><span class="bdg b-nt">'+esc(e.m)+'</span></td>'+
+      '<td class="num" style="color:var(--txt-2)">'+esc(e.v)+'</td><td style="color:var(--txt-2)">'+esc(e.q)+'</td></tr>';
+  }).join(""));
+
+  /* ─────── roles y permisos ─────── */
+  var ROLES=[
+    {id:"admin",s:"ADM",n:"Administrador del sistema",r:"214 permisos · 2 usuarios",f:"var(--marca)",c:"#fff",des:"Configura el sistema completo. Es el único que administra roles, permisos y parámetros.",p:"214",u:"2",al:"todo"},
+    {id:"coord",s:"CRH",n:"Coordinador de RRHH",r:"118 permisos · 3 usuarios",f:"var(--accion-suave)",c:"var(--accion-2)",des:"Dirige el área. Ve y edita todo lo de personal, incluidos los datos reservados.",p:"118",u:"3",al:"todo"},
+    {id:"anal",s:"ARH",n:"Analista de RRHH",r:"74 permisos · 6 usuarios",f:"var(--accion-suave)",c:"var(--accion-2)",des:"Opera el día a día: registra personal, atiende solicitudes y cierra trámites. Ve el salario pero no lo edita.",p:"74",u:"6",al:"todo"},
+    {id:"auxi",s:"AUX",n:"Auxiliar de RRHH",r:"41 permisos · 4 usuarios",f:"var(--sup-3)",c:"var(--txt-2)",des:"Apoya la operación. No ve datos reservados ni registra retiros.",p:"41",u:"4",al:"todo"},
+    {id:"jefe",s:"JEF",n:"Jefe de área",r:"33 permisos · 38 usuarios",f:"var(--ok-s)",c:"var(--ok)",des:"Ve y gestiona únicamente a quienes dependen de su cargo en el organigrama.",p:"33",u:"38",al:"rama"},
+    {id:"dire",s:"DIR",n:"Director",r:"47 permisos · 9 usuarios",f:"var(--ok-s)",c:"var(--ok)",des:"Lo mismo que un jefe, sobre toda su rama de la estructura.",p:"47",u:"9",al:"rama"},
+    {id:"sst", s:"SST",n:"Seguridad y salud",r:"52 permisos · 3 usuarios",f:"var(--aviso-s)",c:"var(--aviso)",des:"Accidentes, enfermedad profesional, exámenes médicos e indicadores de SST.",p:"52",u:"3",al:"area"}
+  ];
+  var rolAct="anal";
+  var PERM={};
+  var GRUPOS=[
+    {m:"Personal",pre:"personal.*",items:[
+      ["personal.ver","Ver personal","Listado y ficha, dentro de su alcance",0,1],
+      ["personal.crear","Registrar persona","Captura rápida y registro completo",0,1],
+      ["personal.editar","Editar datos básicos","Y aprobar solicitudes de actualización",0,1],
+      ["personal.salario.ver","Ver el salario","Cada consulta queda en la bitácora",1,1],
+      ["personal.salario.editar","Editar datos reservados","Salario, EPS, caja, pensión y cesantías",1,0],
+      ["personal.retirar","Registrar un retiro","Dispara el paz y salvo y revoca accesos",1,1]]},
+    {m:"Empresa",pre:"empresa.*",items:[
+      ["empresa.area.ver","Ver áreas y cargos","Solo lectura del catálogo",0,1],
+      ["empresa.cargo.editar","Crear y editar cargos","Incluye matriz y punto de marcación del cargo",0,0],
+      ["empresa.estructura.editar","Cambiar la estructura","Mueve a quién reporta cada cargo",1,0],
+      ["empresa.punto.editar","Administrar puntos de marcación","Afecta el cálculo de horas de todo el personal",1,0],
+      ["empresa.punto.excepcion","Autorizar excepción de punto","Cambia el punto de una persona concreta",0,1]]},
+    {m:"Firmas",pre:"firma.*",items:[
+      ["firma.capturar","Capturar firma en tableta","Al registrar a una persona",0,1],
+      ["firma.migrar","Migrar firmas del sistema anterior","Operación masiva, una sola vez",1,0]]}
+  ];
+  GRUPOS.forEach(function(g){ g.items.forEach(function(it){ PERM[it[0]]=it[4]; }); });
+
+  function pintarRoles(){
+    html("listaRoles",ROLES.map(function(r){
+      return '<button type="button" data-rol="'+r.id+'" style="display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:9px;font-size:13.5px;width:100%;text-align:left;border:0;cursor:pointer;font-family:inherit;'+
+        (r.id===rolAct?'background:var(--accion-suave);color:var(--accion-2);font-weight:600':'background:transparent;color:var(--txt-2)')+'">'+
+        '<span style="width:28px;height:28px;border-radius:8px;background:'+r.f+';color:'+r.c+';display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex:0 0 28px">'+r.s+'</span>'+
+        '<span style="flex:1;min-width:0"><span style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(r.n)+'</span>'+
+        '<span class="num" style="display:block;color:var(--txt-4);font-size:11.5px;font-weight:400;margin-top:1px">'+esc(r.r)+'</span></span></button>';
+    }).join(""));
+    document.querySelectorAll("[data-rol]").forEach(function(b){
+      b.addEventListener("click",function(){ rolAct=b.getAttribute("data-rol"); pintarRoles(); pintarDetalle(); });
+    });
+  }
+  function pintarDetalle(){
+    var r=ROLES.filter(function(x){ return x.id===rolAct; })[0];
+    $("rolNom").textContent=r.n; $("rolDes").textContent=r.des;
+    $("rolPer").textContent=r.p; $("rolUsu").textContent=r.u;
+    $("rolUsu2").textContent=r.u+" usuarios";
+    html("alcances",[["propio","Solo lo propio"],["area","Su área"],["rama","Su rama del organigrama"],["todo","Toda la empresa"]].map(function(a){
+      var on=a[0]===r.al;
+      return '<span style="display:inline-block;font-size:12.5px;padding:7px 13px;border-radius:999px;'+
+        (on?'background:var(--marca);color:#fff;font-weight:600':'background:var(--sup);border:1px solid var(--linea-2);color:var(--txt-3)')+'">'+esc(a[1])+'</span>';
+    }).join(""));
+  }
+  function pintarPermisos(){
+    html("permisos",GRUPOS.map(function(g){
+      var act=g.items.filter(function(i){ return PERM[i[0]]; }).length;
+      return '<div><div style="display:flex;flex-wrap:wrap;gap:var(--e3);align-items:center;padding:12px var(--e4);background:var(--sup-2);border-bottom:1px solid var(--linea)">'+
+        '<span style="font-size:13px;font-weight:700">'+esc(g.m)+'</span><code>'+esc(g.pre)+'</code>'+
+        '<span class="num" style="margin-left:auto;color:var(--txt-3);font-size:12px">'+act+' de '+g.items.length+' activos</span></div>'+
+        g.items.map(function(it){
+          var on=PERM[it[0]];
+          return '<div style="display:flex;align-items:center;gap:var(--e4);padding:11px var(--e4);border-bottom:1px solid var(--linea)">'+
+            '<button type="button" class="sw" data-p="'+it[0]+'" aria-pressed="'+(on?'true':'false')+'" aria-label="'+esc(it[1])+'" style="background:'+(on?'var(--accion)':'var(--linea-2)')+'"><i style="left:'+(on?'19px':'3px')+'"></i></button>'+
+            '<span style="flex:1 1 200px;min-width:0"><span style="display:block;font-size:13.5px;font-weight:500">'+esc(it[1])+'</span>'+
+            '<span style="display:block;color:var(--txt-3);font-size:11.5px;margin-top:2px">'+esc(it[2])+'</span></span>'+
+            '<code>'+esc(it[0])+'</code>'+
+            (it[3]?'<span class="bdg b-av" style="font-size:10px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>Sensible</span>':'')+
+            '</div>';
+        }).join("")+'</div>';
+    }).join(""));
+    document.querySelectorAll("[data-p]").forEach(function(b){
+      b.addEventListener("click",function(){ var k=b.getAttribute("data-p"); PERM[k]=PERM[k]?0:1; pintarPermisos(); });
+    });
+  }
+
+  /* ─────── usuarios ─────── */
+  var ALC={todo:["Toda la empresa","var(--marca)","#fff"],rama:["Su rama","var(--ok-s)","var(--ok)"],area:["Su área","var(--accion-suave)","var(--accion-2)"]};
+  html("tblUsu",[
+    {i:"SG",n:"Sebastián García",c:"Analista de TI",u:"sgarcia",r:"Administrador del sistema",a:"todo",l:"Hoy, 08:14",e:"Activo",t:"var(--ok)"},
+    {i:"CP",n:"Carolina Páez",c:"Coordinadora de RRHH",u:"cpaez",r:"Coordinador de RRHH",a:"todo",l:"Hoy, 07:52",e:"Activo",t:"var(--ok)"},
+    {i:"LM",n:"Laura Mejía",c:"Analista de RRHH",u:"lmejia",r:"Analista de RRHH",a:"todo",l:"Hoy, 09:03",e:"Activo",t:"var(--ok)"},
+    {i:"JP",n:"Julián Peña",c:"Jefe de Producción Insumos",u:"jpena",r:"Jefe de área",a:"rama",l:"Ayer, 16:40",e:"Activo",t:"var(--ok)"},
+    {i:"DS",n:"Diego Salcedo",c:"Director de Operaciones",u:"dsalcedo",r:"Director",a:"rama",l:"03/11, 11:08",e:"Activo",t:"var(--ok)"},
+    {i:"MR",n:"Marta Rodríguez",c:"Directora de Calidad",u:"mrodriguez",r:"Seguridad y salud",a:"area",l:"31/10, 09:55",e:"Activo",t:"var(--ok)"},
+    {i:"AT",n:"Andrea Torres",c:"Auxiliar de RRHH",u:"atorres",r:"Auxiliar de RRHH",a:"todo",l:"Hace 46 días",e:"Sin uso reciente",t:"var(--aviso)"}
+  ].map(function(u){
+    var a=ALC[u.a];
+    return '<tr><td><span style="display:flex;align-items:center;gap:10px"><span class="av32" style="background:var(--sup-3);color:var(--txt-2)">'+esc(u.i)+'</span>'+
+      '<span><span style="display:block;font-weight:600">'+esc(u.n)+'</span><span style="display:block;color:var(--txt-3);font-size:11.5px;margin-top:1px">'+esc(u.c)+'</span></span></span></td>'+
+      '<td><code>'+esc(u.u)+'</code></td><td style="color:var(--txt-2)">'+esc(u.r)+'</td>'+
+      '<td><span style="display:inline-block;background:'+a[1]+';color:'+a[2]+';font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px">'+a[0]+'</span></td>'+
+      '<td class="num" style="color:var(--txt-2)">'+esc(u.l)+'</td>'+
+      '<td><span style="display:inline-flex;align-items:center;gap:6px;color:'+u.t+';font-size:12.5px;font-weight:600"><span style="width:7px;height:7px;border-radius:50%;background:'+u.t+'"></span>'+esc(u.e)+'</span></td></tr>';
+  }).join(""));
+
+  /* ─────── parámetros ─────── */
+  html("listaParam",[
+    {n:"Jornada y recargos",c:14,on:true},{n:"Conceptos de nómina",c:9},{n:"Marcaciones",c:11},
+    {n:"Puntos de marcación",c:4},{n:"Vacaciones y permisos",c:7},{n:"Códigos de nómina",c:5},
+    {n:"Completitud del registro",c:3},{n:"Vencimientos",c:6},{n:"Calendario de festivos",c:2}
+  ].map(function(g){
+    return '<div style="display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:9px;font-size:13.5px;'+(g.on?'background:var(--accion-suave);color:var(--accion-2);font-weight:600':'color:var(--txt-2)')+'">'+
+      '<span style="flex:1;min-width:0">'+esc(g.n)+'</span><span class="num" style="color:var(--txt-4);font-size:12px">'+g.c+'</span></div>';
+  }).join(""));
+
+  html("vigencias",[
+    {v:"42 h",r:"Desde el 16 de julio de 2025 · vigente",q:"Registró Sebastián García el 14/07/2025",e:"Vigente",c:"b-ok",t:"var(--ok)"},
+    {v:"44 h",r:"Del 16 de julio de 2024 al 15 de julio de 2025",q:"Registró Sebastián García el 12/07/2024",e:"Histórico",c:"b-nt",t:"var(--linea-2)"},
+    {v:"46 h",r:"Del 15 de julio de 2023 al 15 de julio de 2024",q:"Registró Sebastián García el 10/07/2023",e:"Histórico",c:"b-nt",t:"var(--linea-2)"},
+    {v:"48 h",r:"Hasta el 14 de julio de 2023",q:"Valor inicial de la migración",e:"Histórico",c:"b-nt",t:"var(--linea-2)"}
+  ].map(function(v){
+    return '<div style="display:flex;flex-wrap:wrap;gap:var(--e4);align-items:center;padding:13px 0;border-bottom:1px solid var(--linea)">'+
+      '<span style="width:4px;height:36px;border-radius:2px;background:'+v.t+';flex:0 0 4px"></span>'+
+      '<span class="num" style="flex:0 0 86px;font-family:var(--disp);font-size:20px;font-weight:700">'+esc(v.v)+'</span>'+
+      '<span style="flex:1 1 200px;min-width:0"><span class="num" style="display:block;font-size:13px">'+esc(v.r)+'</span>'+
+      '<span style="display:block;color:var(--txt-4);font-size:11.5px;margin-top:2px">'+esc(v.q)+'</span></span>'+
+      '<span class="bdg '+v.c+'">'+esc(v.e)+'</span></div>';
+  }).join(""));
+
+  var TP={L:["Legal","b-ko"],P:["Política","b-in"],O:["Operativo","b-nt"]};
+  html("otrosParam",[
+    {n:"Inicio de la franja nocturna",k:"jornada.nocturna_inicio",v:"19:00",d:"16/07/2025",t:"L"},
+    {n:"Fin de la franja nocturna",k:"jornada.nocturna_fin",v:"06:00",d:"01/01/2020",t:"L"},
+    {n:"Inicio de la semana operativa",k:"jornada.semana_inicio",v:"Dom 22:00",d:"01/01/2026",t:"O"},
+    {n:"Tolerancia de puntualidad",k:"marcacion.tolerancia",v:"5 min",d:"01/01/2024",t:"P"},
+    {n:"Tope de horas extra por semana",k:"jornada.tope_semanal",v:"12 h",d:"01/01/2020",t:"L"},
+    {n:"Plazo del registro bajo el 40 %",k:"personal.plazo_incompleto",v:"24 h",d:"01/11/2026",t:"P"}
+  ].map(function(o){
+    var t=TP[o.t];
+    return '<div style="display:flex;flex-wrap:wrap;gap:var(--e4);align-items:center;padding:13px 0;border-bottom:1px solid var(--linea)">'+
+      '<span style="flex:1 1 250px;min-width:0"><span style="display:flex;flex-wrap:wrap;gap:var(--e2);align-items:center">'+
+      '<span style="font-size:13.5px;font-weight:600">'+esc(o.n)+'</span><span class="bdg '+t[1]+'" style="font-size:10px">'+t[0]+'</span></span>'+
+      '<code style="display:inline-block;margin-top:5px">'+esc(o.k)+'</code></span>'+
+      '<span class="num" style="font-family:var(--disp);font-size:16px;font-weight:700;white-space:nowrap">'+esc(o.v)+'</span>'+
+      '<span class="num" style="color:var(--txt-4);font-size:11.5px;white-space:nowrap">desde '+esc(o.d)+'</span>'+
+      '<button class="btn sm" type="button">Editar</button></div>';
+  }).join(""));
+
+  /* ─────── auditoría ─────── */
+  var TA={ver:{s:"VER",t:"Consulta sensible",f:"var(--aviso-s)",c:"var(--aviso)"},mod:{s:"MOD",t:"Modificación",f:"var(--accion-suave)",c:"var(--accion-2)"},
+          new:{s:"NEW",t:"Creación",f:"var(--ok-s)",c:"var(--ok)"},seg:{s:"SEG",t:"Seguridad",f:"var(--error-s)",c:"var(--error)"}};
+  html("eventos",[
+    {k:TA.ver,t:"Consultó el salario de Jised Johana Acero",d:"Hoja de vida · sección de datos reservados",q:"Laura Mejía · lmejia",ip:"172.16.4.88",eq:"RH-PC-03",w:"Hoy, 09:14"},
+    {k:TA.mod,t:"Cambió el punto de marcación de María Fernanda Aguiar",d:"Excepción por apoyo a otra área, vigente hasta el 31/12/2026",a:"Portería Planta",b:"Recepción Planta 2",q:"Laura Mejía · lmejia",ip:"172.16.4.88",eq:"RH-PC-03",w:"Hoy, 08:58"},
+    {k:TA.mod,t:"Cambió la estructura de Operario de Extrusión 1",d:"Afecta a 94 personas: aprobador y evaluador",a:"Jefe de Producción Insumos",b:"Coordinador de Turno",q:"Sebastián García · sgarcia",ip:"172.16.4.12",eq:"TI-PC-01",w:"Hoy, 08:47"},
+    {k:TA.seg,t:"Activó personal.salario.editar en el rol Coordinador",d:"Afecta a 3 usuarios de inmediato",a:"inactivo",b:"activo",q:"Sebastián García · sgarcia",ip:"172.16.4.12",eq:"TI-PC-01",w:"Hoy, 08:31"},
+    {k:TA.new,t:"Registró a Andrés Felipe Mora Quintero",d:"Captura rápida · código 9204 · usuario en GLPI e identidad generada",q:"Laura Mejía · lmejia",ip:"172.16.4.88",eq:"RH-PC-03",w:"Ayer, 15:22"},
+    {k:TA.mod,t:"Nueva vigencia de jornada.umbral_semanal",d:"Rige desde el 16 de julio de 2025. Los períodos anteriores conservan su valor",a:"44 h",b:"42 h",q:"Sebastián García · sgarcia",ip:"172.16.4.12",eq:"TI-PC-01",w:"04/11, 17:05"},
+    {k:TA.ver,t:"Exportó el listado de personal con salario",d:"1.094 filas · formato Excel",q:"Carolina Páez · cpaez",ip:"172.16.4.90",eq:"RH-PC-01",w:"03/11, 16:18"},
+    {k:TA.seg,t:"Intento de acceso sin permiso a Datos reservados",d:"Ruta bloqueada por el servidor. El enlace no estaba visible en el menú",q:"Andrea Torres · atorres",ip:"172.16.4.77",eq:"RH-PC-05",w:"03/11, 10:02"}
+  ].map(function(e){
+    return '<div style="display:flex;gap:var(--e4);padding:14px 0;border-bottom:1px solid var(--linea)">'+
+      '<span style="flex:0 0 34px"><span style="width:34px;height:34px;border-radius:10px;background:'+e.k.f+';color:'+e.k.c+';display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:800">'+e.k.s+'</span></span>'+
+      '<span style="flex:1;min-width:0">'+
+      '<span style="display:flex;flex-wrap:wrap;gap:10px;align-items:baseline"><span style="font-size:13.5px;font-weight:600">'+esc(e.t)+'</span>'+
+      '<span style="display:inline-block;background:'+e.k.f+';color:'+e.k.c+';font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;letter-spacing:.04em;text-transform:uppercase">'+e.k.t+'</span>'+
+      '<span class="num" style="margin-left:auto;color:var(--txt-4);font-size:12px;white-space:nowrap">'+esc(e.w)+'</span></span>'+
+      '<span style="display:block;color:var(--txt-2);font-size:12.5px;margin-top:4px">'+esc(e.d)+'</span>'+
+      (e.a?'<span style="display:flex;flex-wrap:wrap;gap:var(--e2);align-items:center;margin-top:7px;font-size:12px"><code style="text-decoration:line-through;color:var(--txt-4)">'+esc(e.a)+'</code>'+
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--txt-4)" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'+
+        '<code style="background:var(--ok-s);color:var(--ok);font-weight:600">'+esc(e.b)+'</code></span>':'')+
+      '<span style="display:flex;flex-wrap:wrap;gap:var(--e4);margin-top:8px;color:var(--txt-4);font-size:11.5px"><span>'+esc(e.q)+'</span><span class="num">'+esc(e.ip)+'</span><span>'+esc(e.eq)+'</span></span>'+
+      '</span></div>';
+  }).join(""));
+
+  /* ─────── arranque ─────── */
+  derivar(); pintarSesion(); pintarCola(); pintarRoles(); pintarDetalle(); pintarPermisos();
+})();
+</script>
+</body>
+</html>
